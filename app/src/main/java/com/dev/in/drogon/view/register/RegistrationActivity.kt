@@ -23,7 +23,17 @@ class RegistrationActivity : BaseActivity() {
         setContentView(R.layout.activity_registration)
 
         setupFirebaseAuth()
-        showPhoneNumberFragment()
+        if (mFirebaseAuth.currentUser == null) {
+            showPhoneNumberFragment()
+        } else {
+            val userName = mFirebaseAuth.currentUser!!.displayName
+            if (userName.isNullOrEmpty()) {
+                showAccountCreationFragment()
+            } else {
+                // TODO: handle this
+                Toast.makeText(this, "handle this", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setupFirebaseAuth() {
@@ -69,9 +79,10 @@ class RegistrationActivity : BaseActivity() {
                         val user = task.result?.user
                         Toast.makeText(
                             this,
-                            "Sign In Successful, ${user.toString()}",
+                            "Sign In Successful",
                             Toast.LENGTH_SHORT
                         ).show()
+                        showAccountCreationFragment();
                     } else {
                         // Sign in failed, display a message and update the UI
                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
@@ -82,6 +93,13 @@ class RegistrationActivity : BaseActivity() {
                     }
                 }
         } ?: otpVerificationFailed(false)
+    }
+
+    private fun showAccountCreationFragment() {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, AccountCreationFragment())
+            .commitAllowingStateLoss()
     }
 
     private fun otpVerificationFailed(invalidOtpEntered: Boolean) {
