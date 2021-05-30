@@ -36,7 +36,7 @@ class PhoneNumberFragment : Fragment() {
             if (phoneNumber.length != 10) {
                 Toast.makeText(registrationActivity, "Invalid mobile number", Toast.LENGTH_SHORT).show()
             } else {
-                registrationActivity?.sendOtp(phoneNumber)
+                registrationActivity?.showOtpBottomSheet(phoneNumber)
             }
         }
     }
