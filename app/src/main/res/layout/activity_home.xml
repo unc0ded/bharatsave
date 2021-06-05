@@ -5,33 +5,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorPrimaryDark"
     tools:context=".view.home.HomeActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/top_bar_wrapper"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true">
+        android:padding="20dp">
 
-        <TextView
+        <Button
+            android:id="@+id/btn_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home Screen"
-            android:textColor="@color/colorPrimary"
-            android:textSize="30sp" />
+            style="@style/ButtonDark"
+            android:text="help!"
+            android:layout_alignParentEnd="true" />
 
-        <TextView
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/success_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_bar_wrapper"
+        android:padding="20dp">
+
+        <RelativeLayout
+            android:id="@id/success_wrapper"
+            android:layout_width="125dp"
+            android:layout_height="125dp">
+
+            <com.dev.in.drogon.custom_widget.CircularIndicator
+                android:id="@+id/circular_indicator"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:elevation="5dp"
+                android:layout_centerInParent="true"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_circle_color_primary"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹ 37"
+                android:fontFamily="@font/rubik_bold"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:textSize="30sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This is temporary"
-            android:textColor="@color/subtitle_grey"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp" />
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/success_wrapper"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentEnd="true"
+            android:gravity="end|center_vertical"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_status_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_medium"
+                android:text="Good going!"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tv_status_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_regular"
+                android:layout_marginTop="10dp"
+                android:text="Just ₹13 more and we are done for today!"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white_60"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_wave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_wave"
+        android:layout_below="@id/success_wrapper"
+        android:layout_marginTop="-150dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_top_both_rect_20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_below="@id/iv_wave"
+        android:elevation="5dp"
+        android:layout_marginTop="-20dp" />
 
 </RelativeLayout>

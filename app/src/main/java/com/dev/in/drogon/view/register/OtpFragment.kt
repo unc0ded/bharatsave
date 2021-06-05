@@ -1,24 +1,28 @@
 package com.dev.`in`.drogon.view.register
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.dev.`in`.drogon.R
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.dev.`in`.drogon.model.User
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_otp_bottom_sheet.*
+import com.jakewharton.rxbinding3.widget.textChanges
+import kotlinx.android.synthetic.main.fragment_otp.*
 import java.util.concurrent.TimeUnit
 
 
-private const val EXTRA_PHONE_NUMBER = "extra_phone_number"
+private const val EXTRA_USER = "extra_user"
 
-class OtpBottomSheetFragment : BottomSheetDialogFragment() {
+class OtpFragment : Fragment() {
 
     private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var mCallBack: PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -27,15 +31,14 @@ class OtpBottomSheetFragment : BottomSheetDialogFragment() {
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
 
     private var registrationActivity: RegistrationActivity? = null
-    private var phoneNumber: String? = null
+    private var user: User? = null
 
     companion object {
-
         @JvmStatic
-        fun newInstance(phoneNUmber: String) =
-            OtpBottomSheetFragment().apply {
+        fun newInstance(user: User) =
+            OtpFragment().apply {
                 arguments = Bundle().apply {
-                    putString(EXTRA_PHONE_NUMBER, phoneNUmber)
+                    putParcelable(EXTRA_USER, user)
                 }
             }
     }
@@ -43,11 +46,13 @@ class OtpBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            phoneNumber = it.getString(EXTRA_PHONE_NUMBER)
+            user = it.getParcelable(EXTRA_USER)
         }
+
         setupFirebaseAuth()
-        phoneNumber?.let {
-            sendOtp(it)
+
+        user?.let {
+            sendOtp(it.phoneNumber)
         } ?: otpVerificationFailed(false)
     }
 
@@ -55,7 +60,7 @@ class OtpBottomSheetFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_otp_bottom_sheet, container, false)
+        return inflater.inflate(R.layout.fragment_otp, container, false)
     }
 
     override fun onAttach(context: Context) {
@@ -65,13 +70,28 @@ class OtpBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        enter_otp_wrapper.visibility = View.GONE
-        progress_wrapper.visibility = View.VISIBLE
+        setupOtpEditTexts()
 
         btn_verify.setOnClickListener {
-            verifyOtp(et_otp.text.trim().toString())
+            verifyOtp("${otp_digit_1.text}${otp_digit_2.text}${otp_digit_3.text}" +
+                    "${otp_digit_4.text}${otp_digit_5.text}${otp_digit_6.text}")
         }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun setupOtpEditTexts() {
+        otp_digit_1.textChanges().filter { it.length == 1 }.subscribe { otp_digit_2.requestFocus() }
+        otp_digit_2.textChanges().filter { it.length == 1 }.subscribe { otp_digit_3.requestFocus() }
+        otp_digit_3.textChanges().filter { it.length == 1 }.subscribe { otp_digit_4.requestFocus() }
+        otp_digit_4.textChanges().filter { it.length == 1 }.subscribe { otp_digit_5.requestFocus() }
+        otp_digit_5.textChanges().filter { it.length == 1 }.subscribe { otp_digit_6.requestFocus() }
+
+        otp_digit_1.filters = arrayOf(InputFilter.LengthFilter(1))
+        otp_digit_2.filters = arrayOf(InputFilter.LengthFilter(1))
+        otp_digit_3.filters = arrayOf(InputFilter.LengthFilter(1))
+        otp_digit_4.filters = arrayOf(InputFilter.LengthFilter(1))
+        otp_digit_5.filters = arrayOf(InputFilter.LengthFilter(1))
+        otp_digit_6.filters = arrayOf(InputFilter.LengthFilter(1))
     }
 
     private fun setupFirebaseAuth() {
@@ -83,7 +103,7 @@ class OtpBottomSheetFragment : BottomSheetDialogFragment() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 val otp = credential.smsCode
                 if (otp != null) {
-                    verifyOtp(otp)
+                    // verifyOtp(otp)
                 }
             }
 
@@ -99,11 +119,10 @@ class OtpBottomSheetFragment : BottomSheetDialogFragment() {
                 verificationId: String,
                 resendToken: PhoneAuthProvider.ForceResendingToken
             ) {
-                this@OtpBottomSheetFragment.verificationId = verificationId
-                this@OtpBottomSheetFragment.resendToken = resendToken
+                this@OtpFragment.verificationId = verificationId
+                this@OtpFragment.resendToken = resendToken
 
-                progress_wrapper.visibility = View.GONE
-                enter_otp_wrapper.visibility = View.VISIBLE
+                tv_otp_status.text = "Otp has been sent to ${user?.phoneNumber}"
             }
 
         }
@@ -122,27 +141,27 @@ class OtpBottomSheetFragment : BottomSheetDialogFragment() {
     private fun verifyOtp(otp: String) {
         if (verificationId != null && registrationActivity != null) {
             mFirebaseAuth.signInWithCredential(
-                PhoneAuthProvider.getCredential(verificationId!!, otp))
+                PhoneAuthProvider.getCredential(verificationId!!, otp)
+            )
                 .addOnCompleteListener(registrationActivity!!) { task ->
-                if (task.isSuccessful) {
-                    val user = task.result?.user
-                    Toast.makeText(
-                        registrationActivity,
-                        "Sign In Successful",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    registrationActivity?.showAccountCreationFragment()
-                    dismiss()
+                    if (task.isSuccessful) {
+                        val user = task.result?.user
+                        Toast.makeText(
+                            registrationActivity,
+                            "Sign In Successful",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        registrationActivity?.showHomeScreen(user?.phoneNumber)
 
-                } else {
-                    // Sign in failed, display a message and update the UI
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        otpVerificationFailed(true)
                     } else {
-                        otpVerificationFailed(false)
+                        // Sign in failed, display a message and update the UI
+                        if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                            otpVerificationFailed(true)
+                        } else {
+                            otpVerificationFailed(false)
+                        }
                     }
                 }
-            }
         } else {
             otpVerificationFailed(false)
         }
