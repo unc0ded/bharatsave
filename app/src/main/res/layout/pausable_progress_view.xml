@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="3dp">
+
+    <View
+        android:id="@+id/progress_background"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"/>
+
+    <View
+        android:id="@+id/progress_primary"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+</androidx.cardview.widget.CardView>
