@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    tools:context=".view.register.OtpFragment">
 
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_foreground"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:src="@drawable/ic_launcher_foreground"
         android:visibility="visible" />
 
     <RelativeLayout
@@ -23,35 +24,34 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_half_circle"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_half_circle" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:orientation="vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_bold"
                 android:text="Random Text"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:fontFamily="@font/rubik_bold" />
+                android:textSize="30sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This is supposed to be a random text used to introduced the application"
-                android:layout_centerVertical="true"
-                android:textColor="@color/white"
+                android:layout_marginTop="10dp"
                 android:alpha="0.66"
-                android:textSize="20sp"
                 android:fontFamily="@font/rubik_medium"
-                android:layout_marginTop="10dp"/>
+                android:text="This is supposed to be a random text used to introduced the application"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -63,24 +63,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_register"
             style="@style/ButtonLight"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Register"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:text="Register" />
 
         <Button
             android:id="@+id/btn_sign_in"
             style="@style/ButtonDark"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Sign In"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp"
+            android:text="Sign In" />
 
     </LinearLayout>
 

@@ -73,8 +73,10 @@ class OtpFragment : Fragment() {
         setupOtpEditTexts()
 
         btn_verify.setOnClickListener {
-            verifyOtp("${otp_digit_1.text}${otp_digit_2.text}${otp_digit_3.text}" +
-                    "${otp_digit_4.text}${otp_digit_5.text}${otp_digit_6.text}")
+            verifyOtp(
+                "${otp_digit_1.text}${otp_digit_2.text}${otp_digit_3.text}" +
+                        "${otp_digit_4.text}${otp_digit_5.text}${otp_digit_6.text}"
+            )
         }
     }
 

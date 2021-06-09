@@ -63,7 +63,9 @@ class RegistrationActivity : BaseActivity() {
     }
 
     fun showSignInFragment() {
-        TODO("Not yet implemented")
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, SignInFragment())
+            .commitAllowingStateLoss()
     }
-
 }

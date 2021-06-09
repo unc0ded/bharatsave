@@ -49,11 +49,16 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-    private fun validDetailsProvided(fullName: String, email: String, phoneNumber: String): Boolean {
+    private fun validDetailsProvided(
+        fullName: String,
+        email: String,
+        phoneNumber: String
+    ): Boolean {
         if (fullName.isEmpty() ||
             email.isEmpty() ||
             phoneNumber.length != 10 ||
-            !StringUtil.isEmailValid(email)) {
+            !StringUtil.isEmailValid(email)
+        ) {
             return false
         }
         return true
