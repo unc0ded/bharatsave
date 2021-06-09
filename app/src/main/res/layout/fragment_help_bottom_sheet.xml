@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_top_both_rect_20dp"
-    android:padding="20dp"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".view.home.HelpBottomSheet">
 
     <LinearLayout
@@ -25,10 +24,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/rubik_regular"
             android:text="about us"
             android:textColor="@color/black"
-            android:layout_marginStart="20dp"
             android:textSize="18sp" />
 
     </LinearLayout>
@@ -49,10 +48,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/rubik_regular"
             android:text="log out"
             android:textColor="@color/black"
-            android:layout_marginStart="20dp"
             android:textSize="18sp" />
 
     </LinearLayout>
