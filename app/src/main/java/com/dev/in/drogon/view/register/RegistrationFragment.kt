@@ -9,10 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.dev.`in`.drogon.R
 import com.dev.`in`.drogon.model.User
+import com.dev.`in`.drogon.util.Constants
 import com.dev.`in`.drogon.util.StringUtil
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_registration.*
 
-
+@AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
     private var registrationActivity: RegistrationActivity? = null
@@ -38,7 +40,10 @@ class RegistrationFragment : Fragment() {
             val email = et_email.text.trim().toString()
             val phoneNumber = et_phone_number.text.trim().toString()
             if (validDetailsProvided(fullName, email, phoneNumber)) {
-                registrationActivity?.verifyPhoneNumberForUser(User(fullName, email, phoneNumber))
+                registrationActivity?.verifyPhoneNumberForUser(
+                    User(fullName, email, phoneNumber),
+                    Constants.ORIGIN_REGISTER
+                )
             } else {
                 Toast.makeText(
                     registrationActivity,

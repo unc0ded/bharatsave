@@ -9,9 +9,10 @@ import com.dev.`in`.drogon.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_help_bottom_sheet.*
 
-
+@AndroidEntryPoint
 class HelpBottomSheet : BottomSheetDialogFragment() {
 
     private var homeActivity: HomeActivity? = null

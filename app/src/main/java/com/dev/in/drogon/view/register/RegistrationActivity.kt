@@ -3,14 +3,16 @@ package com.dev.`in`.drogon.view.register
 import android.content.Intent
 import android.os.Bundle
 import com.dev.`in`.drogon.R
+import com.dev.`in`.drogon.data.repository.PreferenceRepository
 import com.dev.`in`.drogon.model.User
 import com.dev.`in`.drogon.view.base.BaseActivity
 import com.dev.`in`.drogon.view.home.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RegistrationActivity : BaseActivity() {
 
     private lateinit var mFirebaseAuth: FirebaseAuth
@@ -49,8 +51,8 @@ class RegistrationActivity : BaseActivity() {
             .commitAllowingStateLoss()
     }
 
-    fun verifyPhoneNumberForUser(user: User) {
-        val otpFragment = OtpFragment.newInstance(user)
+    fun verifyPhoneNumberForUser(user: User, origin: Int) {
+        val otpFragment = OtpFragment.newInstance(user, origin)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, otpFragment)

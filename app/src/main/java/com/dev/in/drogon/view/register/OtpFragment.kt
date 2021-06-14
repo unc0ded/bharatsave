@@ -9,19 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.dev.`in`.drogon.R
 import com.dev.`in`.drogon.model.User
+import com.dev.`in`.drogon.util.Constants
+import com.dev.`in`.drogon.view.register.viewmodel.RegistrationViewModel
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.jakewharton.rxbinding3.widget.textChanges
+import com.jakewharton.rxbinding4.widget.textChanges
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_otp.*
 import java.util.concurrent.TimeUnit
 
-
-private const val EXTRA_USER = "extra_user"
-
+@AndroidEntryPoint
 class OtpFragment : Fragment() {
 
     private lateinit var mFirebaseAuth: FirebaseAuth
@@ -32,13 +34,20 @@ class OtpFragment : Fragment() {
 
     private var registrationActivity: RegistrationActivity? = null
     private var user: User? = null
+    private var origin: Int? = null
+
+    private val viewModel by viewModels<RegistrationViewModel>()
 
     companion object {
+        private const val EXTRA_USER = "extra_user"
+        private const val EXTRA_ORIGIN = "extra_origin"
+
         @JvmStatic
-        fun newInstance(user: User) =
+        fun newInstance(user: User, origin: Int) =
             OtpFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(EXTRA_USER, user)
+                    putInt(EXTRA_ORIGIN, origin)
                 }
             }
     }
@@ -47,6 +56,7 @@ class OtpFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             user = it.getParcelable(EXTRA_USER)
+            origin = it.getInt(EXTRA_ORIGIN)
         }
 
         setupFirebaseAuth()
@@ -71,6 +81,7 @@ class OtpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupOtpEditTexts()
+        setupObservers()
 
         btn_verify.setOnClickListener {
             verifyOtp(
@@ -94,6 +105,18 @@ class OtpFragment : Fragment() {
         otp_digit_4.filters = arrayOf(InputFilter.LengthFilter(1))
         otp_digit_5.filters = arrayOf(InputFilter.LengthFilter(1))
         otp_digit_6.filters = arrayOf(InputFilter.LengthFilter(1))
+    }
+
+    private fun setupObservers() {
+        viewModel.response.observe(viewLifecycleOwner) { response ->
+            if (response != null && response.user == null) {
+                registrationActivity?.showHomeScreen(response.user?.phoneNumber)
+                viewModel.saveTokens(response.authToken, response.refreshToken)
+            }
+        }
+        viewModel.message.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupFirebaseAuth() {
@@ -147,14 +170,14 @@ class OtpFragment : Fragment() {
             )
                 .addOnCompleteListener(registrationActivity!!) { task ->
                     if (task.isSuccessful) {
-                        val user = task.result?.user
                         Toast.makeText(
                             registrationActivity,
                             "Sign In Successful",
                             Toast.LENGTH_SHORT
                         ).show()
-                        registrationActivity?.showHomeScreen(user?.phoneNumber)
-
+                        if (origin == Constants.ORIGIN_REGISTER) {
+                            viewModel.signUp(user!!)
+                        } else registrationActivity?.showHomeScreen(user?.phoneNumber)
                     } else {
                         // Sign in failed, display a message and update the UI
                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
