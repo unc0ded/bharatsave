@@ -1,70 +1,53 @@
 package com.dev.`in`.drogon.view.register
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
-import com.dev.`in`.drogon.R
-import com.dev.`in`.drogon.util.Constants
-import com.dev.`in`.drogon.view.register.viewmodel.RegistrationViewModel
+import androidx.navigation.fragment.findNavController
+import com.dev.`in`.drogon.databinding.FragmentSignInBinding
+import com.dev.`in`.drogon.util.actionGo
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_sign_in.*
 
-/**
- * A simple [Fragment] subclass.
- */
 @AndroidEntryPoint
 class SignInFragment : Fragment() {
 
-    private lateinit var registrationActivity: RegistrationActivity
-    private val viewModel by viewModels<RegistrationViewModel>()
+    private var _binding: FragmentSignInBinding? = null
+    private val binding: FragmentSignInBinding
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        registrationActivity = context as RegistrationActivity
+    ): View {
+        _binding = FragmentSignInBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.response.observe(viewLifecycleOwner) { response ->
-            if (response.user != null) {
-                registrationActivity.verifyPhoneNumberForUser(
-                    response.user,
-                    Constants.ORIGIN_SIGN_IN
-                )
-                viewModel.saveTokens(response.authToken, response.refreshToken)
-            } else Toast.makeText(context, "Error logging in", Toast.LENGTH_SHORT).show()
-        }
+        binding.etPhoneNumber.actionGo { binding.btnSignIn.callOnClick() }
 
-        viewModel.message.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
-
-        btn_sign_in.setOnClickListener {
-            val phoneNumber = et_phone_number.text.toString().trim()
+        binding.btnSignIn.setOnClickListener {
+            val phoneNumber = binding.etPhoneNumber.text.toString().trim()
 
             if (phoneNumber.length == 10) {
-                viewModel.login(phoneNumber)
+                findNavController().navigate(SignInFragmentDirections.actionVerifyOtp(phoneNumber))
             } else {
                 Toast.makeText(
-                    registrationActivity,
+                    context,
                     "Please enter a 10-digit phone number",
                     Toast.LENGTH_SHORT
                 ).show()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

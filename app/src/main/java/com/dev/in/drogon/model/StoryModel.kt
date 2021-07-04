@@ -1,7 +1,7 @@
 package com.dev.`in`.drogon.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class StoryModel(

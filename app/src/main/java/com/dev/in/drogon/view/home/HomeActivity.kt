@@ -1,34 +1,28 @@
 package com.dev.`in`.drogon.view.home
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.dev.`in`.drogon.R
-import com.dev.`in`.drogon.view.register.RegistrationActivity
+import com.dev.`in`.drogon.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_home.*
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setupViews()
-    }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_home) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.bottomNav.setupWithNavController(navController)
 
-    private fun setupViews() {
-        btn_help.setOnClickListener {
-            val helpBottomSheet = HelpBottomSheet()
-            helpBottomSheet.show(supportFragmentManager, "help_bottom_sheet")
-        }
-    }
-
-    fun navigateToIntroductionScreen() {
-        val intent = Intent(this@HomeActivity, RegistrationActivity::class.java).apply {
-            this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
-        startActivity(intent)
-        finish()
+        binding.bottomNav.setOnItemReselectedListener {  }
     }
 }

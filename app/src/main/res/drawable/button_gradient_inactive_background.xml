@@ -2,12 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@android:color/black" />
     <gradient
-        android:startColor="@color/light_turquoise"
         android:endColor="@color/dark_turquoise"
+        android:startColor="@color/light_turquoise"
         android:type="linear" />
-    <corners
-        android:bottomLeftRadius="0dp"
-        android:bottomRightRadius="0dp"
-        android:topLeftRadius="20dp"
-        android:topRightRadius="20dp" />
+    <corners android:radius="20dp" />
 </shape>

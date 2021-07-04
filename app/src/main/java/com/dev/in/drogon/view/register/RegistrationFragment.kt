@@ -1,55 +1,65 @@
 package com.dev.`in`.drogon.view.register
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.dev.`in`.drogon.R
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.dev.`in`.drogon.AuthNavigationDirections
+import com.dev.`in`.drogon.databinding.FragmentRegistrationBinding
 import com.dev.`in`.drogon.model.User
-import com.dev.`in`.drogon.util.Constants
 import com.dev.`in`.drogon.util.StringUtil
+import com.dev.`in`.drogon.util.actionGo
+import com.dev.`in`.drogon.view.register.viewmodel.RegistrationViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_registration.*
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
-    private var registrationActivity: RegistrationActivity? = null
+    private var _binding: FragmentRegistrationBinding? = null
+    private val binding: FragmentRegistrationBinding
+        get() = _binding!!
+
+    private val args by navArgs<RegistrationFragmentArgs>()
+    private val viewModel by viewModels<RegistrationViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registration, container, false)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        registrationActivity = context as RegistrationActivity
+    ): View {
+        _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btn_register.setOnClickListener {
-            val fullName = et_full_name.text.trim().toString()
-            val email = et_email.text.trim().toString()
-            val phoneNumber = et_phone_number.text.trim().toString()
-            if (validDetailsProvided(fullName, email, phoneNumber)) {
-                registrationActivity?.verifyPhoneNumberForUser(
-                    User(fullName, email, phoneNumber),
-                    Constants.ORIGIN_REGISTER
-                )
+        viewModel.response.observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
+                findNavController().navigate(AuthNavigationDirections.actionOnboarding())
+                viewModel.saveTokens(response.authToken, response.refreshToken)
+                activity?.finish()
+            }
+        }
+
+        viewModel.message.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+
+        binding.etEmail.actionGo { binding.btnRegister.callOnClick() }
+
+        binding.btnRegister.setOnClickListener {
+            val fullName = binding.etFullName.text.trim().toString()
+            val email = binding.etEmail.text.trim().toString()
+            if (validDetailsProvided(fullName, email, args.phone)) {
+                viewModel.signUp(User(fullName, email, args.phone))
             } else {
-                Toast.makeText(
-                    registrationActivity,
-                    "Please enter valid details",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, "Please enter valid details", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -69,4 +79,8 @@ class RegistrationFragment : Fragment() {
         return true
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

@@ -4,23 +4,32 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View
+import android.view.WindowInsetsController
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.dev.`in`.drogon.R
 import com.dev.`in`.drogon.custom_widget.story.PausableProgressView
+import com.dev.`in`.drogon.databinding.ActivityStoryContainerBinding
 import com.dev.`in`.drogon.model.StoryModel
+import com.dev.`in`.drogon.view.home.HomeActivity
 import com.dev.`in`.drogon.view.register.RegistrationActivity
-import kotlinx.android.synthetic.main.activity_story_container.*
 
 class StoryContainerActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityStoryContainerBinding
 
     private val storyList = ArrayList<StoryModel>()
     private var currentActiveStoryIndex = -1
 
     private val PROGRESS_BAR_PARAMS = LinearLayout.LayoutParams(
-        0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+        0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f
+    ).apply {
         this.setMargins(10, 10, 10, 10)
     }
 
@@ -31,7 +40,8 @@ class StoryContainerActivity : AppCompatActivity() {
                 if (currentActiveStoryIndex == 0) {
                     loadStory(
                         storyList[currentActiveStoryIndex].imageUrl,
-                        storyList[currentActiveStoryIndex].actionButtonText)
+                        storyList[currentActiveStoryIndex].actionButtonText
+                    )
                 }
             }
 
@@ -41,7 +51,12 @@ class StoryContainerActivity : AppCompatActivity() {
                     getPausableProgressViewAt(nextIndex)?.startProgress()
                     loadStory(storyList[nextIndex].imageUrl, storyList[nextIndex].actionButtonText)
                 } else {
-                    startActivity(Intent(this@StoryContainerActivity, RegistrationActivity::class.java))
+                    startActivity(
+                        Intent(
+                            this@StoryContainerActivity,
+                            HomeActivity::class.java
+                        )
+                    )
                     finish()
                 }
             }
@@ -50,7 +65,12 @@ class StoryContainerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_story_container)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+        binding = ActivityStoryContainerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
+
 
         // just for testing
         storyList.add(
@@ -77,7 +97,7 @@ class StoryContainerActivity : AppCompatActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupViews() {
-        pausable_progress_container.weightSum = (storyList.size).toFloat()
+        binding.pausableProgressContainer.weightSum = (storyList.size).toFloat()
         for (i in 0 until storyList.size) {
             val pausableProgressView = PausableProgressView(this).apply {
                 this.layoutParams = PROGRESS_BAR_PARAMS
@@ -86,11 +106,11 @@ class StoryContainerActivity : AppCompatActivity() {
             if (i == 0) {
                 pausableProgressView.startProgress()
             }
-            pausable_progress_container.addView(pausableProgressView)
+            binding.pausableProgressContainer.addView(pausableProgressView)
 
         }
 
-        iv_story.setOnTouchListener { v, event ->
+        binding.ivStory.setOnTouchListener { v, event ->
             if (event != null) {
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
@@ -104,7 +124,7 @@ class StoryContainerActivity : AppCompatActivity() {
             true
         }
 
-        btn_next.setOnClickListener {
+        binding.btnNext.setOnClickListener {
             if (currentActiveStoryIndex >= storyList.size) {
                 getPausableProgressViewAt(storyList.size - 1)?.finishProgress(true)
             } else {
@@ -112,9 +132,9 @@ class StoryContainerActivity : AppCompatActivity() {
             }
         }
 
-        btn_back.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             if (currentActiveStoryIndex == 0) {
-                    getPausableProgressViewAt(0)?.startProgress()
+                getPausableProgressViewAt(0)?.startProgress()
             } else {
                 getPausableProgressViewAt(currentActiveStoryIndex)?.finishProgress(false)
                 getPausableProgressViewAt(currentActiveStoryIndex - 1)?.startProgress()
@@ -122,25 +142,25 @@ class StoryContainerActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPausableProgressViewAt(index: Int) : PausableProgressView? {
-        if (pausable_progress_container.childCount != storyList.size || index < 0 || index >= storyList.size) {
+    private fun getPausableProgressViewAt(index: Int): PausableProgressView? {
+        if (binding.pausableProgressContainer.childCount != storyList.size || index < 0 || index >= storyList.size) {
             return null
         }
-        return (pausable_progress_container[index] as PausableProgressView)
+        return (binding.pausableProgressContainer[index] as PausableProgressView)
     }
 
     // TODO: improve this
     private fun loadStory(imageUrl: String, actionButtonText: String) {
         Glide.with(this@StoryContainerActivity)
             .load(imageUrl)
-            .into(iv_story)
-        btn_story_action.text = actionButtonText
+            .into(binding.ivStory)
+        binding.btnStoryAction.text = actionButtonText
         // TODO: handle button on click actions
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        for(i in 0 until storyList.size) {
+        for (i in 0 until storyList.size) {
             getPausableProgressViewAt(i)?.clear()
         }
     }

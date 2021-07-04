@@ -4,6 +4,20 @@
     <color name="colorPrimaryDark">#191720</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="white_60">#B1B0B3</color>
+    <color name="white_80">#CCFFFFFF</color>
     <color name="translucent_black">#14000000</color>
+
+<!--    blacks-->
+    <color name="dark_grey">#3B3B3D</color>
+    <color name="light_grey">#666666</color>
+
+<!--    gold gradient-->
+    <color name="light_gold">#FFC969</color>
+    <color name="dark_gold">#FEB838</color>
+
+<!--    turquoise gradient-->
+    <color name="light_turquoise">#1FC2C2</color>
+    <color name="dark_turquoise">#157CB0</color>
+    <color name="white_30">#4DFFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
 </resources>
