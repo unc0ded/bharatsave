@@ -3,36 +3,36 @@ package com.dev.`in`.drogon.view.register
 import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.text.HtmlCompat
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dev.`in`.drogon.AuthNavigationDirections
 import com.dev.`in`.drogon.R
-import com.dev.`in`.drogon.databinding.FragmentOtpBottomSheetBinding
+import com.dev.`in`.drogon.databinding.FragmentOtpBinding
 import com.dev.`in`.drogon.view.register.viewmodel.RegistrationViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.jakewharton.rxbinding4.widget.textChanges
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
-class OtpBottomSheet : BottomSheetDialogFragment() {
+class OtpFragment : Fragment() {
 
-    private var _binding: FragmentOtpBottomSheetBinding? = null
-    private val binding: FragmentOtpBottomSheetBinding
+    private var _binding: FragmentOtpBinding? = null
+    private val binding: FragmentOtpBinding
         get() = _binding!!
 
-    private val args by navArgs<OtpBottomSheetArgs>()
+    private val args by navArgs<OtpFragmentArgs>()
 
     private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var mCallBack: PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -51,7 +51,6 @@ class OtpBottomSheet : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isCancelable = false
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.tvTimer.text = "(${millisUntilFinished / 1000})"
@@ -73,17 +72,28 @@ class OtpBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentOtpBottomSheetBinding.inflate(inflater, container, false)
+        _binding = FragmentOtpBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.progressBar.show()
-
+        binding.btnEditPhone.text = HtmlCompat.fromHtml(
+            getString(R.string.edit_phone_text, "+91 ${args.phone}"),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
         setupOtpEditTexts()
         setupObservers()
+
+        binding.btnNext.setOnClickListener {
+            signInWithPhoneAuthCredential(
+                PhoneAuthProvider.getCredential(
+                    storedVerificationId!!,
+                    binding.etOtp.text.toString()
+                )
+            )
+        }
 
         binding.btnResendOtp.setOnClickListener {
             sendOtp(args.phone)
@@ -92,7 +102,8 @@ class OtpBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        verificationInProgress = savedInstanceState?.getBoolean(VERIFICATION_STATUS_FLAG, false)?: false
+        verificationInProgress =
+            savedInstanceState?.getBoolean(VERIFICATION_STATUS_FLAG, false) ?: false
     }
 
     override fun onStart() {
@@ -114,33 +125,14 @@ class OtpBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun setupOtpEditTexts() {
-        binding.otpDigit1.textChanges().filter { it.length == 1 }
-            .subscribe { binding.otpDigit2.requestFocus() }
-        binding.otpDigit2.textChanges().filter { it.length == 1 }
-            .subscribe { binding.otpDigit3.requestFocus() }
-        binding.otpDigit3.textChanges().filter { it.length == 1 }
-            .subscribe { binding.otpDigit4.requestFocus() }
-        binding.otpDigit4.textChanges().filter { it.length == 1 }
-            .subscribe { binding.otpDigit5.requestFocus() }
-        binding.otpDigit5.textChanges().filter { it.length == 1 }
-            .subscribe { binding.otpDigit6.requestFocus() }
-        binding.otpDigit6.textChanges().filter { it.length == 1 }
-            .subscribe {
-                signInWithPhoneAuthCredential(
-                    PhoneAuthProvider.getCredential(
-                        storedVerificationId!!,
-                        "${binding.otpDigit1.text}${binding.otpDigit2.text}${binding.otpDigit3.text}" +
-                                "${binding.otpDigit4.text}${binding.otpDigit5.text}${binding.otpDigit6.text}"
-                    )
-                )
+        binding.etOtp.doOnTextChanged { text, _, _, _ ->
+            if (text != null) {
+                when (text.length) {
+                    6 -> binding.btnNext.isEnabled = true
+                    else -> binding.btnNext.isEnabled = false
+                }
             }
-
-        binding.otpDigit1.filters = arrayOf(InputFilter.LengthFilter(1))
-        binding.otpDigit2.filters = arrayOf(InputFilter.LengthFilter(1))
-        binding.otpDigit3.filters = arrayOf(InputFilter.LengthFilter(1))
-        binding.otpDigit4.filters = arrayOf(InputFilter.LengthFilter(1))
-        binding.otpDigit5.filters = arrayOf(InputFilter.LengthFilter(1))
-        binding.otpDigit6.filters = arrayOf(InputFilter.LengthFilter(1))
+        }
     }
 
     private fun setupObservers() {
@@ -154,7 +146,7 @@ class OtpBottomSheet : BottomSheetDialogFragment() {
         }
         viewModel.message.observe(viewLifecycleOwner) {
             if (it.contains("User not found", true)) {
-                findNavController().navigate(OtpBottomSheetDirections.actionDetails(args.phone))
+                findNavController().navigate(OtpFragmentDirections.actionDetails(args.phone))
             } else {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
@@ -200,14 +192,6 @@ class OtpBottomSheet : BottomSheetDialogFragment() {
                 binding.tvTimer.visibility = View.VISIBLE
                 binding.btnResendOtp.isEnabled = false
                 timer.start()
-                binding.tvOtpStatus.text = "OTP sent to +91${args.phone}. Trying to auto-verify..."
-                binding.progressBar.hide()
-                binding.otpDigit1.isEnabled = true
-                binding.otpDigit2.isEnabled = true
-                binding.otpDigit3.isEnabled = true
-                binding.otpDigit4.isEnabled = true
-                binding.otpDigit5.isEnabled = true
-                binding.otpDigit6.isEnabled = true
             }
         }
     }

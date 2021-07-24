@@ -51,11 +51,11 @@ class RegistrationFragment : Fragment() {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
 
-        binding.etEmail.actionGo { binding.btnRegister.callOnClick() }
+        binding.etEmail.editText?.actionGo { binding.btnRegister.callOnClick() }
 
         binding.btnRegister.setOnClickListener {
-            val fullName = binding.etFullName.text.trim().toString()
-            val email = binding.etEmail.text.trim().toString()
+            val fullName = binding.etFullName.editText?.text?.trim().toString()
+            val email = binding.etEmail.editText?.text?.trim().toString()
             if (validDetailsProvided(fullName, email, args.phone)) {
                 viewModel.signUp(User(fullName, email, args.phone))
             } else {

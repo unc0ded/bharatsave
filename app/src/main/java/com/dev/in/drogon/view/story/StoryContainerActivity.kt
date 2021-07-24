@@ -71,7 +71,6 @@ class StoryContainerActivity : AppCompatActivity() {
 
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
 
-
         // just for testing
         storyList.add(
             StoryModel(

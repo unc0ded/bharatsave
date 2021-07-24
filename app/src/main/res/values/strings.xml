@@ -2,7 +2,8 @@
     <string name="app_name">Drogon</string>
 
     <string name="contact_us"><u>Contact Us</u></string>
-    <string name="send_again"><u>Send Again</u></string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="resend_otp"><u>Resend</u></string>
+    <string name="edit_phone_text">&lt;u>%1$s&lt;/u></string>
+    <!--    dummy link to google for now-->
+    <string name="terms_and_conditions_text">By registering, I agree to the <a href="https://www.google.com"><b><u>T&amp;C</u></b></a></string>
 </resources>

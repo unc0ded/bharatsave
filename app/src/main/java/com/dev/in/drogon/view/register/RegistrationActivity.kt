@@ -36,7 +36,6 @@ class RegistrationActivity : BaseActivity() {
         mFirebaseAuth.currentUser?.let {
             navController.navigate(AuthNavigationDirections.actionHomeActivity())
             finish()
-
         }
     }
 

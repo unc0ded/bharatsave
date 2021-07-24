@@ -60,7 +60,8 @@ class CircularIndicator @JvmOverloads constructor(
         }
     private val progressIndicatorStrokeWidth: Float
         get() {
-            val factor = 7.5f / 90f
+            // Originally 7.5f / 90f, lowered to have thinner stroke
+            val factor = 2.5f / 90f
             return height * factor
         }
 

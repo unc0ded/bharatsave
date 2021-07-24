@@ -14,11 +14,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/Theme.Drogon"
         android:usesCleartextTraffic="true">
 
         <activity
             android:name=".view.register.RegistrationActivity"
-            android:theme="@style/Theme.Drogon">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,13 +27,9 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".view.home.HomeActivity"
-            android:theme="@style/Theme.Drogon" />
+        <activity android:name=".view.home.HomeActivity" />
 
-        <activity
-            android:name=".view.story.StoryContainerActivity"
-            android:theme="@style/Theme.Drogon" />
+        <activity android:name=".view.story.StoryContainerActivity" />
 
         <receiver
             android:name="com.dev.in.drogon.view.ReadSmsBroadcastReceiver"

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/auth_navigation"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/startFragment">
 
     <action
         android:id="@+id/action_home_activity"
@@ -12,6 +12,46 @@
     <action
         android:id="@+id/action_onboarding"
         app:destination="@id/storyContainerActivity" />
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.dev.in.drogon.view.register.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start">
+
+        <action
+            android:id="@+id/action_login"
+            app:destination="@id/signInFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.dev.in.drogon.view.register.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in">
+
+        <action
+            android:id="@+id/action_verify_otp"
+            app:destination="@id/otpFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="com.dev.in.drogon.view.register.OtpFragment"
+        android:label="fragment_otp"
+        tools:layout="@layout/fragment_otp">
+
+        <action
+            android:id="@+id/action_details"
+            app:destination="@id/registrationFragment" />
+
+        <argument
+            android:name="phone"
+            app:argType="string" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/registrationFragment"
@@ -25,39 +65,12 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/signInFragment"
-        android:name="com.dev.in.drogon.view.register.SignInFragment"
-        android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in">
-
-        <action
-            android:id="@+id/action_verify_otp"
-            app:destination="@id/otpBottomSheet" />
-
-    </fragment>
-
     <activity
         android:id="@+id/homeActivity"
         android:name="com.dev.in.drogon.view.home.HomeActivity"
         android:label="activity_home"
         tools:layout="@layout/activity_home" />
 
-    <dialog
-        android:id="@+id/otpBottomSheet"
-        android:name="com.dev.in.drogon.view.register.OtpBottomSheet"
-        android:label="fragment_otp_bottom_sheet"
-        tools:layout="@layout/fragment_otp_bottom_sheet">
-
-        <action
-            android:id="@+id/action_details"
-            app:destination="@id/registrationFragment" />
-
-        <argument
-            android:name="phone"
-            app:argType="string" />
-
-    </dialog>
     <activity
         android:id="@+id/storyContainerActivity"
         android:name="com.dev.in.drogon.view.story.StoryContainerActivity"

@@ -29,10 +29,10 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.etPhoneNumber.actionGo { binding.btnSignIn.callOnClick() }
+        binding.etPhoneNumber.editText?.actionGo { binding.btnSignIn.callOnClick() }
 
         binding.btnSignIn.setOnClickListener {
-            val phoneNumber = binding.etPhoneNumber.text.toString().trim()
+            val phoneNumber = binding.etPhoneNumber.editText?.text.toString().trim()
 
             if (phoneNumber.length == 10) {
                 findNavController().navigate(SignInFragmentDirections.actionVerifyOtp(phoneNumber))
