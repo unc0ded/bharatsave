@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:paddingHorizontal="40dp"
     tools:context=".view.register.RegistrationFragment">
 
@@ -14,11 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/rubik_bold"
+        android:fontFamily="@font/eina01_bold"
         android:text="Details"
-        android:textColor="@color/dark_grey"
+        android:textColor="@color/dark_turquoise"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,11 +26,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/rubik_medium"
-        android:text="Add your details to finish up!"
+        android:fontFamily="@font/eina01_regular"
+        android:text="Add your details to create an account"
         android:textColor="@color/light_grey"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -40,7 +37,7 @@
         android:id="@+id/et_full_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:hint="Full Name"
         android:textColorHint="@color/light_grey"
         app:boxBackgroundColor="@color/black_10"
@@ -50,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autofillHints="name"
-            android:fontFamily="@font/rubik_regular"
+            android:fontFamily="@font/eina01_regular"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@color/dark_grey"
@@ -62,7 +59,7 @@
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:hint="Email Address (optional)"
         android:textColorHint="@color/light_grey"
         app:boxBackgroundColor="@color/black_10"
@@ -72,9 +69,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autofillHints="emailAddress"
-            android:fontFamily="@font/rubik_regular"
+            android:fontFamily="@font/eina01_regular"
             android:imeOptions="actionGo"
             android:inputType="textEmailAddress"
+            android:textColor="@color/dark_grey"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_referral"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Referral Code (if any)"
+        android:textColorHint="@color/light_grey"
+        app:boxBackgroundColor="@color/black_10"
+        app:layout_constraintTop_toBottomOf="@+id/et_email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="emailAddress"
+            android:fontFamily="@font/eina01_regular"
+            android:imeOptions="actionGo"
+            android:inputType="text"
             android:textColor="@color/dark_grey"
             android:textSize="16sp" />
 
@@ -85,8 +104,8 @@
         style="@style/Widget.App.Button.Primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         android:text="Begin Your Journey"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

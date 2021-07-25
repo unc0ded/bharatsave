@@ -56,6 +56,8 @@ class RegistrationFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             val fullName = binding.etFullName.editText?.text?.trim().toString()
             val email = binding.etEmail.editText?.text?.trim().toString()
+            // TODO unused referral field
+            val referral = binding.etReferral.editText?.text?.trim().toString()
             if (validDetailsProvided(fullName, email, args.phone)) {
                 viewModel.signUp(User(fullName, email, args.phone))
             } else {
