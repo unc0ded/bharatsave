@@ -8,8 +8,10 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import android.view.animation.LinearInterpolator
+import com.dev.`in`.drogon.R
 import java.util.*
 
 
@@ -21,8 +23,8 @@ class CircularIndicator @JvmOverloads constructor(
     private var centerY = 0f
 
     private var progressPaint: Paint
-    // default colors
-    private var progressColor = Color.parseColor("#7CC769")
+    // initialized with colorPrimary
+    private var progressColor: Int
 
     // default number of levels -> 3
     private var levelProgress = ArrayList(listOf(0f, 0f, 0f))
@@ -32,6 +34,10 @@ class CircularIndicator @JvmOverloads constructor(
     var progressRectF: RectF
 
     init {
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(R.attr.colorPrimary, typedValue, true)
+        progressColor = typedValue.data
+
         progressPaint = Paint().apply {
             this.isAntiAlias = true
             this.color = progressColor

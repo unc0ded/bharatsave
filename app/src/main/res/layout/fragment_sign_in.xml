@@ -4,85 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="40dp"
     tools:context=".view.register.SignInFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_title"
+        style="@style/Widget.App.TextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/eina01_bold"
         android:text="Get Started"
-        android:textColor="@color/dark_turquoise"
-        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_subtitle"
+        style="@style/Widget.App.TextView.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/eina01_regular"
         android:text="Enter your phone number to continue"
-        android:textColor="@color/light_grey"
-        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-    <LinearLayout
-        android:id="@+id/container_phone"
-        android:layout_width="match_parent"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_country_code"
+        style="@style/Widget.App.TextView.Subtitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:background="@drawable/rounded_outline_background"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="17dp"
+        android:text="+91"
+        android:textColor="@color/text_black"
+        app:layout_constraintBottom_toBottomOf="@+id/et_phone_number"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_phone_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_subtitle">
+        android:layout_marginEnd="40dp"
+        android:hint="Mobile Number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_country_code"
+        app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/rounded_filled_background"
-            android:backgroundTint="@color/black_10"
-            android:fontFamily="@font/eina01_regular"
-            android:gravity="center"
-            android:paddingHorizontal="16dp"
-            android:text="+91"
-            android:textColor="@color/dark_grey"
-            android:textSize="16sp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_phone_number"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:hint="Mobile Number"
-            android:textColorHint="@color/light_grey"
-            app:boxBackgroundColor="@color/black_10">
+            android:layout_height="match_parent"
+            android:autofillHints="phone"
+            android:imeOptions="actionGo"
+            android:inputType="phone" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="phone"
-                android:fontFamily="@font/eina01_regular"
-                android:imeOptions="actionGo"
-                android:inputType="phone"
-                android:textColor="@color/dark_grey"
-                android:textSize="16sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_sign_in"
         style="@style/Widget.App.Button.Primary"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="40dp"
         android:text="Continue"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

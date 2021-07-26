@@ -4,33 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="40dp"
     tools:context=".view.register.OtpFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_title"
+        style="@style/Widget.App.TextView.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/eina01_bold"
         android:text="Verify your phone"
-        android:textColor="@color/dark_turquoise"
-        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_subtitle"
+        style="@style/Widget.App.TextView.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/eina01_regular"
         android:gravity="center"
         android:text="OTP sent to"
-        android:textAlignment="center"
-        android:textColor="@color/light_grey"
-        android:textSize="16sp"
-        app:drawableTint="@color/light_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -39,11 +34,12 @@
         style="?attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/baseline_drive_file_rename_outline_24"
-        android:drawablePadding="5dp"
-        android:textColor="@color/light_grey"
-        android:textSize="16sp"
-        app:drawableTint="@color/light_grey"
+        android:layout_marginHorizontal="32dp"
+        android:textAppearance="@style/TextAppearance.App.Subtitle"
+        android:textColor="@color/text_bluish_grey"
+        app:icon="@drawable/ic_edit"
+        app:iconGravity="textEnd"
+        app:iconTint="@color/text_bluish_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
         tools:text="@string/edit_phone_text" />
@@ -53,26 +49,25 @@
         style="@style/PinWidget.PinView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
-        android:cursorVisible="false"
         android:inputType="number"
-        android:itemBackground="@color/black_10"
-        android:textColor="@color/dark_grey"
+        android:textColor="@color/text_black"
+        app:cursorColor="?attr/colorSecondary"
         app:itemCount="6"
         app:itemRadius="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_edit_phone"
-        app:lineColor="@color/black" />
+        app:lineColor="@color/text_black" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_footer"
+        style="@style/Widget.App.TextView.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/eina01_regular"
         android:text="Didn't receive yet?"
-        android:textColor="@color/light_grey"
-        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_otp" />
 
@@ -92,17 +87,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/resend_otp"
-            android:textColor="@color/dark_grey"
-            android:textSize="14sp" />
+            android:textAppearance="@style/TextAppearance.App.Subtitle"
+            android:textColor="@color/text_bluish_grey" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_timer"
+            style="@style/Widget.App.TextView.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:fontFamily="@font/eina01_regular"
             android:gravity="center"
-            android:textColor="@color/dark_grey"
-            android:textSize="14sp"
             android:visibility="gone"
             tools:text="(60)" />
 
@@ -111,13 +104,15 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_next"
         style="@style/Widget.App.Button.Primary"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="40dp"
         android:backgroundTint="@color/button_background_state_list"
         android:enabled="false"
         android:text="Next"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

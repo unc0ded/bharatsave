@@ -1,21 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="Theme.Drogon" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Drogon" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/brand_blue</item>
+        <item name="colorPrimaryVariant">@color/brand_blue_dark</item>
+        <item name="colorSecondary">@color/brand_gold</item>
+        <item name="colorSecondaryVariant">@color/brand_gold_light</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/text_black</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:windowBackground">@color/white</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
         <item name="borderlessButtonStyle">@style/Widget.App.Button.TextButton</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.App.Button.OutlinedButton</item>
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
-    </style>
-
-    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 
     <style name="Widget.App.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
@@ -24,18 +25,15 @@
     </style>
 
     <style name="Widget.App.Button.Primary">
-        <item name="backgroundTint">@color/dark_turquoise</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:fontFamily">@font/eina01_semi_bold</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Button.Primary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
     </style>
 
     <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.Button</item>
-        <item name="android:fontFamily">@font/eina01_regular</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
     </style>
 
     <style name="Widget.App.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
@@ -48,41 +46,98 @@
         <item name="android:minHeight">0dp</item>
     </style>
 
-    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+    <style name="Widget.App.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
-        <item name="hintTextColor">@color/black</item>
+        <item name="android:textColorHint">@color/unfocused_grey</item>
+        <item name="hintTextColor">@color/text_black</item>
+        <item name="hintTextAppearance">@style/TextAppearance.App.Base</item>
+        <item name="boxStrokeColor">@color/text_black</item>
         <item name="boxCornerRadiusTopStart">12dp</item>
         <item name="boxCornerRadiusTopEnd">12dp</item>
         <item name="boxCornerRadiusBottomStart">12dp</item>
         <item name="boxCornerRadiusBottomEnd">12dp</item>
-        <item name="boxStrokeWidth">0dp</item>
-        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <style name="Widget.App.TextInputEditText.OutlinedBox" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
+        <item name="android:textColor">@color/text_black</item>
     </style>
 
     <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
-        <item name="backgroundTint">@color/white</item>
     </style>
 
-    <style name="ThemeOverlay.App.TextInputLayout" parent="">
-        <item name="colorSurface">@null</item>
-        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputLayout.FilledBox</item>
+    <style name="Widget.App.TextView.Title" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.App.Title</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
-    <style name="ShapeAppearanceOverlay.App.Button" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
+    <style name="Widget.App.TextView.Subtitle" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
+        <item name="android:textColor">@color/text_bluish_grey</item>
+        <item name="android:textColorLink">?attr/colorOnBackground</item>
     </style>
-    
+
+    <style name="Widget.App.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.App.Base</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.BottomSheet" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">20dp</item>
         <item name="cornerSizeTopRight">20dp</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.Button" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+
+    <style name="ThemeOverlay.App.TextInputLayout" parent="">
+        <item name="editTextStyle">@style/Widget.App.TextInputEditText.OutlinedBox</item>
+    </style>
+
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorPrimary">@color/dark_gold</item>
-        <item name="colorOnSurface">@color/black</item>
+        <item name="colorPrimary">?attr/colorSecondary</item>
+        <item name="colorOnSurface">@color/icon_grey</item>
+    </style>
+
+    <style name="TextAppearance.App.Title" parent="">
+        <item name="android:fontFamily">@font/eina01_semi_bold</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="TextAppearance.App.Subtitle" parent="">
+        <item name="android:fontFamily">@font/eina01_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.App.Button.Primary" parent="">
+        <item name="android:fontFamily">@font/eina01_semi_bold</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="TextAppearance.App.Button" parent="">
+        <item name="android:fontFamily">@font/eina01_semi_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.App.Base" parent="">
+        <item name="android:fontFamily">@font/eina01_regular</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
 </resources>

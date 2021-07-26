@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3B3941</color>
-    <color name="colorPrimaryDark">#191720</color>
+    <!--    brand colors-->
+    <color name="brand_blue">#152969</color>
+    <color name="brand_blue_dark">#00003E</color>
+    <color name="brand_gold">#FF810A</color>
+    <color name="brand_gold_light">#FFBC22</color>
 
+    <!--    text colors-->
+    <color name="text_bluish_grey">#465466</color>
+    <color name="text_black">#303030</color>
+
+    <!--    misc-->
+    <color name="icon_grey">#C7C7C7</color>
+    <color name="unfocused_grey">#B8B8B8</color>
+
+    <!--    blacks-->
     <color name="black">#FF000000</color>
     <color name="black_10">#1A000000</color>
 
+    <!--    whites-->
     <color name="white">#FFFFFFFF</color>
     <color name="white_80">#CCFFFFFF</color>
     <color name="white_50">#80FFFFFF</color>
     <color name="white_30">#4DFFFFFF</color>
 
-<!--    blacks-->
+    <!--    blacks-->
     <color name="dark_grey">#3B3B3D</color>
     <color name="light_grey">#666666</color>
-
-<!--    gold gradient-->
-    <color name="light_gold">#FFC969</color>
-    <color name="dark_gold">#FEB838</color>
-
-<!--    turquoise gradient-->
-    <color name="light_turquoise">#1FC2C2</color>
-    <color name="dark_turquoise">#157CB0</color>
 </resources>

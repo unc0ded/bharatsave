@@ -4,12 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
-import android.view.WindowInsetsController
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.get
 import com.bumptech.glide.Glide
@@ -18,7 +15,6 @@ import com.dev.`in`.drogon.custom_widget.story.PausableProgressView
 import com.dev.`in`.drogon.databinding.ActivityStoryContainerBinding
 import com.dev.`in`.drogon.model.StoryModel
 import com.dev.`in`.drogon.view.home.HomeActivity
-import com.dev.`in`.drogon.view.register.RegistrationActivity
 
 class StoryContainerActivity : AppCompatActivity() {
 
@@ -65,7 +61,7 @@ class StoryContainerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.brand_blue_dark)
         binding = ActivityStoryContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
