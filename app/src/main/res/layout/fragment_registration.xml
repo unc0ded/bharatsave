@@ -97,6 +97,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/button_background_state_list"
+        android:enabled="false"
         android:text="Begin Your Journey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

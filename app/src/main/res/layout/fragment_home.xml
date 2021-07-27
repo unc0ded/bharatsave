@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.home.HomeActivity">
+    tools:context=".view.main.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_content"
@@ -15,7 +15,7 @@
             android:id="@+id/iv_logo"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="40dp"
+            android:layout_marginStart="40dp"
             android:background="@drawable/circle_background"
             android:elevation="6dp"
             android:paddingStart="12dp"
@@ -52,7 +52,7 @@
             android:insetRight="0dp"
             android:insetBottom="0dp"
             android:paddingHorizontal="0dp"
-            app:icon="@drawable/ic_info"
+            app:icon="@drawable/ic_notifications_black_24dp"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconTint="@color/white"

@@ -1,10 +1,14 @@
 package com.dev.`in`.drogon.view.register
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,7 +19,10 @@ import com.dev.`in`.drogon.model.User
 import com.dev.`in`.drogon.util.StringUtil
 import com.dev.`in`.drogon.util.actionGo
 import com.dev.`in`.drogon.view.register.viewmodel.RegistrationViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
@@ -38,20 +45,33 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.response.observe(viewLifecycleOwner) { response ->
-            if (response != null) {
-                Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(AuthNavigationDirections.actionOnboarding())
-                viewModel.saveTokens(response.authToken, response.refreshToken)
-                activity?.finish()
+        setupViews()
+        setupObservers()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+
+        // Sign out firebase user if sign up was not completed before exiting app
+        runBlocking {
+            val loginComplete = viewModel.checkTokens()
+            if (!loginComplete) {
+                Firebase.auth.signOut()
             }
         }
+    }
 
-        viewModel.message.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+    private fun setupViews() {
+        binding.etFullName.editText?.doOnTextChanged { text, _, _, _ ->
+            binding.btnRegister.isEnabled =
+                !(text.toString().isEmpty() || binding.etEmail.editText?.text.toString().isEmpty())
         }
-
-        binding.etEmail.editText?.actionGo { binding.btnRegister.callOnClick() }
+        binding.etEmail.editText?.doOnTextChanged { text, _, _, _ ->
+            binding.btnRegister.isEnabled =
+                !(binding.etFullName.editText?.text.toString().isEmpty() || text.toString()
+                    .isEmpty())
+        }
 
         binding.btnRegister.setOnClickListener {
             val fullName = binding.etFullName.editText?.text?.trim().toString()
@@ -63,6 +83,23 @@ class RegistrationFragment : Fragment() {
             } else {
                 Toast.makeText(context, "Please enter valid details", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.etEmail.editText?.actionGo { binding.btnRegister.callOnClick() }
+    }
+
+    private fun setupObservers() {
+        viewModel.response.observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
+                findNavController().navigate(AuthNavigationDirections.actionOnboarding())
+                viewModel.saveTokens(response.authToken, response.refreshToken)
+                activity?.finish()
+            }
+        }
+
+        viewModel.message.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -79,10 +116,5 @@ class RegistrationFragment : Fragment() {
             return false
         }
         return true
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

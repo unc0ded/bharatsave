@@ -4,6 +4,8 @@ import android.os.SystemClock
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import com.google.android.material.button.MaterialButton
+import kotlin.random.Random
 
 fun EditText.actionGo(callback: () -> Unit) {
     setOnEditorActionListener { _, actionId, _ ->
@@ -28,4 +30,12 @@ fun View.clickWithThrottle(throttleTimeMillis: Long = 600L, onClick: () -> Unit)
             lastClickTimeMillis = SystemClock.elapsedRealtime()
         }
     })
+}
+
+fun MaterialButton.generateRandomString(length: Int) {
+    val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+    val randomString = (1..length)
+        .map { allowedChars.random() }
+        .joinToString("")
+    text = randomString
 }

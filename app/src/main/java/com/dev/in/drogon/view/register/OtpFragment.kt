@@ -79,25 +79,8 @@ class OtpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnEditPhone.text = HtmlCompat.fromHtml(
-            getString(R.string.edit_phone_text, "+91 ${args.phone}"),
-            HtmlCompat.FROM_HTML_MODE_LEGACY
-        )
-        setupOtpEditTexts()
+        setupViews()
         setupObservers()
-
-        binding.btnNext.setOnClickListener {
-            signInWithPhoneAuthCredential(
-                PhoneAuthProvider.getCredential(
-                    storedVerificationId!!,
-                    binding.etOtp.text.toString()
-                )
-            )
-        }
-
-        binding.btnResendOtp.setOnClickListener {
-            sendOtp(args.phone)
-        }
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -124,7 +107,19 @@ class OtpFragment : Fragment() {
         timer.cancel()
     }
 
-    private fun setupOtpEditTexts() {
+    private fun setupViews() {
+        binding.btnEditPhone.text = HtmlCompat.fromHtml(
+            getString(R.string.edit_phone_text, "+91 ${args.phone}"),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
+
+        // TODO show confirmation dialog
+        binding.btnEditPhone.setOnClickListener {
+            // Manually cancel verification
+            mCallBack.onVerificationFailed(FirebaseException("User navigated away from screen"))
+            findNavController().popBackStack()
+        }
+
         binding.etOtp.doOnTextChanged { text, _, _, _ ->
             if (text != null) {
                 when (text.length) {
@@ -132,6 +127,19 @@ class OtpFragment : Fragment() {
                     else -> binding.btnNext.isEnabled = false
                 }
             }
+        }
+
+        binding.btnNext.setOnClickListener {
+            signInWithPhoneAuthCredential(
+                PhoneAuthProvider.getCredential(
+                    storedVerificationId!!,
+                    binding.etOtp.text.toString()
+                )
+            )
+        }
+
+        binding.btnResendOtp.setOnClickListener {
+            sendOtp(args.phone)
         }
     }
 
@@ -189,6 +197,8 @@ class OtpFragment : Fragment() {
                 storedVerificationId = verificationId
                 resendToken = token
 
+                binding.etOtp.isEnabled = true
+                binding.etOtp.requestFocus()
                 binding.tvTimer.visibility = View.VISIBLE
                 binding.btnResendOtp.isEnabled = false
                 timer.start()

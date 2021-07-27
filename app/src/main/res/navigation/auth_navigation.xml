@@ -45,6 +45,8 @@
 
         <action
             android:id="@+id/action_details"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/registrationFragment" />
 
         <argument
@@ -67,9 +69,9 @@
 
     <activity
         android:id="@+id/homeActivity"
-        android:name="com.dev.in.drogon.view.home.HomeActivity"
+        android:name="com.dev.in.drogon.view.main.MainActivity"
         android:label="activity_home"
-        tools:layout="@layout/activity_home" />
+        tools:layout="@layout/activity_main" />
 
     <activity
         android:id="@+id/storyContainerActivity"

@@ -10,6 +10,7 @@ import com.dev.`in`.drogon.model.AuthResponse
 import com.dev.`in`.drogon.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.IOException
@@ -69,5 +70,14 @@ class RegistrationViewModel @Inject constructor(
             preferenceRepository.saveAuthToken(authToken)
             preferenceRepository.saveRefreshToken(refreshToken)
         }
+    }
+
+    suspend fun checkTokens(): Boolean {
+        val authToken = preferenceRepository.getAuthToken().first()
+        val refreshToken = preferenceRepository.getRefreshToken().first()
+        if (authToken.isBlank() || refreshToken.isBlank()) {
+            return false
+        }
+        return true
     }
 }

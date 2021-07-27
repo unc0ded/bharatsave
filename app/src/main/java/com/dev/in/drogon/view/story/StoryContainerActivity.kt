@@ -14,7 +14,7 @@ import com.dev.`in`.drogon.R
 import com.dev.`in`.drogon.custom_widget.story.PausableProgressView
 import com.dev.`in`.drogon.databinding.ActivityStoryContainerBinding
 import com.dev.`in`.drogon.model.StoryModel
-import com.dev.`in`.drogon.view.home.HomeActivity
+import com.dev.`in`.drogon.view.main.MainActivity
 
 class StoryContainerActivity : AppCompatActivity() {
 
@@ -50,7 +50,7 @@ class StoryContainerActivity : AppCompatActivity() {
                     startActivity(
                         Intent(
                             this@StoryContainerActivity,
-                            HomeActivity::class.java
+                            MainActivity::class.java
                         )
                     )
                     finish()

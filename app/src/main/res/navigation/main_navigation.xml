@@ -3,29 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/menu_home">
+    app:startDestination="@id/nav_home">
 
     <action
         android:id="@+id/action_logout"
         app:destination="@id/registrationActivity" />
 
-    <dialog
-        android:id="@+id/helpBottomSheet"
-        android:name="com.dev.in.drogon.view.home.HelpBottomSheet"
-        android:label="fragment_help_bottom_sheet"
-        tools:layout="@layout/fragment_help_bottom_sheet" />
-
     <fragment
-        android:id="@+id/menu_home"
-        android:name="com.dev.in.drogon.view.home.HomeFragment"
+        android:id="@+id/nav_home"
+        android:name="com.dev.in.drogon.view.main.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
-
-        <action
-            android:id="@+id/action_help"
-            app:destination="@id/helpBottomSheet" />
-
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.dev.in.drogon.view.main.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 
     <activity
         android:id="@+id/registrationActivity"

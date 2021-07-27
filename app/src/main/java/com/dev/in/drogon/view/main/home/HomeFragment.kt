@@ -1,4 +1,4 @@
-package com.dev.`in`.drogon.view.home
+package com.dev.`in`.drogon.view.main.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.dev.`in`.drogon.R
 import com.dev.`in`.drogon.databinding.FragmentHomeBinding
 import com.dev.`in`.drogon.util.clickWithThrottle
 import com.google.android.material.badge.BadgeDrawable
@@ -30,10 +32,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Basic badge with no count
         initBadge(binding.btnOptions, 0)
-
-        binding.btnOptions.clickWithThrottle {
-            findNavController().navigate(HomeFragmentDirections.actionHelp())
-        }
     }
 
     override fun onResume() {
@@ -54,6 +52,7 @@ class HomeFragment : Fragment() {
                     if (notificationCount == 0) {
                         clearNumber()
                     } else number = notificationCount
+                    backgroundColor = ContextCompat.getColor(requireContext(), R.color.brand_gold)
                     verticalOffset = 10
                     horizontalOffset = 10
                     BadgeUtils.attachBadgeDrawable(this, binding.btnOptions)

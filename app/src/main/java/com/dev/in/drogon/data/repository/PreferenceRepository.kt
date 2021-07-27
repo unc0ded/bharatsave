@@ -29,6 +29,12 @@ class PreferenceRepository @Inject constructor(private val dataStore: DataStore<
         }
     }
 
+    suspend fun clearTokens() {
+        dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
+
     fun getAuthToken(): Flow<String> {
         return dataStore.data
             .catch { emit(emptyPreferences()) }
