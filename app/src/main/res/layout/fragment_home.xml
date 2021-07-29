@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_logo"
@@ -103,6 +103,7 @@
             app:layout_constraintTop_toBottomOf="@+id/circular_indicator" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/materialButton"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,6 +112,252 @@
             app:layout_constraintEnd_toEndOf="@+id/circular_indicator"
             app:layout_constraintStart_toStartOf="@+id/circular_indicator"
             app:layout_constraintTop_toBottomOf="@id/tv_status" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_plans"
+            style="@style/Widget.App.TextView.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_add_plan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_add_plan"
+            tools:text="nudgePlans" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_plan"
+            style="@style/Widget.App.Button.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:text="add"
+            app:icon="@drawable/ic_add_black_24dp"
+            app:iconGravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/materialButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_plan_change"
+            style="@style/Widget.App.Button.Card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="30dp"
+            android:paddingHorizontal="10dp"
+            android:text="start now"
+            android:textAlignment="viewEnd"
+            app:icon="@drawable/ic_chevron_right_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_add_plan" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_plan_change"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="25dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="?attr/colorPrimary"
+            android:elevation="8dp"
+            android:outlineProvider="none"
+            android:padding="10dp"
+            android:src="@drawable/ic_money"
+            app:layout_constraintBottom_toBottomOf="@id/btn_plan_change"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="@id/btn_plan_change"
+            app:layout_constraintTop_toTopOf="@+id/btn_plan_change" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_plan_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:elevation="8dp"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="5dp"
+            android:outlineProvider="none"
+            android:text="Invest your\nspare changes"
+            android:textAppearance="@style/TextAppearance.App.Button.UnelevatedButton"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_plan_change"
+            app:layout_constraintStart_toEndOf="@+id/iv_plan_change"
+            app:layout_constraintTop_toTopOf="@+id/iv_plan_change" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_learn"
+            style="@style/Widget.App.TextView.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_plan_change"
+            tools:text="nudgeGoals" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_digital_gold"
+            style="@style/Widget.MaterialComponents.CardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_learn">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_gold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_gold"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_digital_gold_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/eina01_regular"
+                    android:text="Digital Gold"
+                    android:textColor="@color/text_black"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_gold"
+                    app:layout_constraintStart_toEndOf="@+id/iv_gold"
+                    app:layout_constraintTop_toTopOf="@+id/iv_gold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gold_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/eina01_regular"
+                    android:text="₹ 4,654.78"
+                    android:textColor="@color/text_black"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_gold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_gold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_digital_gold_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/eina01_regular"
+                    android:text="24K gold based electronic money"
+                    android:textColor="@color/text_black"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_gold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gold_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/eina01_bold"
+                    android:text="1 gm"
+                    android:textColor="@color/text_black"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_digital_gold_subtitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_digital_gold_subtitle" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_digital_gold_subtitle" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_gold_bars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/gold_bars"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_learn_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:text="learn more"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_gold_bars"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_gold_bars" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_why_nudge"
+            style="@style/Widget.App.Button.Card"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="5dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="8dp"
+            android:text="Why choose\nnudge?"
+            android:textAlignment="viewStart"
+            app:icon="@drawable/ic_chevron_right_black_24dp"
+            app:iconPadding="0dp"
+            app:iconSize="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_privacy"
+            app:layout_constraintEnd_toStartOf="@id/guideline_mid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_privacy" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_privacy"
+            style="@style/Widget.App.Button.Card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="20dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="8dp"
+            android:text="Security and Privacy Measures"
+            android:textAlignment="viewStart"
+            app:icon="@drawable/ic_chevron_right_black_24dp"
+            app:iconPadding="0dp"
+            app:iconSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline_mid"
+            app:layout_constraintTop_toBottomOf="@+id/card_digital_gold" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

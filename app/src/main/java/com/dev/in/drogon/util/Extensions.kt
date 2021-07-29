@@ -5,7 +5,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import com.google.android.material.button.MaterialButton
-import kotlin.random.Random
 
 fun EditText.actionGo(callback: () -> Unit) {
     setOnEditorActionListener { _, actionId, _ ->

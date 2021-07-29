@@ -2,16 +2,15 @@ package com.dev.`in`.drogon.view.main.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
+import androidx.core.content.res.ResourcesCompat
 import com.dev.`in`.drogon.R
 import com.dev.`in`.drogon.databinding.FragmentHomeBinding
-import com.dev.`in`.drogon.util.clickWithThrottle
+import com.dev.`in`.drogon.util.CustomTypefaceSpan
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 
@@ -32,6 +31,36 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Basic badge with no count
         initBadge(binding.btnOptions, 0)
+        setupViews()
+    }
+
+    private fun setupViews() {
+        binding.tvPlans.text = getCustomTypefaceSpanString("nudge", "Plans")
+        binding.tvLearn.text = getCustomTypefaceSpanString("nudge", "Goals")
+    }
+
+    private fun getCustomTypefaceSpanString(
+        firstWord: String,
+        secondWord: String
+    ): SpannableString {
+        val spannable = SpannableString(firstWord + secondWord)
+        spannable.setSpan(
+            CustomTypefaceSpan(
+                ResourcesCompat.getFont(
+                    requireContext(),
+                    R.font.eina01_light
+                )!!
+            ), 0, firstWord.length, Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        spannable.setSpan(
+            CustomTypefaceSpan(
+                ResourcesCompat.getFont(requireContext(), R.font.eina01_semi_bold)!!
+            ),
+            firstWord.length,
+            firstWord.length + secondWord.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        return spannable
     }
 
     override fun onResume() {
@@ -46,7 +75,8 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("UnsafeOptInUsageError")
     private fun initBadge(view: View, notificationCount: Int) {
-        view.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        view.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 BadgeDrawable.create(requireContext()).apply {
                     if (notificationCount == 0) {

@@ -23,21 +23,27 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.BottomSheet</item>
     </style>
 
-    <style name="Widget.App.Button.UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    <style name="Widget.App.Button.Card" parent="Widget.MaterialComponents.Button.Icon">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.Button.UnelevatedButton</item>
-        <item name="android:backgroundTint">@color/fill_grey</item>
+        <item name="android:backgroundTint">?attr/colorSurface</item>
         <item name="android:textAppearance">@style/TextAppearance.App.Button.UnelevatedButton</item>
         <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:lineSpacingExtra">5dp</item>
+        <item name="iconGravity">end</item>
         <item name="iconTint">?attr/colorPrimary</item>
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
     </style>
 
-    <style name="Widget.App.Button.Primary">
+    <style name="Widget.App.Button.Primary" parent="">
         <item name="android:textAppearance">@style/TextAppearance.App.Button.Primary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="Widget.App.Button.Icon" parent="Widget.MaterialComponents.Button.Icon">
+        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
     </style>
 
     <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
@@ -59,6 +65,16 @@
         <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="strokeColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.Button.UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.Button.UnelevatedButton</item>
+        <item name="android:backgroundTint">@color/fill_grey</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Button.UnelevatedButton</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="iconTint">?attr/colorPrimary</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
     </style>
 
     <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
