@@ -3,6 +3,7 @@ package com.dev.`in`.drogon.view.main.profile
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.dev.`in`.drogon.MainNavigationDirections
 import com.dev.`in`.drogon.databinding.FragmentProfileBinding
 import com.dev.`in`.drogon.util.generateRandomString
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,18 +42,33 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // TODO get from backend
-        binding.tvName.text = "Nudge Admin"
-        binding.tvEmail.text = "admin@nudge.money"
         binding.btnCopyReferral.generateRandomString(12);
 
-        // TODO add confirmation dialog
+        viewModel.userData.observe(viewLifecycleOwner) { user ->
+            binding.tvName.text = user?.name
+            binding.tvEmail.text = user?.email
+        }
+
+        // TODO use a custom view for the dialog
         binding.btnLogOut.setOnClickListener {
-            val firebaseAuth = Firebase.auth
-            firebaseAuth.signOut()
-            viewModel.clearUserData()
-            findNavController().navigate(MainNavigationDirections.actionLogout())
-            activity?.finish()
+            MaterialAlertDialogBuilder(requireContext()).setTitle("Log Out")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton(
+                    "Confirm"
+                ) { dialog, _ ->
+                    Firebase.auth.signOut()
+                    viewModel.clearUserData()
+                    dialog.dismiss()
+                    findNavController().navigate(MainNavigationDirections.actionLogout())
+                    activity?.finish()
+                }
+                .setNegativeButton(
+                    "Cancel"
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setCancelable(true)
+                .show()
         }
 
         binding.btnCopyReferral.setOnClickListener {

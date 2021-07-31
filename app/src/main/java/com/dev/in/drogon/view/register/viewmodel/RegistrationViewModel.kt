@@ -80,4 +80,10 @@ class RegistrationViewModel @Inject constructor(
         }
         return true
     }
+
+    fun saveUser(user: User) {
+        viewModelScope.launch {
+            authRepository.insertUser(user)
+        }
+    }
 }

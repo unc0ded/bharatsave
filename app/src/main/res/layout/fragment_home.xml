@@ -145,8 +145,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="10dp"
-            android:paddingVertical="30dp"
             android:paddingHorizontal="10dp"
+            android:paddingVertical="30dp"
             android:text="start now"
             android:textAlignment="viewEnd"
             app:icon="@drawable/ic_chevron_right_black_24dp"
@@ -279,10 +279,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_digital_gold_subtitle" />
 
-                <View
-                    android:id="@+id/view"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_gold_graph"
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:src="@drawable/ic_gold_graph"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_digital_gold_subtitle" />
@@ -291,12 +294,12 @@
                     android:id="@+id/iv_gold_bars"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
                     android:src="@drawable/gold_bars"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view" />
+                    app:layout_constraintTop_toBottomOf="@+id/iv_gold_graph" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_learn_more"
@@ -327,12 +330,12 @@
             app:iconPadding="0dp"
             app:iconSize="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_privacy"
-            app:layout_constraintEnd_toStartOf="@id/guideline_mid"
+            app:layout_constraintEnd_toStartOf="@id/guideline_50"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btn_privacy" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_mid"
+            android:id="@+id/guideline_50"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -356,7 +359,7 @@
             app:iconSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideline_mid"
+            app:layout_constraintStart_toEndOf="@id/guideline_50"
             app:layout_constraintTop_toBottomOf="@+id/card_digital_gold" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

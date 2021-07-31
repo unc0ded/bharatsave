@@ -11,6 +11,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.dev.`in`.drogon.R
 import com.dev.`in`.drogon.databinding.FragmentHomeBinding
 import com.dev.`in`.drogon.util.CustomTypefaceSpan
+import com.dev.`in`.drogon.util.setCustomTypefaceSpanString
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 
@@ -35,32 +36,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupViews() {
-        binding.tvPlans.text = getCustomTypefaceSpanString("nudge", "Plans")
-        binding.tvLearn.text = getCustomTypefaceSpanString("nudge", "Goals")
-    }
-
-    private fun getCustomTypefaceSpanString(
-        firstWord: String,
-        secondWord: String
-    ): SpannableString {
-        val spannable = SpannableString(firstWord + secondWord)
-        spannable.setSpan(
-            CustomTypefaceSpan(
-                ResourcesCompat.getFont(
-                    requireContext(),
-                    R.font.eina01_light
-                )!!
-            ), 0, firstWord.length, Spanned.SPAN_EXCLUSIVE_INCLUSIVE
-        )
-        spannable.setSpan(
-            CustomTypefaceSpan(
-                ResourcesCompat.getFont(requireContext(), R.font.eina01_semi_bold)!!
-            ),
-            firstWord.length,
-            firstWord.length + secondWord.length,
-            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
-        )
-        return spannable
+        binding.tvPlans.setCustomTypefaceSpanString("nudge", "Plans")
+        binding.tvLearn.setCustomTypefaceSpanString("nudge", "Learn")
     }
 
     override fun onResume() {

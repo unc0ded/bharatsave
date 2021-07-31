@@ -46,7 +46,7 @@
             android:layout_height="match_parent"
             android:autofillHints="name"
             android:imeOptions="actionNext"
-            android:inputType="text" />
+            android:inputType="textCapWords" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

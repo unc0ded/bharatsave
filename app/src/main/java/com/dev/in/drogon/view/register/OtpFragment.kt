@@ -16,7 +16,9 @@ import androidx.navigation.fragment.navArgs
 import com.dev.`in`.drogon.AuthNavigationDirections
 import com.dev.`in`.drogon.R
 import com.dev.`in`.drogon.databinding.FragmentOtpBinding
+import com.dev.`in`.drogon.util.showSoftKeyboard
 import com.dev.`in`.drogon.view.register.viewmodel.RegistrationViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -113,11 +115,26 @@ class OtpFragment : Fragment() {
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
 
-        // TODO show confirmation dialog
+        // TODO use a custom view for the dialog
         binding.btnEditPhone.setOnClickListener {
-            // Manually cancel verification
-            mCallBack.onVerificationFailed(FirebaseException("User navigated away from screen"))
-            findNavController().popBackStack()
+            MaterialAlertDialogBuilder(requireContext()).setTitle("Edit Number")
+                .setMessage(
+                    HtmlCompat.fromHtml(
+                        "Confirm that you want to edit the phone number<br><b>+91 ${args.phone}</b>",
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                )
+                .setPositiveButton("Yes") { dialog, _ ->
+                    // Manually cancel verification
+                    mCallBack.onVerificationFailed(FirebaseException("User navigated away from screen"))
+                    dialog.dismiss()
+                    findNavController().popBackStack()
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setCancelable(false)
+                .show()
         }
 
         binding.etOtp.doOnTextChanged { text, _, _, _ ->
@@ -147,6 +164,7 @@ class OtpFragment : Fragment() {
         viewModel.response.observe(viewLifecycleOwner) { response ->
             if (response?.user != null) {
                 Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
+                viewModel.saveUser(response.user)
                 findNavController().navigate(AuthNavigationDirections.actionOnboarding())
                 viewModel.saveTokens(response.authToken, response.refreshToken)
                 activity?.finish()
@@ -198,7 +216,7 @@ class OtpFragment : Fragment() {
                 resendToken = token
 
                 binding.etOtp.isEnabled = true
-                binding.etOtp.requestFocus()
+                binding.etOtp.showSoftKeyboard()
                 binding.tvTimer.visibility = View.VISIBLE
                 binding.btnResendOtp.isEnabled = false
                 timer.start()
