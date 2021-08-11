@@ -107,6 +107,11 @@
         <item name="android:textColor">@color/text_black</item>
     </style>
 
+    <style name="Widget.App.CardView.Circular" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">6dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.Button</item>
+    </style>
+
     <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardElevation">2dp</item>
         <item name="cardCornerRadius">12dp</item>

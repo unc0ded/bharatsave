@@ -61,57 +61,106 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btn_add_goal" />
 
-        <com.dev.in.drogon.custom_widget.CircularIndicator
-            android:id="@+id/circular_indicator"
+        <!--        <com.dev.in.drogon.custom_widget.CircularIndicator-->
+        <!--            android:id="@+id/circular_indicator"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_marginHorizontal="100dp"-->
+        <!--            android:layout_marginTop="40dp"-->
+        <!--            app:layout_constraintDimensionRatio="1:1"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/btn_add_goal" />-->
+
+        <!--        <androidx.appcompat.widget.AppCompatImageView-->
+        <!--            android:id="@+id/iv_logo_setup"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_margin="15dp"-->
+        <!--            android:background="@drawable/circle_background"-->
+        <!--            android:elevation="6dp"-->
+        <!--            android:paddingStart="5dp"-->
+        <!--            android:paddingTop="15dp"-->
+        <!--            android:paddingEnd="10dp"-->
+        <!--            android:scaleType="centerInside"-->
+        <!--            android:src="@drawable/ic_logo"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/circular_indicator"-->
+        <!--            app:layout_constraintEnd_toEndOf="@id/circular_indicator"-->
+        <!--            app:layout_constraintStart_toStartOf="@id/circular_indicator"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/circular_indicator" />-->
+
+        <!--        <com.google.android.material.textview.MaterialTextView-->
+        <!--            android:id="@+id/tv_status"-->
+        <!--            style="@style/Widget.App.TextView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:text="Set up Autopay to start"-->
+        <!--            android:textAlignment="center"-->
+        <!--            android:textSize="17sp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/circular_indicator" />-->
+
+        <!--        <com.google.android.material.button.MaterialButton-->
+        <!--            android:id="@+id/btn_action"-->
+        <!--            style="?attr/materialButtonOutlinedStyle"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:text="continue"-->
+        <!--            app:layout_constraintEnd_toEndOf="@+id/circular_indicator"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/circular_indicator"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/tv_status" />-->
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager_goals"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="100dp"
-            android:layout_marginTop="40dp"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_add_goal" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_logo_setup"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="15dp"
-            android:background="@drawable/circle_background"
-            android:elevation="6dp"
-            android:paddingStart="5dp"
-            android:paddingTop="15dp"
-            android:paddingEnd="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_logo"
-            app:layout_constraintBottom_toBottomOf="@id/circular_indicator"
-            app:layout_constraintEnd_toEndOf="@id/circular_indicator"
-            app:layout_constraintStart_toStartOf="@id/circular_indicator"
-            app:layout_constraintTop_toTopOf="@id/circular_indicator" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/pager_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pager_goals"
+            app:tabBackground="@drawable/default_dot"
+            app:tabIndicator="@drawable/selected_dot"
+            app:tabIndicatorColor="?attr/colorOnBackground"
+            app:tabIndicatorGravity="center"
+            app:tabPaddingEnd="8dp"
+            app:tabPaddingStart="8dp"
+            app:tabRippleColor="@null" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_status"
+            android:id="@+id/tv_desc"
             style="@style/Widget.App.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Set up Autopay to start"
             android:textAlignment="center"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/circular_indicator" />
+            app:layout_constraintTop_toBottomOf="@id/pager_indicator"
+            tools:text="Set up Autopay to start" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton"
+            android:id="@+id/btn_action"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="continue"
-            app:layout_constraintEnd_toEndOf="@+id/circular_indicator"
-            app:layout_constraintStart_toStartOf="@+id/circular_indicator"
-            app:layout_constraintTop_toBottomOf="@id/tv_status" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_desc"
+            tools:text="continue" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_plans"
@@ -136,7 +185,7 @@
             app:icon="@drawable/ic_add_black_24dp"
             app:iconGravity="start"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/materialButton" />
+            app:layout_constraintTop_toBottomOf="@id/btn_action" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_plan_change"

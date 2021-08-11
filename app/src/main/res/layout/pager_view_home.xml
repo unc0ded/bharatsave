@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.dev.in.drogon.custom_widget.CircularIndicator
+        android:id="@+id/circular_indicator"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/iv_logo_setup"
+        style="@style/Widget.App.CardView.Circular"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/circular_indicator"
+        app:layout_constraintEnd_toEndOf="@id/circular_indicator"
+        app:layout_constraintStart_toStartOf="@id/circular_indicator"
+        app:layout_constraintTop_toTopOf="@id/circular_indicator">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_current_value"
+                style="@style/Widget.App.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:textSize="25sp"
+                tools:text="₹ 4,654.78" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_gold_weight"
+                style="@style/Widget.App.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:drawableTop="@drawable/ic_money"
+                android:drawablePadding="-5dp"
+                android:textSize="13sp"
+                tools:text="5.655 gm" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
