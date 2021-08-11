@@ -12,8 +12,7 @@ import com.dev.`in`.drogon.databinding.FragmentStartBinding
 class StartFragment : Fragment() {
 
     private var _binding: FragmentStartBinding? = null
-    private val binding: FragmentStartBinding
-        get() = _binding!!
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,5 +28,10 @@ class StartFragment : Fragment() {
         binding.btnStart.setOnClickListener {
             findNavController().navigate(StartFragmentDirections.actionLogin())
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

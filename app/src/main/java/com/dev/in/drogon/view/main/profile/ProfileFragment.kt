@@ -24,8 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
-    private val binding: FragmentProfileBinding
-        get() = _binding!!
+    private val binding get() = _binding!!
 
     private val clipboard by lazy {
         context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -71,10 +70,20 @@ class ProfileFragment : Fragment() {
                 .show()
         }
 
+        // TODO implement saved cards and accounts
+        binding.btnLinked.setOnClickListener {
+            Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show()
+        }
+
         binding.btnCopyReferral.setOnClickListener {
             val clip = ClipData.newPlainText("referral", binding.btnCopyReferral.text)
             clipboard.setPrimaryClip(clip)
             Toast.makeText(context, "Referral code copied!", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

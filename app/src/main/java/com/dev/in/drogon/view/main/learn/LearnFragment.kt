@@ -11,8 +11,7 @@ import com.dev.`in`.drogon.util.setCustomTypefaceSpanString
 class LearnFragment : Fragment() {
 
     private var _binding: FragmentLearnBinding? = null
-    private val binding: FragmentLearnBinding
-        get() = _binding!!
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,5 +23,10 @@ class LearnFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.tvTitleLearn.setCustomTypefaceSpanString("nudge", "Learn")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

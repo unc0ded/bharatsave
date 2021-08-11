@@ -17,6 +17,9 @@
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="listPopupWindowStyle">@style/Widget.App.PopupMenu.ListPopupWindow</item>
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <item name="chipStyle">@style/Widget.App.Chip.Choice</item>
     </style>
 
     <style name="Widget.App.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
@@ -77,6 +80,10 @@
         <item name="android:paddingBottom">15dp</item>
     </style>
 
+    <style name="Widget.App.TextInputLayout.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ExposedDropdownMenu</item>
+    </style>
+
     <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
         <item name="android:textColorHint">@color/unfocused_grey</item>
@@ -92,6 +99,41 @@
     <style name="Widget.App.TextInputEditText.OutlinedBox" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
         <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
         <item name="android:textColor">@color/text_black</item>
+    </style>
+    
+    <style name="Widget.App.AutoCompleteTextView.OutlinedBox" parent="Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox">
+        <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_black</item>
+    </style>
+
+    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">2dp</item>
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+
+    <style name="Widget.App.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textAppearance">@style/TextAppearance.App.Base</item>
+        <item name="android:textColor">@color/chip_text</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipStrokeColor">@color/chip_outline</item>
+        <item name="chipBackgroundColor">@color/chip_background</item>
+        <item name="textStartPadding">8dp</item>
+        <item name="textEndPadding">8dp</item>
+        <item name="chipStartPadding">8dp</item>
+        <item name="chipEndPadding">8dp</item>
+    </style>
+
+    <style name="Widget.App.Chip.Action" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:elevation">2dp</item>
+        <item name="chipBackgroundColor">?attr/colorSurface</item>
+    </style>
+
+    <style name="Widget.App.PopupMenu.ListPopupWindow" parent="Widget.MaterialComponents.PopupMenu.ListPopupWindow">
+        <item name="popupMenuBackground">?attr/colorPrimary</item>
     </style>
 
     <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
@@ -135,6 +177,10 @@
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+    
+    <style name="ThemeOverlay.App.ExposedDropdownMenu" parent="">
+        <item name="autoCompleteTextViewStyle">@style/Widget.App.AutoCompleteTextView.OutlinedBox</item>
     </style>
 
     <style name="ThemeOverlay.App.TextInputLayout" parent="">

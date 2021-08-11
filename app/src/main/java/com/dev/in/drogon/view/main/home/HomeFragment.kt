@@ -2,15 +2,12 @@ package com.dev.`in`.drogon.view.main.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.fragment.findNavController
 import com.dev.`in`.drogon.R
 import com.dev.`in`.drogon.databinding.FragmentHomeBinding
-import com.dev.`in`.drogon.util.CustomTypefaceSpan
 import com.dev.`in`.drogon.util.setCustomTypefaceSpanString
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
@@ -18,8 +15,7 @@ import com.google.android.material.badge.BadgeUtils
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private val binding: FragmentHomeBinding
-        get() = _binding!!
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +34,14 @@ class HomeFragment : Fragment() {
     private fun setupViews() {
         binding.tvPlans.setCustomTypefaceSpanString("nudge", "Plans")
         binding.tvLearn.setCustomTypefaceSpanString("nudge", "Learn")
+
+        binding.btnAddPlan.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionAddPlan())
+        }
+
+        binding.btnAddGoal.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionAddGoal())
+        }
     }
 
     override fun onResume() {

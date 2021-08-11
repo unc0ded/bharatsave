@@ -31,8 +31,7 @@ import java.util.concurrent.TimeUnit
 class OtpFragment : Fragment() {
 
     private var _binding: FragmentOtpBinding? = null
-    private val binding: FragmentOtpBinding
-        get() = _binding!!
+    private val binding get() = _binding!!
 
     private val args by navArgs<OtpFragmentArgs>()
 

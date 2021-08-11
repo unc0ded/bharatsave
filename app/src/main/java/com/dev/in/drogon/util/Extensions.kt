@@ -1,17 +1,23 @@
 package com.dev.`in`.drogon.util
 
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
 import android.os.SystemClock
 import android.text.SpannableString
 import android.text.Spanned
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.core.content.res.ResourcesCompat
 import com.dev.`in`.drogon.R
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.color.MaterialColors
 
 fun EditText.actionGo(callback: () -> Unit) {
     setOnEditorActionListener { _, actionId, _ ->
@@ -65,7 +71,20 @@ fun TextView.setCustomTypefaceSpanString(firstWord: String, secondWord: String) 
 
 fun View.showSoftKeyboard() {
     if (requestFocus()) {
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     }
+}
+
+val Number.toPx
+    get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.toFloat(),
+        Resources.getSystem().displayMetrics
+    )
+
+@ColorInt
+fun Context.getThemeColorFromAttr(@AttrRes colorRef: Int): Int {
+    return MaterialColors.getColor(this, colorRef, Color.MAGENTA)
 }

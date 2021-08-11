@@ -28,8 +28,7 @@ import kotlinx.coroutines.runBlocking
 class RegistrationFragment : Fragment() {
 
     private var _binding: FragmentRegistrationBinding? = null
-    private val binding: FragmentRegistrationBinding
-        get() = _binding!!
+    private val binding get() = _binding!!
 
     private val args by navArgs<RegistrationFragmentArgs>()
     private val viewModel by viewModels<RegistrationViewModel>()
