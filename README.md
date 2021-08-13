@@ -1,8 +1,8 @@
-# Drogon
+# BharatSave
 
-To test using the locally-running [server](https://github.com/epicadk/drogon-backend):
-1. Get the server running according to the instructions [here](https://github.com/epicadk/drogon-backend#running-server-locally)
-1. In `app/src/main/java/com/dev/in/drogon/di/RetrofitModule.kt`, change the `BASE_URL` field from  
+To test using the locally-running [server](https://github.com/Sanskar0520/bharatSaveBackend):
+1. Get the server running locally.
+2. In [RetrofitModule.kt](app/src/main/java/com/bharatsave/goldapp/di/RetrofitModule.kt), change the `BASE_URL` field from  
 
 <div align="center">
 
