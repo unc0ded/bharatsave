@@ -6,16 +6,18 @@
     app:startDestination="@id/startFragment">
 
     <action
-        android:id="@+id/action_home_activity"
-        app:destination="@id/homeActivity" />
+        android:id="@+id/action_main_activity"
+        app:destination="@id/mainActivity" />
 
-    <action
-        android:id="@+id/action_onboarding"
-        app:destination="@id/storyContainerActivity" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.bharatsave.goldapp.view.main.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 
     <fragment
         android:id="@+id/startFragment"
-        android:name="com.dev.in.drogon.view.register.StartFragment"
+        android:name="com.bharatsave.goldapp.view.register.StartFragment"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start">
 
@@ -31,7 +33,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.dev.in.drogon.view.register.SignInFragment"
+        android:name="com.bharatsave.goldapp.view.register.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in">
 
@@ -47,7 +49,7 @@
 
     <fragment
         android:id="@+id/otpFragment"
-        android:name="com.dev.in.drogon.view.register.OtpFragment"
+        android:name="com.bharatsave.goldapp.view.register.OtpFragment"
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp">
 
@@ -69,26 +71,14 @@
 
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.dev.in.drogon.view.register.RegistrationFragment"
+        android:name="com.bharatsave.goldapp.view.register.SignUpDetailsFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration">
+        tools:layout="@layout/fragment_sign_up_details">
 
         <argument
             android:name="phone"
             app:argType="string" />
 
     </fragment>
-
-    <activity
-        android:id="@+id/homeActivity"
-        android:name="com.dev.in.drogon.view.main.MainActivity"
-        android:label="activity_home"
-        tools:layout="@layout/activity_main" />
-
-    <activity
-        android:id="@+id/storyContainerActivity"
-        android:name="com.dev.in.drogon.view.story.StoryContainerActivity"
-        android:label="activity_story_container"
-        tools:layout="@layout/activity_story_container" />
 
 </navigation>

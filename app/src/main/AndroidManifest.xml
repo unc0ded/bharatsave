@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dev.in.drogon">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.bharatsave.goldapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
@@ -8,18 +9,20 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".DrogonApp"
+        android:name="com.bharatsave.goldapp.GoldApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Drogon"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
 
         <activity
-            android:name=".view.register.RegistrationActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:name="com.bharatsave.goldapp.view.register.RegistrationActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,13 +30,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.main.MainActivity" />
+        <activity android:name="com.bharatsave.goldapp.view.main.MainActivity" />
 
-        <activity android:name=".view.story.StoryContainerActivity" />
+        <activity android:name="com.bharatsave.goldapp.view.story.StoryContainerActivity" />
 
         <receiver
-            android:name="com.dev.in.drogon.view.ReadSmsBroadcastReceiver"
-            android:permission="android.permission.BROADCAST_SMS">
+            android:name="com.bharatsave.goldapp.view.ReadSmsBroadcastReceiver"
+            android:permission="android.permission.BROADCAST_SMS"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>

@@ -6,40 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.register.RegistrationActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:src="@drawable/ic_logo"
-        app:layout_constraintEnd_toStartOf="@+id/tv_title"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/eina01_bold"
-        android:text="nudge"
-        android:textColor="@color/brand_blue"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_logo" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_subtitle"
-        style="@style/Widget.App.TextView.Subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Learn. Plan. Invest."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -49,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
-        app:navGraph="@navigation/auth_navigation" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/onboarding_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

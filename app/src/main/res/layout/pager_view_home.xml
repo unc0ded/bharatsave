@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.dev.in.drogon.custom_widget.CircularIndicator
+    <com.bharatsave.goldapp.custom_widget.CircularIndicator
         android:id="@+id/circular_indicator"
         android:layout_width="0dp"
         android:layout_height="0dp"
