@@ -16,23 +16,23 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="Profile"
             android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_log_out"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_log_out" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_log_out"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
             android:text="log out"
+            app:layout_constraintBottom_toBottomOf="@id/tv_page_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/tv_page_title" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_profile_picture"
@@ -135,6 +135,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="20dp"
+            android:elevation="2dp"
             android:textAlignment="textStart"
             app:icon="@drawable/ic_content_copy_black_24dp"
             app:iconGravity="end"

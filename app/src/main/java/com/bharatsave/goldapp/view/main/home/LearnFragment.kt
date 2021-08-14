@@ -1,13 +1,15 @@
-package com.bharatsave.goldapp.view.main.learn
+package com.bharatsave.goldapp.view.main.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentLearnBinding
-import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
+import com.bharatsave.goldapp.util.getThemeColorFromAttr
+import com.bharatsave.goldapp.util.setCustomSpanString
 
 class LearnFragment : Fragment() {
 
@@ -23,12 +25,17 @@ class LearnFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.tvTitleLearn.setCustomTypefaceSpanString(
-            "nudge",
-            R.font.eina01_light,
+        binding.tvTitleLearn.setCustomSpanString(
+            "save",
+            R.font.eina01_regular,
+            requireContext().getThemeColorFromAttr(R.attr.colorPrimary),
+            "",
             "Learn",
-            R.font.eina01_semi_bold
+            R.font.eina01_semi_bold,
+            requireContext().getThemeColorFromAttr(R.attr.colorSecondaryVariant)
         )
+
+        binding.btnBack.setOnClickListener { findNavController().popBackStack() }
     }
 
     override fun onDestroyView() {

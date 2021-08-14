@@ -79,32 +79,12 @@ class RoundUpDetailsFragment : Fragment() {
         (binding.menuRoundUpAmount.editText as MaterialAutoCompleteTextView).setAdapter(adapter)
 
         val goalAdapter =
-            GoalArrayAdapter(
+            ArrayAdapter(
                 requireContext(),
                 R.layout.dropdown_menu_item,
-                mutableListOf("Education")
+                listOf("Education", "Wedding", "Vacation")
             )
-        (binding.menuChooseGoal.editText as MaterialAutoCompleteTextView).apply {
-            setAdapter(goalAdapter)
-
-            // TODO see if this can be done better
-            dropDownVerticalOffset = (-8).toPx.toInt()
-
-            setOnItemClickListener { parent, _, position, _ ->
-                if (position == parent.count - 1) {
-                    // TODO figure out this shit
-                    findNavController().navigate(RoundUpDetailsFragmentDirections.actionAddGoal())
-                }
-                dismissDropDown()
-            }
-
-            setDropDownBackgroundDrawable(
-                AppCompatResources.getDrawable(
-                    context,
-                    R.drawable.popup_menu_background
-                )
-            )
-        }
+        (binding.menuChooseGoal.editText as MaterialAutoCompleteTextView).setAdapter(goalAdapter)
 
         binding.btnContinue.setOnClickListener {
             if ((binding.datePickerEndDate.editText as MaterialAutoCompleteTextView).text.toString()

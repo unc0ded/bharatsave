@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    brand colors-->
-    <color name="brand_blue">#152969</color>
+    <color name="brand_blue">#104480</color>
     <color name="brand_blue_dark">#00003E</color>
-    <color name="brand_gold">#FF810A</color>
-    <color name="brand_gold_light">#FFBC22</color>
+    <color name="brand_gold">#FFAD00</color>
+    <color name="brand_gold_alt">#FFB40D</color>
 
     <!--    text colors-->
     <color name="text_bluish_grey">#465466</color>
-    <color name="text_black">#303030</color>
+    <color name="text_black">#1C1C1C</color>
+    <color name="text_lighter_black">#343434</color>
+    <color name="text_grey">#969696</color>
 
     <!--    misc-->
     <color name="icon_grey">#C7C7C7</color>

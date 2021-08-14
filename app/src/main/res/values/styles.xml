@@ -1,11 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="Theme.Drogon" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.BharatSave" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/brand_blue</item>
         <item name="colorPrimaryVariant">@color/brand_blue_dark</item>
         <item name="colorSecondary">@color/brand_gold</item>
-        <item name="colorSecondaryVariant">@color/brand_gold_light</item>
+        <item name="colorSecondaryVariant">@color/brand_gold_alt</item>
         <item name="android:colorBackground">@color/white</item>
         <item name="colorOnBackground">@color/text_black</item>
         <item name="android:statusBarColor">@color/white</item>
@@ -30,10 +30,10 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.Button.UnelevatedButton</item>
         <item name="android:backgroundTint">?attr/colorSurface</item>
         <item name="android:textAppearance">@style/TextAppearance.App.Button.UnelevatedButton</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
         <item name="android:lineSpacingExtra">5dp</item>
         <item name="iconGravity">end</item>
-        <item name="iconTint">?attr/colorPrimary</item>
+        <item name="iconTint">?attr/colorOnBackground</item>
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
     </style>
@@ -65,7 +65,7 @@
     </style>
 
     <style name="Widget.App.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Button.UnelevatedButton</item>
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="strokeColor">?attr/colorPrimary</item>
     </style>
@@ -155,7 +155,7 @@
     <style name="Widget.App.TextView.Subtitle" parent="">
         <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
         <item name="android:textColor">@color/text_bluish_grey</item>
-        <item name="android:textColorLink">?attr/colorOnBackground</item>
+        <item name="android:textColorLink">@color/text_bluish_grey</item>
     </style>
 
     <style name="Widget.App.TextView" parent="Widget.MaterialComponents.TextView">
@@ -209,6 +209,11 @@
     <style name="TextAppearance.App.Subtitle" parent="">
         <item name="android:fontFamily">@font/eina01_regular</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.App.Light" parent="">
+        <item name="android:fontFamily">@font/eina01_light</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="TextAppearance.App.Button.UnelevatedButton" parent="">

@@ -86,8 +86,9 @@ class SignUpDetailsFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.response.observe(viewLifecycleOwner) { response ->
-            if (response != null) {
+            if (response?.user != null) {
                 Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
+                viewModel.saveUser(response.user)
                 findNavController().navigate(AuthNavigationDirections.actionMainActivity())
                 viewModel.saveTokens(response.authToken, response.refreshToken)
                 activity?.finish()

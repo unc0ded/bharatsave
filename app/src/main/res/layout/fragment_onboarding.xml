@@ -8,13 +8,16 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="60dp"
-        android:adjustViewBounds="true"
+        android:background="@drawable/circle_background"
+        android:backgroundTint="?attr/colorPrimary"
+        android:padding="6dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_logo"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,11 +27,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:fontFamily="@font/eina01_bold"
-        android:text="nudge"
         android:textColor="@color/brand_blue"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
-        app:layout_constraintStart_toEndOf="@id/iv_logo" />
+        app:layout_constraintStart_toEndOf="@id/iv_logo"
+        app:layout_constraintTop_toTopOf="@+id/iv_logo"
+        tools:text="Bharat Save" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager_onboard"
@@ -37,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/indicator_onboard"

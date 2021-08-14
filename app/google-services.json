@@ -1,78 +1,41 @@
 {
   "project_info": {
-    "project_number": "508476022148",
-    "project_id": "drogon-d646d",
-    "storage_bucket": "drogon-d646d.appspot.com"
+    "project_number": "511380934505",
+    "project_id": "bharatsave-4c86e",
+    "storage_bucket": "bharatsave-4c86e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:508476022148:android:9de4a06f9f863d3cf651d1",
+        "mobilesdk_app_id": "1:511380934505:android:f0c6fe686635fdb681b7f8",
         "android_client_info": {
-          "package_name": "com.dev.in.drogon"
+          "package_name": "com.bharatsave.goldapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "508476022148-2nvnt3vgnc56pga27nvv46f6jdnu7ebh.apps.googleusercontent.com",
+          "client_id": "511380934505-sd3uprfru24rg7tkrgk0gupbv2afvgi4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dev.in.drogon",
-            "certificate_hash": "259ee534dc239ead5f7de6643dab2d28e39172be"
+            "package_name": "com.bharatsave.goldapp",
+            "certificate_hash": "00cfc6fb16133709e7d48a7e1520377f3cc7c001"
           }
         },
         {
-          "client_id": "508476022148-5b9s51d21rbg58b2osrsg6vsq6cbnrpo.apps.googleusercontent.com",
+          "client_id": "511380934505-eqcqg8ahp8ccto56nuokpf62h51nkunj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA6nkcwWE7-EqBls46MF95KF5uL2NLI1Ug"
+          "current_key": "AIzaSyB3Viu8RBj9yKmK_QyqEwOF_SmNLTnZ-FY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "508476022148-5b9s51d21rbg58b2osrsg6vsq6cbnrpo.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:508476022148:android:10938bd115d43abef651d1",
-        "android_client_info": {
-          "package_name": "com.example.read_sms"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "508476022148-mqhir3ddb64hk27a3emdv716b80ko33g.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.read_sms",
-            "certificate_hash": "259ee534dc239ead5f7de6643dab2d28e39172be"
-          }
-        },
-        {
-          "client_id": "508476022148-5b9s51d21rbg58b2osrsg6vsq6cbnrpo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA6nkcwWE7-EqBls46MF95KF5uL2NLI1Ug"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "508476022148-5b9s51d21rbg58b2osrsg6vsq6cbnrpo.apps.googleusercontent.com",
+              "client_id": "511380934505-eqcqg8ahp8ccto56nuokpf62h51nkunj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

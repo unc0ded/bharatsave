@@ -6,14 +6,13 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentHomeBinding
-import com.bharatsave.goldapp.model.GoalDetails
+import com.bharatsave.goldapp.util.getThemeColorFromAttr
+import com.bharatsave.goldapp.util.setCustomSpanString
 import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
-import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {
 
@@ -30,60 +29,40 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Basic badge with no count
-        initBadge(binding.btnOptions, 0)
+//        initBadge(binding.btnOptions, 0)
         setupViews()
     }
 
     private fun setupViews() {
         binding.tvPlans.setCustomTypefaceSpanString(
-            "nudge",
+            "save",
             R.font.eina01_light,
+            "",
             "Plans",
             R.font.eina01_semi_bold
         )
         binding.tvLearn.setCustomTypefaceSpanString(
-            "nudge",
+            "know",
             R.font.eina01_light,
-            "Learn",
+            " ",
+            "Digital Gold",
             R.font.eina01_semi_bold
         )
+        binding.tvTitle.setCustomSpanString(
+            "Bharat",
+            R.font.eina01_regular,
+            requireContext().getThemeColorFromAttr(R.attr.colorPrimary),
+            "",
+            "Save",
+            R.font.eina01_semi_bold,
+            requireContext().getThemeColorFromAttr(R.attr.colorSecondaryVariant)
+        )
 
-        binding.btnAction.text = "manage goals"
-        binding.pagerGoals.apply {
-
-            // TODO use actual goals
-            val goalsList = listOf(
-                GoalDetails(goalName = "Child's Education", currentValue = 4654.78f),
-                GoalDetails(goalName = "Daughter's Wedding", currentValue = 4654.78f),
-                GoalDetails(goalName = "Maldives Vacation", currentValue = 4654.78f)
-            )
-            adapter = GoalsAdapter(goalsList)
-
-            binding.tvDesc.text = goalsList[0].goalName
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
-                    binding.tvDesc.text =
-                        if (positionOffset > 0.5) goalsList[position + 1].goalName else goalsList[position].goalName
-                }
-            })
-        }
-        TabLayoutMediator(binding.pagerIndicator, binding.pagerGoals) { _, _ -> }.attach()
-
-        binding.btnAction.setOnClickListener {
-            // TODO add activity screen
-        }
-
-        binding.btnAddPlan.setOnClickListener {
+        binding.btnPlanPeriodic.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionAddPlan())
         }
 
-        binding.btnAddGoal.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionAddGoal())
-        }
+        binding.btnLearn.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionSaveLearn()) }
     }
 
     override fun onDestroyView() {

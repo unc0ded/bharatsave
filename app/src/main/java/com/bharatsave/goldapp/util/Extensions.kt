@@ -56,45 +56,91 @@ fun MaterialButton.generateRandomString(length: Int) {
 fun TextView.setCustomTypefaceSpanString(
     firstWord: String,
     @FontRes firstFont: Int,
+    connector: String,
     secondWord: String,
     @FontRes secondFont: Int
 ) {
-    val spannable = SpannableString(firstWord + secondWord)
-    spannable.setSpan(
-        CustomTypefaceSpan(ResourcesCompat.getFont(context, firstFont)!!),
-        0,
-        firstWord.length,
-        Spanned.SPAN_EXCLUSIVE_INCLUSIVE
-    )
-    spannable.setSpan(
-        CustomTypefaceSpan(ResourcesCompat.getFont(context, secondFont)!!),
-        firstWord.length,
-        firstWord.length + secondWord.length,
-        Spanned.SPAN_EXCLUSIVE_INCLUSIVE
-    )
-    text = spannable
+    val spannable = SpannableString(firstWord + connector + secondWord)
+    spannable.apply {
+        setSpan(
+            CustomTypefaceSpan(ResourcesCompat.getFont(context, firstFont)!!),
+            0,
+            firstWord.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        setSpan(
+            CustomTypefaceSpan(ResourcesCompat.getFont(context, secondFont)!!),
+            firstWord.length + connector.length,
+            spannable.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        text = this
+    }
 }
 
 fun TextView.setMultipleColorSpanString(
     firstWord: String,
     @ColorInt firstColor: Int,
+    connector: String,
     secondWord: String,
     @ColorInt secondColor: Int
 ) {
-    val spannable = SpannableString(firstWord + "\n" + secondWord)
-    spannable.setSpan(
-        ForegroundColorSpan(firstColor),
-        0,
-        firstWord.length,
-        Spanned.SPAN_EXCLUSIVE_INCLUSIVE
-    )
-    spannable.setSpan(
-        ForegroundColorSpan(secondColor),
-        firstWord.length + 1,
-        spannable.length,
-        Spanned.SPAN_EXCLUSIVE_INCLUSIVE
-    )
-    text = spannable
+    val spannable = SpannableString(firstWord + connector + secondWord)
+    spannable.apply {
+        setSpan(
+            ForegroundColorSpan(firstColor),
+            0,
+            firstWord.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        setSpan(
+            ForegroundColorSpan(secondColor),
+            firstWord.length + connector.length,
+            spannable.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        text = this
+    }
+}
+
+fun TextView.setCustomSpanString(
+    firstWord: String,
+    @FontRes firstFont: Int,
+    @ColorInt firstColor: Int,
+    connector: String,
+    secondWord: String,
+    @FontRes secondFont: Int,
+    @ColorInt secondColor: Int
+) {
+    val spannable = SpannableString(firstWord + connector + secondWord)
+    spannable.apply {
+        setSpan(
+            CustomTypefaceSpan(ResourcesCompat.getFont(context, firstFont)!!),
+            0,
+            firstWord.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        setSpan(
+            ForegroundColorSpan(firstColor),
+            0,
+            firstWord.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        setSpan(
+            CustomTypefaceSpan(ResourcesCompat.getFont(context, secondFont)!!),
+            firstWord.length + connector.length,
+            this.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        setSpan(
+            ForegroundColorSpan(secondColor),
+            firstWord.length + connector.length,
+            this.length,
+            Spanned.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        text = this
+    }
+
 }
 
 fun View.showSoftKeyboard() {

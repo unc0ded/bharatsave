@@ -4,23 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.learn.LearnFragment">
+    tools:context=".view.main.home.LearnFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:tint="?attr/colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title_learn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title_learn" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_title_learn"
-            style="@style/Widget.App.TextView.Title"
+            style="@style/Widget.App.TextView.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@+id/btn_back"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="nudgeLearn" />
+            tools:text="saveLearn" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_why_nudge"
@@ -29,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
-            android:text="Why nudge"
+            android:text="Why Bharat Save"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title_learn" />
@@ -100,56 +114,66 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
             android:text="More Articles"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_body_3" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_why_nudge"
-            style="@style/Widget.App.Button.Card"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="5dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="8dp"
-            android:text="Why choose\nnudge?"
-            android:textAlignment="viewStart"
-            app:icon="@drawable/ic_chevron_right_black_24dp"
-            app:iconPadding="0dp"
-            app:iconSize="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_privacy"
-            app:layout_constraintEnd_toStartOf="@id/guideline_50"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_privacy" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_50"
-            android:layout_width="wrap_content"
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_privacy"
-            style="@style/Widget.App.Button.Card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="20dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="8dp"
-            android:text="Security and Privacy Measures"
-            android:textAlignment="viewStart"
-            app:icon="@drawable/ic_chevron_right_black_24dp"
-            app:iconPadding="0dp"
-            app:iconSize="20dp"
+            android:layout_marginVertical="10dp"
+            android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideline_50"
-            app:layout_constraintTop_toBottomOf="@+id/tv_more_articles" />
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_more_articles">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_why_bharatsave"
+                    style="@style/Widget.App.Button.Card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:text="Why choose\nBharat Save?"
+                    android:textAlignment="viewStart"
+                    app:icon="@drawable/ic_chevron_right_black_24dp"
+                    app:iconPadding="16dp"
+                    app:iconSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_privacy"
+                    style="@style/Widget.App.Button.Card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    android:text="Security and\nPrivacy Measures"
+                    android:textAlignment="viewStart"
+                    app:icon="@drawable/ic_chevron_right_black_24dp"
+                    app:iconPadding="16dp"
+                    app:iconSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btn_why_bharatsave"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </HorizontalScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

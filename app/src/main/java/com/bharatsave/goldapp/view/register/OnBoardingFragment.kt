@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentOnboardingBinding
 import com.bharatsave.goldapp.model.OnBoardingItem
+import com.bharatsave.goldapp.util.getThemeColorFromAttr
+import com.bharatsave.goldapp.util.setCustomSpanString
 import com.google.android.material.tabs.TabLayoutMediator
 
 class OnBoardingFragment : Fragment() {
@@ -42,26 +44,36 @@ class OnBoardingFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.tvTitle.setCustomSpanString(
+            "Bharat",
+            R.font.eina01_regular,
+            requireContext().getThemeColorFromAttr(R.attr.colorPrimary),
+            " ",
+            "Save",
+            R.font.eina01_semi_bold,
+            requireContext().getThemeColorFromAttr(R.attr.colorSecondaryVariant)
+        )
+
         binding.pagerOnboard.apply {
             adapter = OnBoardingAdapter(
                 listOf(
                     OnBoardingItem(
-                        "Save. Invest. Forget",
+                        "Your Gold Investment Companion",
                         "Financial investment simplified through",
                         "Gold",
-                        R.drawable.mascot_3
+                        R.drawable.ic_intro_screen_1
                     ),
                     OnBoardingItem(
-                        "Fulfill your goals with Nudge",
+                        "Your Gold Investment Companion",
                         "Plan your goals and invest with",
-                        "nudgePlans",
-                        R.drawable.mascot_1
+                        "SavePlans",
+                        R.drawable.ic_intro_screen_2
                     ),
                     OnBoardingItem(
-                        "Learn with nudgeLearn",
+                        "Your Gold Investment Companion",
                         "Learn all about finance easily with",
-                        "nudgeLearn",
-                        R.drawable.mascot_2
+                        "SaveLearn",
+                        R.drawable.ic_intro_screen_3
                     )
                 ), context
             )

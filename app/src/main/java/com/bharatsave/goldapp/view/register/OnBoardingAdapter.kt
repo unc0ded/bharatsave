@@ -19,25 +19,21 @@ class OnBoardingAdapter(private val itemList: List<OnBoardingItem>, private val 
         )
 
     override fun onBindViewHolder(holder: OnBoardingViewHolder, position: Int) {
-        holder.bind(itemList[position], position, context)
+        holder.bind(itemList[position])
     }
 
     override fun getItemCount(): Int = itemList.size
 
-    class OnBoardingViewHolder(val binding: PagerViewOnboardingBinding) :
+    inner class OnBoardingViewHolder(val binding: PagerViewOnboardingBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        internal fun bind(item: OnBoardingItem, position: Int, context: Context) {
+        internal fun bind(item: OnBoardingItem) {
             binding.tvSubtitle.text = item.subText
             binding.tvFocusedTitle.setMultipleColorSpanString(
                 item.primaryText, context.getThemeColorFromAttr(
                     R.attr.colorPrimary
-                ), item.highlightedText, context.getThemeColorFromAttr(R.attr.colorSecondary)
+                ), "\n", item.highlightedText, context.getThemeColorFromAttr(R.attr.colorSecondary)
             )
-            binding.ivBrandImage.setImageResource(R.drawable.ic_brand_logo)
-            if (position == 2) {
-                binding.ivBrandImage.rotationY = 180f
-            }
-            binding.ivMascot.setImageResource(item.imgRes)
+            binding.ivIntroImage.setImageResource(item.imgRes)
         }
     }
 }

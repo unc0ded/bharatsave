@@ -7,15 +7,15 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_subtitle"
-        style="@style/Widget.App.TextView.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
-        android:textColor="?attr/colorPrimary"
+        android:textAppearance="@style/TextAppearance.App.Subtitle"
+        android:textColor="@color/text_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Save. Invest. Forget" />
+        tools:text="Your Gold Investment Companion" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_focused_title"
@@ -31,28 +31,18 @@
         tools:text="Financial Investment simplified through\nGold" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_brand_image"
-        android:layout_width="wrap_content"
+        android:id="@+id/iv_intro_image"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="80dp"
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_focused_title"
-        app:layout_constraintVertical_bias="0.3"
-        tools:src="@drawable/ic_brand_logo" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_mascot"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginEnd="60dp"
-        android:adjustViewBounds="true"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_focused_title"
-        tools:src="@drawable/mascot_1" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:src="@drawable/ic_intro_screen_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
