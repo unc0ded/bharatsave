@@ -27,7 +27,9 @@
     </style>
 
     <style name="Widget.App.Button.Card" parent="Widget.MaterialComponents.Button.Icon">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.Button.UnelevatedButton</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay.App.Button.UnelevatedButton
+        </item>
         <item name="android:backgroundTint">?attr/colorSurface</item>
         <item name="android:textAppearance">@style/TextAppearance.App.Button.UnelevatedButton</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
@@ -71,7 +73,9 @@
     </style>
 
     <style name="Widget.App.Button.UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.Button.UnelevatedButton</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay.App.Button.UnelevatedButton
+        </item>
         <item name="android:backgroundTint">@color/fill_grey</item>
         <item name="android:textAppearance">@style/TextAppearance.App.Button.UnelevatedButton</item>
         <item name="android:textColor">?attr/colorPrimary</item>
@@ -100,7 +104,7 @@
         <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
         <item name="android:textColor">@color/text_black</item>
     </style>
-    
+
     <style name="Widget.App.AutoCompleteTextView.OutlinedBox" parent="Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox">
         <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
         <item name="android:textSize">14sp</item>
@@ -130,11 +134,19 @@
     </style>
 
     <style name="Widget.App.Chip.Action" parent="Widget.MaterialComponents.Chip.Action">
-        <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Base</item>
         <item name="android:textSize">11sp</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="chipIconEnabled">true</item>
+        <item name="chipIconTint">?attr/colorOnBackground</item>
+        <item name="chipIconSize">16dp</item>
+        <item name="android:includeFontPadding">true</item>
         <item name="android:elevation">2dp</item>
         <item name="chipBackgroundColor">?attr/colorSurface</item>
+        <item name="textStartPadding">8dp</item>
+        <item name="textEndPadding">8dp</item>
+        <item name="chipStartPadding">8dp</item>
+        <item name="chipEndPadding">8dp</item>
     </style>
 
     <style name="Widget.App.PopupMenu.ListPopupWindow" parent="Widget.MaterialComponents.PopupMenu.ListPopupWindow">
@@ -144,7 +156,8 @@
     <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.App.BottomNavigationView</item>
-        <item name="itemTextAppearanceInactive">@style/TextAppearance.App.BottomNavigationView</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.App.BottomNavigationView
+        </item>
     </style>
 
     <style name="Widget.App.TextView.Title" parent="">
@@ -183,9 +196,10 @@
         <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
-    
+
     <style name="ThemeOverlay.App.ExposedDropdownMenu" parent="">
-        <item name="autoCompleteTextViewStyle">@style/Widget.App.AutoCompleteTextView.OutlinedBox</item>
+        <item name="autoCompleteTextViewStyle">@style/Widget.App.AutoCompleteTextView.OutlinedBox
+        </item>
     </style>
 
     <style name="ThemeOverlay.App.TextInputLayout" parent="">

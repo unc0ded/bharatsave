@@ -1,4 +1,4 @@
-package com.bharatsave.goldapp.view.register.viewmodel
+package com.bharatsave.goldapp.view.register
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

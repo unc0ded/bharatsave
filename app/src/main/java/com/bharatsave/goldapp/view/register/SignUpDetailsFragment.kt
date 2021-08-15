@@ -15,7 +15,6 @@ import com.bharatsave.goldapp.databinding.FragmentSignUpDetailsBinding
 import com.bharatsave.goldapp.model.User
 import com.bharatsave.goldapp.util.StringUtil
 import com.bharatsave.goldapp.util.actionGo
-import com.bharatsave.goldapp.view.register.viewmodel.RegistrationViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint

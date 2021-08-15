@@ -9,7 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_logo"
@@ -63,6 +64,245 @@
             app:layout_constraintTop_toTopOf="@id/iv_logo" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_title_buy_gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:textAppearance="@style/TextAppearance.App.Subtitle"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo"
+            tools:text="buy Gold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_gold_24k"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/rounded_outline_small"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="24K"
+            android:textAppearance="@style/TextAppearance.App.Title"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title_buy_gold"
+            app:layout_constraintStart_toEndOf="@id/tv_title_buy_gold"
+            app:layout_constraintTop_toTopOf="@id/tv_title_buy_gold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_live_gold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_buy_gold">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_gold_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/circle_background"
+                    android:backgroundTint="?attr/colorSurface"
+                    android:elevation="4dp"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_money"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_label_gold_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="LIVE GOLD PRICE"
+                    android:textAppearance="@style/TextAppearance.App.Base"
+                    android:textColor="?attr/colorOnBackground"
+                    app:layout_constraintStart_toEndOf="@id/iv_gold_price"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_live_gold_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:textAppearance="@style/TextAppearance.App.Title"
+                    android:textColor="?attr/colorOnBackground"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_gold_price"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_gold_price"
+                    tools:text="₹4,654.78/gm" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gst_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="+3% GST"
+                    android:textAppearance="@style/TextAppearance.App.Base"
+                    android:textColor="?attr/colorOnBackground"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@id/tv_label_gold_price"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <RadioGroup
+            android:id="@+id/toggle_group_buy_option"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:checkedButton="@id/toggle_currency"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_live_gold">
+
+            <RadioButton
+                android:id="@+id/toggle_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_button_ripple"
+                android:button="@null"
+                android:minHeight="0dp"
+                android:text="@string/buy_currency_text"
+                android:textAppearance="@style/TextAppearance.App.Button.UnelevatedButton"
+                android:textColor="@color/radio_button_text" />
+
+            <androidx.legacy.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/toggle_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_button_ripple"
+                android:button="@null"
+                android:minHeight="0dp"
+                android:text="@string/buy_quantity_text"
+                android:textAppearance="@style/TextAppearance.App.Button.UnelevatedButton"
+                android:textColor="@color/radio_button_text" />
+
+        </RadioGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_buy_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:hint="Enter amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toggle_group_buy_option"
+            app:prefixText="₹"
+            app:prefixTextAppearance="@style/TextAppearance.App.Subtitle"
+            app:suffixTextAppearance="@style/TextAppearance.App.Subtitle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:includeFontPadding="true"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/sv_chip_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_buy_amount">
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_add_500"
+                    style="@style/Widget.App.Chip.Action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:tag="500"
+                    android:text="₹500"
+                    app:chipIcon="@drawable/ic_add_black_24dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_add_1000"
+                    style="@style/Widget.App.Chip.Action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="1000"
+                    android:text="₹1000"
+                    app:chipIcon="@drawable/ic_add_black_24dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_add_5000"
+                    style="@style/Widget.App.Chip.Action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="5000"
+                    android:text="₹5000"
+                    app:chipIcon="@drawable/ic_add_black_24dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_add_10000"
+                    style="@style/Widget.App.Chip.Action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:tag="10000"
+                    android:text="₹10,000"
+                    app:chipIcon="@drawable/ic_add_black_24dp" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </HorizontalScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_buy_gold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="?attr/colorSecondary"
+            android:text="Buy Gold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sv_chip_group" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_plans"
             style="@style/Widget.App.TextView.Title"
             android:layout_width="wrap_content"
@@ -84,7 +324,7 @@
             android:paddingHorizontal="20dp"
             android:text="learn more"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_logo" />
+            app:layout_constraintTop_toBottomOf="@id/btn_buy_gold" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_plan_change"

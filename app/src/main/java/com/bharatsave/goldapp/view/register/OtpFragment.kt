@@ -17,7 +17,6 @@ import com.bharatsave.goldapp.AuthNavigationDirections
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentOtpBinding
 import com.bharatsave.goldapp.util.showSoftKeyboard
-import com.bharatsave.goldapp.view.register.viewmodel.RegistrationViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException

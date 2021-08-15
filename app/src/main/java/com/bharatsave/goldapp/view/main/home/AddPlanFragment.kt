@@ -32,36 +32,32 @@ class AddPlanFragment : Fragment() {
         binding.btnBack.setOnClickListener { findNavController().popBackStack() }
 
         binding.gridPlanCards.addView(
-            CheckablePlanCard(requireContext()).useGridLayout().setPlanName("Round Up")
-                .setPlanDescription("Round up each time you buy something. Invest the changes.")
+            CheckablePlanCard(requireContext()).useGridLayout().setPlanName("Daily Savings")
+                .setPlanDescription("Save something on a daily basis. Move closer to your goals")
                 .setMarginsDp(start = 40, end = 5, top = 10, bottom = 10)
         )
 
         binding.gridPlanCards.addView(
-            CheckablePlanCard(requireContext()).useGridLayout().setPlanName("Daily Savings")
-                .setPlanDescription("Save something on a daily basis. Move closer to your goals")
+            CheckablePlanCard(requireContext()).useGridLayout().setPlanName("Weekly Savings")
+                .setPlanDescription("Grow your savings with investments, week by week")
                 .setMarginsDp(start = 5, end = 40, top = 10, bottom = 10)
         )
 
         binding.gridPlanCards.addView(
             CheckablePlanCard(requireContext()).useGridLayout().setPlanName("Monthly Savings")
-                .setPlanDescription("Invest every month whenever you get paid with auto-pay")
+                .setPlanDescription("Invest every month whenever you get paid, with auto-pay")
                 .setMarginsDp(start = 40, end = 5, top = 10, bottom = 10)
         )
 
-        binding.btnContinue.setOnClickListener {
+        binding.btnSetupAutopay.setOnClickListener {
             val checkedItem =
                 binding.gridPlanCards.children.filter { (it as CheckablePlanCard).isChecked }
                     .elementAt(0) as CheckablePlanCard
-            if (checkedItem.findViewById<MaterialTextView>(R.id.tv_plan_name).text.contentEquals(
-                    "round up",
-                    true
-                )
-            ) {
-                findNavController().navigate(AddPlanFragmentDirections.actionRoundUpDetails())
-            } else {
-                Toast.makeText(context, "Coming Soon!", Toast.LENGTH_SHORT).show()
-            }
+            Toast.makeText(
+                context,
+                checkedItem.findViewById<MaterialTextView>(R.id.tv_plan_name).text,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

@@ -38,16 +38,16 @@ class CheckablePlanCard(context: Context) : MaterialCardView(context) {
                     )
                 )
             )
+            setCheckedIconResource(R.drawable.ic_done_black_24dp)
             checkedIconTint =
-                ColorStateList.valueOf(context.getThemeColorFromAttr(R.attr.colorSurface))
+                ColorStateList.valueOf(context.getThemeColorFromAttr(R.attr.colorPrimary))
             backgroundTintList =
-                ContextCompat.getColorStateList(context, R.color.card_background_tint_list)
-            rippleColor = ContextCompat.getColorStateList(context, R.color.card_ripple)
+                ColorStateList.valueOf(context.getThemeColorFromAttr(R.attr.colorSurface))
             setOnClickListener {
                 this.isChecked = !this.isChecked
 
                 // Button visibility toggle
-                (parent.parent as ConstraintLayout).getViewById(R.id.btn_continue).visibility =
+                (parent.parent as ConstraintLayout).getViewById(R.id.btn_setup_autopay).visibility =
                     if (isChecked) View.VISIBLE else View.GONE
 
                 // Scroll to button on card selection, or to top on deselection
@@ -63,13 +63,14 @@ class CheckablePlanCard(context: Context) : MaterialCardView(context) {
             }
             setOnCheckedChangeListener { _, isChecked ->
                 binding.tvPlanName.setTextColor(
-                    context.getThemeColorFromAttr(if (isChecked) R.attr.colorSurface else R.attr.colorPrimary)
+                    context.getThemeColorFromAttr(if (isChecked) R.attr.colorPrimary else R.attr.colorOnBackground)
                 )
                 binding.tvPlanDescription.setTextColor(
-                    context.getThemeColorFromAttr(if (isChecked) R.attr.colorSurface else R.attr.colorPrimary)
+                    context.getThemeColorFromAttr(if (isChecked) R.attr.colorPrimary else R.attr.colorOnBackground)
                 )
+                binding.ivPlanImage.elevation = (if (isChecked) 0 else 4).toPx
                 binding.ivPlanImage.backgroundTintList =
-                    ColorStateList.valueOf(context.getThemeColorFromAttr(if (isChecked) R.attr.colorSurface else R.attr.colorPrimary))
+                    ColorStateList.valueOf(context.getThemeColorFromAttr(if (isChecked) R.attr.colorPrimary else R.attr.colorSurface))
             }
         }
     }

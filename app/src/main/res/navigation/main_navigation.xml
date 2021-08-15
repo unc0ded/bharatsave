@@ -24,8 +24,8 @@
             app:popExitAnim="@android:anim/slide_out_right" />
 
         <action
-            android:id="@+id/action_add_goal"
-            app:destination="@id/nav_add_goal"
+            android:id="@+id/action_round_up_details"
+            app:destination="@id/nav_details_round_up"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
@@ -63,31 +63,13 @@
         android:id="@+id/nav_add_plan"
         android:name="com.bharatsave.goldapp.view.main.home.AddPlanFragment"
         android:label="fragment_add_plan"
-        tools:layout="@layout/fragment_add_plan">
-
-        <action
-            android:id="@+id/action_round_up_details"
-            app:destination="@id/nav_details_round_up"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
-
-    </fragment>
+        tools:layout="@layout/fragment_add_plan" />
 
     <fragment
         android:id="@+id/nav_details_round_up"
         android:name="com.bharatsave.goldapp.view.main.home.RoundUpDetailsFragment"
         android:label="fragment_round_up_details"
         tools:layout="@layout/fragment_round_up_details">
-
-        <action
-            android:id="@+id/action_add_goal"
-            app:destination="@id/nav_add_goal"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
 
         <action
             android:id="@+id/action_finish_plan"
@@ -101,11 +83,6 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/nav_add_goal"
-        android:name="com.bharatsave.goldapp.view.main.home.AddGoalFragment"
-        android:label="fragment_add_goal"
-        tools:layout="@layout/fragment_add_goal" />
     <fragment
         android:id="@+id/nav_transactions"
         android:name="com.bharatsave.goldapp.view.main.transactions.TransactionsFragment"
