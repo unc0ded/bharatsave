@@ -28,7 +28,7 @@ class CheckablePlanCard(context: Context) : MaterialCardView(context) {
 
     init {
         _binding = CheckablePlanCardBinding.inflate(LayoutInflater.from(context), this, true)
-        apply {
+        run {
             isCheckable = true
             setCardForegroundColor(
                 ColorStateList.valueOf(
@@ -75,51 +75,41 @@ class CheckablePlanCard(context: Context) : MaterialCardView(context) {
         }
     }
 
-    fun setPlanName(name: String): CheckablePlanCard {
+    fun setPlanName(name: String) {
         binding.tvPlanName.text = name
-        return this
     }
 
-    fun setPlanDescription(description: String): CheckablePlanCard {
+    fun setPlanDescription(description: String) {
         binding.tvPlanDescription.text = description
-        return this
     }
 
-    fun useLinearLayout(): CheckablePlanCard {
+    fun useLinearLayout() {
         params = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             .apply { this@CheckablePlanCard.layoutParams = this }
-        return this
     }
 
-    fun useGridLayout(): CheckablePlanCard {
+    fun useGridLayout() {
         params = GridLayout.LayoutParams(
             GridLayout.spec(GridLayout.UNDEFINED, 1f),
             GridLayout.spec(GridLayout.UNDEFINED, 1f)
         ).apply {
             this@CheckablePlanCard.layoutParams = this
         }
-        return this
     }
 
-    fun setMarginsDp(
-        start: Int = 0,
-        end: Int = 0,
-        top: Int = 0,
-        bottom: Int = 0
-    ): CheckablePlanCard {
+    fun setMarginsDp(start: Int = 0, end: Int = 0, top: Int = 0, bottom: Int = 0) {
         when (params) {
             is LinearLayout.LayoutParams -> {
-                (params as LinearLayout.LayoutParams).apply {
+                (params as LinearLayout.LayoutParams).run {
                     marginStart = start.toPx.toInt()
                     marginEnd = end.toPx.toInt()
                     topMargin = top.toPx.toInt()
                     bottomMargin = bottom.toPx.toInt()
                     layoutParams = this
-                    return this@CheckablePlanCard
                 }
             }
             is GridLayout.LayoutParams -> {
-                (params as GridLayout.LayoutParams).apply {
+                (params as GridLayout.LayoutParams).run {
                     height = GridLayout.LayoutParams.WRAP_CONTENT
                     width = 0
                     marginStart = start.toPx.toInt()
@@ -127,12 +117,10 @@ class CheckablePlanCard(context: Context) : MaterialCardView(context) {
                     topMargin = top.toPx.toInt()
                     bottomMargin = bottom.toPx.toInt()
                     layoutParams = this
-                    return this@CheckablePlanCard
                 }
             }
             else -> {
-                Log.e(this.javaClass.simpleName, "Unknown params type")
-                return this
+                throw ClassCastException("Parent Layout is neither LinearLayout nor GridLayout")
             }
         }
     }

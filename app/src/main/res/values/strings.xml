@@ -9,4 +9,6 @@
 
     <string name="buy_currency_text">Buy in Rupees</string>
     <string name="buy_quantity_text">Buy in quantity</string>
+    <string name="sell_currency_text">Amount of gold to sell</string>
+    <string name="sell_quantity_text">Sell in quantity</string>
 </resources>

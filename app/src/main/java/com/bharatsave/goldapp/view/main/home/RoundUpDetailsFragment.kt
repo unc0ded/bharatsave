@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentRoundUpDetailsBinding
+import com.bharatsave.goldapp.util.increaseHitArea
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -62,7 +63,10 @@ class RoundUpDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.btnBack.setOnClickListener { findNavController().popBackStack() }
+        binding.btnBack.run {
+            increaseHitArea(20f)
+            setOnClickListener { findNavController().popBackStack() }
+        }
 
         (binding.menuRoundUpAmount.editText as MaterialAutoCompleteTextView).setText(
             "Hundred",

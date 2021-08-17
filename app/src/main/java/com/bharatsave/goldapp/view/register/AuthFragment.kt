@@ -34,4 +34,9 @@ class AuthFragment : Fragment() {
             requireContext().getThemeColorFromAttr(R.attr.colorSecondaryVariant)
         )
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

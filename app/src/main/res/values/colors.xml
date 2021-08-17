@@ -16,6 +16,8 @@
     <color name="icon_grey">#C7C7C7</color>
     <color name="unfocused_grey">#B8B8B8</color>
     <color name="fill_grey">#F8F8FA</color>
+    <color name="icon_green">#10CC0F</color>
+    <color name="icon_red">#FF1B1B</color>
 
     <!--    blacks-->
     <color name="black">#FF000000</color>

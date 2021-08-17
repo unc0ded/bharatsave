@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.custom_widget.CheckablePlanCard
 import com.bharatsave.goldapp.databinding.FragmentAddPlanBinding
+import com.bharatsave.goldapp.util.increaseHitArea
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,24 +30,36 @@ class AddPlanFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.btnBack.setOnClickListener { findNavController().popBackStack() }
+        binding.btnBack.run {
+            increaseHitArea(20f)
+            setOnClickListener { findNavController().popBackStack() }
+        }
 
         binding.gridPlanCards.addView(
-            CheckablePlanCard(requireContext()).useGridLayout().setPlanName("Daily Savings")
-                .setPlanDescription("Save something on a daily basis. Move closer to your goals")
-                .setMarginsDp(start = 40, end = 5, top = 10, bottom = 10)
+            CheckablePlanCard(requireContext()).apply {
+                useGridLayout()
+                setPlanName("Daily Savings")
+                setPlanDescription("Save something on a daily basis. Move closer to your goals")
+                setMarginsDp(start = 40, end = 5, top = 10, bottom = 10)
+            }
         )
 
         binding.gridPlanCards.addView(
-            CheckablePlanCard(requireContext()).useGridLayout().setPlanName("Weekly Savings")
-                .setPlanDescription("Grow your savings with investments, week by week")
-                .setMarginsDp(start = 5, end = 40, top = 10, bottom = 10)
+            CheckablePlanCard(requireContext()).apply {
+                useGridLayout()
+                setPlanName("Weekly Savings")
+                setPlanDescription("Grow your savings with investments, week by week")
+                setMarginsDp(start = 5, end = 40, top = 10, bottom = 10)
+            }
         )
 
         binding.gridPlanCards.addView(
-            CheckablePlanCard(requireContext()).useGridLayout().setPlanName("Monthly Savings")
-                .setPlanDescription("Invest every month whenever you get paid, with auto-pay")
-                .setMarginsDp(start = 40, end = 5, top = 10, bottom = 10)
+            CheckablePlanCard(requireContext()).apply {
+                useGridLayout()
+                setPlanName("Monthly Savings")
+                setPlanDescription("Invest every month whenever you get paid, with auto-pay")
+                setMarginsDp(start = 40, end = 5, top = 10, bottom = 10)
+            }
         )
 
         binding.btnSetupAutopay.setOnClickListener {

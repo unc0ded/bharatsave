@@ -86,6 +86,15 @@
 
     <style name="Widget.App.TextInputLayout.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.ExposedDropdownMenu</item>
+        <item name="android:textColorHint">@color/unfocused_grey</item>
+        <item name="hintTextColor">@color/text_black</item>
+        <item name="hintTextAppearance">@style/TextAppearance.App.Base</item>
+        <item name="endIconTint">@color/text_black</item>
+        <item name="boxStrokeColor">@color/text_black</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
     </style>
 
     <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

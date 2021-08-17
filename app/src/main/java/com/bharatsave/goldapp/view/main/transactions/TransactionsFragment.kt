@@ -52,6 +52,11 @@ class TransactionsFragment : Fragment() {
         binding.rvTxns.adapter = TransactionsAdapter(finalList)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun sortAndGroup(list: MutableList<Transaction.TransactionItem>): List<Transaction> {
         list.sortByDescending { it.dateTime }
         val sortedList = mutableListOf<Transaction>()

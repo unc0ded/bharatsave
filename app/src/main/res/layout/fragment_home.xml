@@ -63,6 +63,195 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_logo" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="?attr/colorPrimary"
+            android:elevation="3dp"
+            android:padding="8dp"
+            android:outlineProvider="none"
+            android:src="@drawable/ic_money"
+            app:layout_constraintBottom_toTopOf="@id/card_gold_balance"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/card_gold_balance"
+            app:layout_constraintStart_toStartOf="@id/card_gold_balance"
+            app:layout_constraintTop_toTopOf="@id/card_gold_balance" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_gold_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gold_balance_price_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="LIVE GOLD PRICE"
+                    android:textAppearance="@style/TextAppearance.App.Base"
+                    android:textColor="?attr/colorOnBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gold_balance_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle"
+                    android:textColor="?attr/colorOnBackground"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_gold_balance_price_label"
+                    tools:text="₹4,654.78/gm" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gold_balance_gst_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="+3% GST"
+                    android:textAppearance="@style/TextAppearance.App.Base"
+                    android:textColor="?attr/colorOnBackground"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_gold_balance_price"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@id/tv_gold_balance_price_label"
+                    app:layout_constraintTop_toTopOf="@id/tv_gold_balance_price_label" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:dividerInsetEnd="56dp"
+                    app:dividerInsetStart="56dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_gold_balance_price" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gold_balance_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="YOUR GOLD"
+                    android:textAppearance="@style/TextAppearance.App.Base"
+                    android:textColor="?attr/colorOnBackground"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider_card" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gold_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:textAppearance="@style/TextAppearance.App.Title"
+                    android:textColor="?attr/colorOnBackground"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_gold_balance_label"
+                    tools:text="₹9,748.98" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_separator"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/circle_background"
+                    android:tint="@color/unfocused_grey"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_gold_balance"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toEndOf="@id/tv_gold_balance"
+                    app:layout_constraintTop_toTopOf="@id/tv_gold_balance" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_gold_weight_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textAppearance="@style/TextAppearance.App.Title"
+                    android:textColor="?attr/colorSecondary"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_gold_balance"
+                    app:layout_constraintStart_toEndOf="@id/iv_separator"
+                    app:layout_constraintTop_toTopOf="@id/tv_gold_balance"
+                    tools:text="6.7gms" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/rounded_outline_small"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:text="24K"
+                    android:textAppearance="@style/TextAppearance.App.Title"
+                    android:textColor="?attr/colorSecondary"
+                    android:textSize="6sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_gold_weight_balance"
+                    app:layout_constraintStart_toEndOf="@id/tv_gold_weight_balance"
+                    app:layout_constraintTop_toTopOf="@id/tv_gold_weight_balance" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:drawableStart="@drawable/ic_arrow_drop_up_black_24dp"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle"
+                    android:textColor="?attr/colorOnBackground"
+                    android:textSize="11sp"
+                    app:drawableTint="@color/icon_green"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_gold_balance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_gold_balance_label"
+                    tools:text="0.9%" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_sell_gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="sell gold"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_gold_balance" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_request_delivery"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="request delivery"
+            android:textAppearance="@style/TextAppearance.App.Button"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_sell_gold"
+            app:layout_constraintStart_toEndOf="@+id/btn_sell_gold"
+            app:layout_constraintTop_toTopOf="@id/btn_sell_gold" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_title_buy_gold"
             android:layout_width="wrap_content"
@@ -73,8 +262,8 @@
             android:textColor="?attr/colorSecondary"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_logo"
-            tools:text="buy Gold" />
+            app:layout_constraintTop_toBottomOf="@id/btn_sell_gold"
+            tools:text="buy gold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_gold_24k"
@@ -174,14 +363,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="20dp"
-            android:checkedButton="@id/toggle_currency"
+            android:checkedButton="@id/toggle_buy_currency"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_live_gold">
 
             <RadioButton
-                android:id="@+id/toggle_currency"
+                android:id="@+id/toggle_buy_currency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_button_ripple"
@@ -197,7 +386,7 @@
                 android:layout_weight="1" />
 
             <RadioButton
-                android:id="@+id/toggle_quantity"
+                android:id="@+id/toggle_buy_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_button_ripple"
@@ -327,7 +516,7 @@
             app:layout_constraintTop_toBottomOf="@id/btn_buy_gold" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_plan_change"
+            android:id="@+id/btn_plan_round_up"
             style="@style/Widget.App.Button.Card"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -354,10 +543,10 @@
             android:elevation="8dp"
             android:padding="10dp"
             android:src="@drawable/ic_money"
-            app:layout_constraintBottom_toBottomOf="@id/btn_plan_change"
+            app:layout_constraintBottom_toBottomOf="@id/btn_plan_round_up"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="@id/btn_plan_change"
-            app:layout_constraintTop_toTopOf="@+id/btn_plan_change" />
+            app:layout_constraintStart_toStartOf="@id/btn_plan_round_up"
+            app:layout_constraintTop_toTopOf="@+id/btn_plan_round_up" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_plan_change"
@@ -390,7 +579,7 @@
             app:iconSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_plan_change" />
+            app:layout_constraintTop_toBottomOf="@id/btn_plan_round_up" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_plan_periodic"
@@ -542,6 +731,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:backgroundTint="?attr/colorSecondary"
+                    android:outlineProvider="none"
                     android:text="learn more"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_gold_bars"
                     app:layout_constraintEnd_toEndOf="parent"

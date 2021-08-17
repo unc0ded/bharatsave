@@ -77,7 +77,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             "gold",
             R.font.eina01_semi_bold
         )
-        binding.toggleQuantity.text =
+        binding.toggleBuyQuantity.text =
             SpannableString(resources.getString(R.string.buy_quantity_text)).apply {
                 setSpan(UnderlineSpan(), 0, this.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
@@ -87,15 +87,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionAddPlan())
         }
 
-        binding.btnPlanChange.setOnClickListener {
+        binding.btnPlanRoundUp.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionRoundUpDetails())
         }
 
         binding.toggleGroupBuyOption.setOnCheckedChangeListener { _, buttonId ->
             when (buttonId) {
-                R.id.toggle_currency -> {
-                    binding.toggleCurrency.text = resources.getString(R.string.buy_currency_text)
-                    binding.toggleQuantity.text =
+                R.id.toggle_buy_currency -> {
+                    binding.toggleBuyCurrency.text = resources.getString(R.string.buy_currency_text)
+                    binding.toggleBuyQuantity.text =
                         SpannableString(resources.getString(R.string.buy_quantity_text)).apply {
                             setSpan(
                                 UnderlineSpan(),
@@ -109,7 +109,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     binding.etBuyAmount.suffixText = ""
                     binding.etBuyAmount.hint = "Enter amount"
                     if (buyAmount != 0f) {
-                        (binding.etBuyAmount.editText as TextInputEditText).apply {
+                        (binding.etBuyAmount.editText as TextInputEditText).run {
                             setText(buyAmount.toString())
                             setSelection(
                                 if (this.text.toString()
@@ -119,9 +119,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         }
                     } else (binding.etBuyAmount.editText as TextInputEditText).setText("")
                 }
-                R.id.toggle_quantity -> {
-                    binding.toggleQuantity.text = resources.getString(R.string.buy_quantity_text)
-                    binding.toggleCurrency.text =
+                R.id.toggle_buy_quantity -> {
+                    binding.toggleBuyQuantity.text = resources.getString(R.string.buy_quantity_text)
+                    binding.toggleBuyCurrency.text =
                         SpannableString(resources.getString(R.string.buy_currency_text)).apply {
                             setSpan(
                                 UnderlineSpan(),
@@ -135,7 +135,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     binding.etBuyAmount.suffixText = "gm"
                     binding.etBuyAmount.hint = "Enter quantity"
                     if (buyQuantity != 0f) {
-                        (binding.etBuyAmount.editText as TextInputEditText).apply {
+                        (binding.etBuyAmount.editText as TextInputEditText).run {
                             setText(buyQuantity.toString())
                             setSelection(
                                 if (this.text.toString()
@@ -150,9 +150,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         binding.etBuyAmount.editText?.doOnTextChanged { text, _, _, _ ->
             when (binding.toggleGroupBuyOption.checkedRadioButtonId) {
-                R.id.toggle_currency -> buyAmount =
+                R.id.toggle_buy_currency -> buyAmount =
                     if (text.toString().isNotBlank()) text.toString().toFloat() else 0f
-                R.id.toggle_quantity -> buyQuantity =
+                R.id.toggle_buy_quantity -> buyQuantity =
                     if (text.toString().isNotBlank()) text.toString().toFloat() else 0f
             }
         }
@@ -162,6 +162,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.chipAdd5000.setOnClickListener(this)
         binding.chipAdd10000.setOnClickListener(this)
 
+        binding.btnSellGold.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionWithdraw()) }
+        binding.btnRequestDelivery.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionRequestDelivery()) }
         binding.btnLearn.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionSaveLearn()) }
     }
 
@@ -170,7 +172,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                BadgeDrawable.create(requireContext()).apply {
+                BadgeDrawable.create(requireContext()).run {
                     if (notificationCount == 0) {
                         clearNumber()
                     } else number = notificationCount
@@ -185,7 +187,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        (binding.etBuyAmount.editText as TextInputEditText).apply {
+        (binding.etBuyAmount.editText as TextInputEditText).run {
             setText(
                 (if ((binding.etBuyAmount.editText as TextInputEditText).text.toString()
                         .isBlank()

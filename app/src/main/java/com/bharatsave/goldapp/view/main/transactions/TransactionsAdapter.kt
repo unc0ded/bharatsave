@@ -51,7 +51,7 @@ class TransactionsAdapter(private val transactionList: List<Transaction>) :
     inner class TransactionsViewHolder(val binding: ItemTransactionBinding) :
         RecyclerView.ViewHolder(binding.root) {
         internal fun bind(transactionItem: Transaction.TransactionItem) {
-            binding.apply {
+            binding.run {
                 tvPlanName.text = transactionItem.plan.toString()
                 tvTime.text =
                     transactionItem.dateTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.US))
@@ -65,7 +65,7 @@ class TransactionsAdapter(private val transactionList: List<Transaction>) :
     inner class SectionViewHolder(val binding: ItemSectionHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
         internal fun bind(dateItem: Transaction.TransactionHeader) {
-            binding.apply {
+            binding.run {
                 tvDate.text = dateItem.date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
             }
         }

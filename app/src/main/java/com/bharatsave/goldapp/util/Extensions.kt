@@ -3,11 +3,13 @@ package com.bharatsave.goldapp.util
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.Rect
 import android.os.SystemClock
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
+import android.view.TouchDelegate
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -17,6 +19,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.FontRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.doOnLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.color.MaterialColors
 
@@ -148,6 +151,19 @@ fun View.showSoftKeyboard() {
         val inputMethodManager =
             context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    }
+}
+
+fun View.increaseHitArea(sizeDp: Float) {
+    val increasedArea = sizeDp.toPx.toInt()
+    (parent as View).doOnLayout {
+        val rect = Rect()
+        getHitRect(rect)
+        rect.top -= increasedArea
+        rect.left -= increasedArea
+        rect.bottom += increasedArea
+        rect.right += increasedArea
+        it.touchDelegate = TouchDelegate(rect, this)
     }
 }
 

@@ -1,18 +1,18 @@
 package com.bharatsave.goldapp.view.register
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.bharatsave.goldapp.OnboardingNavigationDirections
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.ActivityRegistrationBinding
-import com.bharatsave.goldapp.view.base.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegistrationActivity : BaseActivity() {
+class RegistrationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistrationBinding
     private lateinit var mFirebaseAuth: FirebaseAuth

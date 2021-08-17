@@ -39,6 +39,22 @@
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
 
+        <action
+            android:id="@+id/action_withdraw"
+            app:destination="@id/nav_withdraw"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_request_delivery"
+            app:destination="@id/nav_delivery"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+
     </fragment>
 
     <fragment
@@ -88,5 +104,17 @@
         android:name="com.bharatsave.goldapp.view.main.transactions.TransactionsFragment"
         android:label="fragment_transactions"
         tools:layout="@layout/fragment_transactions" />
+
+    <fragment
+        android:id="@+id/nav_withdraw"
+        android:name="com.bharatsave.goldapp.view.main.home.WithdrawFragment"
+        android:label="fragment_withdraw"
+        tools:layout="@layout/fragment_withdraw" />
+
+    <fragment
+        android:id="@+id/nav_delivery"
+        android:name="com.bharatsave.goldapp.view.main.home.DeliveryFragment"
+        android:label="fragment_delivery"
+        tools:layout="@layout/fragment_delivery" />
 
 </navigation>
