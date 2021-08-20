@@ -6,6 +6,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
@@ -88,7 +89,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
 
         binding.btnPlanRoundUp.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionRoundUpDetails())
+            Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show()
+//            findNavController().navigate(HomeFragmentDirections.actionRoundUpDetails())
         }
 
         binding.toggleGroupBuyOption.setOnCheckedChangeListener { _, buttonId ->

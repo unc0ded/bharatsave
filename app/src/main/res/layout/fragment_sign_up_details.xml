@@ -65,8 +65,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autofillHints="emailAddress"
-            android:imeOptions="actionGo"
+            android:imeOptions="actionNext"
             android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_postal_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="Pin Code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints="postalCode"
+            android:imeOptions="actionGo"
+            android:inputType="number"
+            android:maxLength="6" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,12 +100,11 @@
         android:hint="Referral Code (if any)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email">
+        app:layout_constraintTop_toBottomOf="@+id/et_postal_code">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:autofillHints="emailAddress"
             android:imeOptions="actionGo"
             android:inputType="text" />
 

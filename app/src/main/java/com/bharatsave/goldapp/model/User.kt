@@ -1,21 +1,22 @@
 package com.bharatsave.goldapp.model
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "user_table")
-@Parcelize
 @JsonClass(generateAdapter = true)
 data class User(
-    @Json(name = "name")
+    @Json(name = "_id")
+    val id: String?,
+    @Json(name = "userName")
     val name: String,
-    @Json(name = "email")
+    @Json(name = "emailId")
     val email: String,
     @PrimaryKey
-    @Json(name = "phone_number")
-    val phoneNumber: String
-) : Parcelable
+    @Json(name = "mobileNumber")
+    val phoneNumber: String,
+    @Json(name = "userPincode")
+    val pinCode: String = ""
+)

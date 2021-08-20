@@ -40,7 +40,7 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.btnCopyReferral.generateRandomString(12);
+        binding.btnCopyReferral.generateRandomString(12)
 
         viewModel.userData.observe(viewLifecycleOwner) { user ->
             binding.tvName.text = user?.name

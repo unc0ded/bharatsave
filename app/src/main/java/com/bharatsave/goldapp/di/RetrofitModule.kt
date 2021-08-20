@@ -1,6 +1,7 @@
 package com.bharatsave.goldapp.di
 
-import com.bharatsave.goldapp.data.service.AuthService
+import com.bharatsave.goldapp.data.service.AugmontService
+import com.bharatsave.goldapp.data.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 @Module
 object RetrofitModule {
 
-    private const val BASE_URL = "http://192.168.1.6:8080/"
+    private const val BASE_URL = "https://api.bharatsave.com/"
 
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
@@ -45,7 +46,9 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun providesAuthService(retrofit: Retrofit): AuthService {
-        return retrofit.create()
-    }
+    fun providesAugmontService(retrofit: Retrofit): AugmontService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun providesUserService(retrofit: Retrofit): UserService = retrofit.create()
 }

@@ -23,7 +23,7 @@ class ProfileViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val user = authRepository.getUser()
+            val user = authRepository.getUser(false)
             _userData.value = user
         }
     }
@@ -34,9 +34,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun getUserData() {
+    fun getUserData(updated: Boolean) {
         viewModelScope.launch {
-            val user = authRepository.getUser()
+            val user = authRepository.getUser(updated)
+            if (updated) authRepository.insertUser(user)
             _userData.value = user
         }
     }

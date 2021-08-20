@@ -161,10 +161,10 @@ class OtpFragment : Fragment() {
     private fun setupObservers() {
         viewModel.response.observe(viewLifecycleOwner) { response ->
             if (response?.user != null) {
-                Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "${response.user.name} logged in!", Toast.LENGTH_SHORT).show()
                 viewModel.saveUser(response.user)
                 findNavController().navigate(AuthNavigationDirections.actionMainActivity())
-                viewModel.saveTokens(response.authToken, response.refreshToken)
+                viewModel.saveAuthData(response.authToken, Firebase.auth.currentUser!!.uid)
                 activity?.finish()
             }
         }

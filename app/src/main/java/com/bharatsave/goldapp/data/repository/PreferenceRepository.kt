@@ -16,6 +16,8 @@ class PreferenceRepository @Inject constructor(private val dataStore: DataStore<
 
     private val authTokenKey = stringPreferencesKey("auth_token")
     private val refreshTokenKey = stringPreferencesKey("refresh_token")
+    private val phoneNumberKey = stringPreferencesKey("mobile_number")
+    private val firebaseUidKey = stringPreferencesKey("user_id")
 
     suspend fun saveAuthToken(token: String) {
         dataStore.edit { preferences ->
@@ -26,6 +28,18 @@ class PreferenceRepository @Inject constructor(private val dataStore: DataStore<
     suspend fun saveRefreshToken(token: String) {
         dataStore.edit { preferences ->
             preferences[refreshTokenKey] = token
+        }
+    }
+
+    suspend fun savePhone(phoneNumber: String) {
+        dataStore.edit { preferences ->
+            preferences[phoneNumberKey] = phoneNumber
+        }
+    }
+
+    suspend fun saveUid(firebaseUid: String) {
+        dataStore.edit { preferences ->
+            preferences[firebaseUidKey] = firebaseUid
         }
     }
 
@@ -45,5 +59,17 @@ class PreferenceRepository @Inject constructor(private val dataStore: DataStore<
         return dataStore.data
             .catch { emit(emptyPreferences()) }
             .map { preferences -> preferences[refreshTokenKey] ?: "" }
+    }
+
+    fun getPhoneNumber(): Flow<String> {
+        return dataStore.data
+            .catch { emit(emptyPreferences()) }
+            .map { preferences -> preferences[phoneNumberKey] ?: "" }
+    }
+
+    fun getFirebaseUid(): Flow<String> {
+        return dataStore.data
+            .catch { emit(emptyPreferences()) }
+            .map { preferences -> preferences[firebaseUidKey] ?: "" }
     }
 }

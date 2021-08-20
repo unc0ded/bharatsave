@@ -60,21 +60,36 @@ class SignUpDetailsFragment : Fragment() {
     private fun setupViews() {
         binding.etFullName.editText?.doOnTextChanged { text, _, _, _ ->
             binding.btnRegister.isEnabled =
-                !(text.toString().isEmpty() || binding.etEmail.editText?.text.toString().isEmpty())
+                !(text.toString().isBlank() || binding.etEmail.editText?.text.toString()
+                    .isBlank() || binding.etPostalCode.editText?.text.toString().isBlank())
         }
         binding.etEmail.editText?.doOnTextChanged { text, _, _, _ ->
             binding.btnRegister.isEnabled =
-                !(binding.etFullName.editText?.text.toString().isEmpty() || text.toString()
-                    .isEmpty())
+                !(binding.etFullName.editText?.text.toString().isBlank() || text.toString()
+                    .isBlank() || binding.etPostalCode.editText?.text.toString().isBlank())
+        }
+        binding.etPostalCode.editText?.doOnTextChanged { text, _, _, _ ->
+            binding.btnRegister.isEnabled = !(binding.etFullName.editText?.text.toString()
+                .isBlank() || binding.etEmail.editText?.text.toString().isBlank() || text.toString()
+                .isBlank())
         }
 
         binding.btnRegister.setOnClickListener {
             val fullName = binding.etFullName.editText?.text?.trim().toString()
             val email = binding.etEmail.editText?.text?.trim().toString()
+            val pinCode = binding.etPostalCode.editText?.text?.trim().toString()
             // TODO unused referral field
             val referral = binding.etReferral.editText?.text?.trim().toString()
             if (validDetailsProvided(fullName, email, args.phone)) {
-                viewModel.signUp(User(fullName, email, args.phone))
+                viewModel.signUp(
+                    User(
+                        id = null,
+                        name = fullName,
+                        email = email,
+                        phoneNumber = args.phone,
+                        pinCode = pinCode
+                    )
+                )
             } else {
                 Toast.makeText(context, "Please enter valid details", Toast.LENGTH_SHORT).show()
             }
@@ -86,10 +101,10 @@ class SignUpDetailsFragment : Fragment() {
     private fun setupObservers() {
         viewModel.response.observe(viewLifecycleOwner) { response ->
             if (response?.user != null) {
-                Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "User Created", Toast.LENGTH_SHORT).show()
                 viewModel.saveUser(response.user)
                 findNavController().navigate(AuthNavigationDirections.actionMainActivity())
-                viewModel.saveTokens(response.authToken, response.refreshToken)
+                viewModel.saveAuthData(response.authToken, Firebase.auth.currentUser!!.uid)
                 activity?.finish()
             }
         }

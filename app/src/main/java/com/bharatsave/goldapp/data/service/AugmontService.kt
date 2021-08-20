@@ -5,11 +5,11 @@ import com.bharatsave.goldapp.model.User
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface AuthService {
+interface AugmontService {
 
-    @POST("auth/signup")
+    @POST("augmont/createuser")
     suspend fun signUp(@Body user: User): AuthResponse
 
-    @POST("auth/login")
+    @POST("augmont/login")
     suspend fun login(@Body map: Map<String, String>): AuthResponse
 }
