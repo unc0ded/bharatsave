@@ -1,6 +1,8 @@
 package com.bharatsave.goldapp.di
 
+import com.bharatsave.goldapp.data.repository.PreferenceRepository
 import com.bharatsave.goldapp.data.service.AugmontService
+import com.bharatsave.goldapp.data.service.AuthInterceptor
 import com.bharatsave.goldapp.data.service.UserService
 import dagger.Module
 import dagger.Provides
@@ -11,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -28,15 +31,19 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun providesOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideBasicOkHttpClient(
+        interceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
             .addInterceptor(interceptor)
             .build()
     }
 
     @Singleton
     @Provides
-    fun providesRetrofitClient(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofitClient(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
@@ -46,9 +53,9 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun providesAugmontService(retrofit: Retrofit): AugmontService = retrofit.create()
+    fun provideAugmontService(retrofit: Retrofit): AugmontService = retrofit.create()
 
     @Singleton
     @Provides
-    fun providesUserService(retrofit: Retrofit): UserService = retrofit.create()
+    fun provideUserService(retrofit: Retrofit): UserService = retrofit.create()
 }

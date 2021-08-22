@@ -1,5 +1,6 @@
 package com.bharatsave.goldapp.model
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
@@ -18,5 +19,7 @@ data class User(
     @Json(name = "mobileNumber")
     val phoneNumber: String,
     @Json(name = "userPincode")
-    val pinCode: String = ""
+    val pinCode: String = "",
+    @Embedded
+    val balanceDetail: BalanceDetail = BalanceDetail()
 )

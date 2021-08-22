@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentHomeBinding
@@ -19,12 +20,20 @@ import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel by viewModels<HomeViewModel>()
+
+    private val decimalFormat by lazy {
+        DecimalFormat("#,##0.00")
+    }
     private var buyAmount: Float = 0f
     private var buyQuantity: Float = 0f
 
@@ -39,6 +48,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Basic badge with no count
 //        initBadge(binding.btnOptions, 0)
+        setupObservers()
         setupViews()
     }
 
@@ -47,15 +57,55 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = null
     }
 
+    private fun setupObservers() {
+        viewModel.goldRateData.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.tvLiveGoldPrice.text =
+                    "₹${decimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+                binding.tvDigitalGoldPrice.text =
+                    "₹${decimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+                binding.tvGoldBalancePrice.text =
+                    "₹${decimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+            }
+        }
+        viewModel.balanceData.observe(viewLifecycleOwner) {
+            if (it.goldBalance.toFloat() != 0f) {
+                binding.cardLiveGold.visibility = View.GONE
+                viewModel.goldRateData.value?.run {
+                    binding.tvGoldCurrentValue.text =
+                        "₹${decimalFormat.format(first.totalSellPrice.toFloat() * it.goldBalance.toFloat())}/gm"
+                    binding.tvGoldCurrentValueChange.text = "${decimalFormat.format(second)}%"
+                    binding.tvGoldCurrentValueChange.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        if (second > 0) R.drawable.ic_arrow_drop_up_black_24dp else R.drawable.ic_arrow_drop_down_black_24dp,
+                        0,
+                        0,
+                        0
+                    )
+                }
+                binding.tvGoldBalance.text = "${decimalFormat.format(it.goldBalance.toFloat())}gms"
+                binding.cardGoldBalance.visibility = View.VISIBLE
+                binding.ivFloatingLogo.visibility = View.VISIBLE
+                binding.btnSellGold.visibility = View.VISIBLE
+                binding.btnRequestDelivery.visibility = View.VISIBLE
+            } else {
+                binding.cardLiveGold.visibility = View.VISIBLE
+                binding.cardGoldBalance.visibility = View.GONE
+                binding.ivFloatingLogo.visibility = View.GONE
+                binding.btnSellGold.visibility = View.GONE
+                binding.btnRequestDelivery.visibility = View.GONE
+            }
+        }
+    }
+
     private fun setupViews() {
-        binding.tvPlans.setCustomTypefaceSpanString(
+        binding.tvPlansHeading.setCustomTypefaceSpanString(
             "save",
             R.font.eina01_light,
             "",
             "Plans",
             R.font.eina01_semi_bold
         )
-        binding.tvLearn.setCustomTypefaceSpanString(
+        binding.tvKnowGoldHeading.setCustomTypefaceSpanString(
             "know",
             R.font.eina01_light,
             " ",
@@ -71,7 +121,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.font.eina01_semi_bold,
             requireContext().getThemeColorFromAttr(R.attr.colorSecondaryVariant)
         )
-        binding.tvTitleBuyGold.setCustomTypefaceSpanString(
+        binding.tvBuyGoldHeading.setCustomTypefaceSpanString(
             "buy",
             R.font.eina01_regular,
             " ",
@@ -165,7 +215,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.chipAdd10000.setOnClickListener(this)
 
         binding.btnSellGold.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionWithdraw()) }
-        binding.btnRequestDelivery.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionRequestDelivery()) }
+        binding.btnRequestDelivery.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionRequestDelivery()
+            )
+        }
         binding.btnLearn.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionSaveLearn()) }
     }
 

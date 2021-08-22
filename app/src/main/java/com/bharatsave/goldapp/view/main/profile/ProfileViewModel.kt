@@ -30,7 +30,7 @@ class ProfileViewModel @Inject constructor(
 
     fun clearUserData() {
         viewModelScope.launch {
-            preferenceRepository.clearTokens()
+            preferenceRepository.clearUserData()
         }
     }
 

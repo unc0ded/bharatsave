@@ -104,7 +104,11 @@ class SignUpDetailsFragment : Fragment() {
                 Toast.makeText(context, "User Created", Toast.LENGTH_SHORT).show()
                 viewModel.saveUser(response.user)
                 findNavController().navigate(AuthNavigationDirections.actionMainActivity())
-                viewModel.saveAuthData(response.authToken, Firebase.auth.currentUser!!.uid)
+                viewModel.saveAuthData(
+                    response.authToken,
+                    response.user.phoneNumber,
+                    Firebase.auth.currentUser!!.uid
+                )
                 activity?.finish()
             }
         }

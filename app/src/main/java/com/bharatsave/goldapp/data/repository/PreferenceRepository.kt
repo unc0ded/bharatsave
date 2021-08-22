@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -43,33 +44,37 @@ class PreferenceRepository @Inject constructor(private val dataStore: DataStore<
         }
     }
 
-    suspend fun clearTokens() {
+    suspend fun clearUserData() {
         dataStore.edit { preferences ->
             preferences.clear()
         }
     }
 
-    fun getAuthToken(): Flow<String> {
+    suspend fun getAuthToken(): String {
         return dataStore.data
             .catch { emit(emptyPreferences()) }
             .map { preferences -> preferences[authTokenKey] ?: "" }
+            .first()
     }
 
-    fun getRefreshToken(): Flow<String> {
+    suspend fun getRefreshToken(): String {
         return dataStore.data
             .catch { emit(emptyPreferences()) }
             .map { preferences -> preferences[refreshTokenKey] ?: "" }
+            .first()
     }
 
-    fun getPhoneNumber(): Flow<String> {
+    suspend fun getPhoneNumber(): String {
         return dataStore.data
             .catch { emit(emptyPreferences()) }
             .map { preferences -> preferences[phoneNumberKey] ?: "" }
+            .first()
     }
 
-    fun getFirebaseUid(): Flow<String> {
+    suspend fun getFirebaseUid(): String {
         return dataStore.data
             .catch { emit(emptyPreferences()) }
             .map { preferences -> preferences[firebaseUidKey] ?: "" }
+            .first()
     }
 }

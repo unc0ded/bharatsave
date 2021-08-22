@@ -65,16 +65,17 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-    fun saveAuthData(authToken: String, firebaseId: String) {
+    fun saveAuthData(authToken: String, phoneNumber: String, firebaseId: String) {
         viewModelScope.launch {
             preferenceRepository.saveAuthToken(authToken)
             preferenceRepository.saveUid(firebaseId)
+            preferenceRepository.savePhone(phoneNumber)
 //            preferenceRepository.saveRefreshToken(refreshToken)
         }
     }
 
     suspend fun checkTokens(): Boolean {
-        val authToken = preferenceRepository.getAuthToken().first()
+        val authToken = preferenceRepository.getAuthToken()
 //        val refreshToken = preferenceRepository.getRefreshToken().first()
         if (authToken.isBlank()) {
             return false

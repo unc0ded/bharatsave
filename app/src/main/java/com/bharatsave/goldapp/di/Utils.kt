@@ -5,7 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
-import com.bharatsave.goldapp.data.db.UserDatabase
+import com.bharatsave.goldapp.data.db.MainDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,11 +25,11 @@ object Utils {
 
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context): UserDatabase {
+    fun provideDatabase(@ApplicationContext context: Context): MainDatabase {
         return synchronized(this) {
             Room.databaseBuilder(
                 context.applicationContext,
-                UserDatabase::class.java,
+                MainDatabase::class.java,
                 "user_database"
             ).build()
         }
@@ -37,5 +37,9 @@ object Utils {
 
     @Singleton
     @Provides
-    fun provideUserDao(userDatabase: UserDatabase) = userDatabase.userDao()
+    fun provideUserDao(mainDatabase: MainDatabase) = mainDatabase.userDao()
+
+    @Singleton
+    @Provides
+    fun provideMainDao(mainDatabase: MainDatabase) = mainDatabase.mainDao()
 }
