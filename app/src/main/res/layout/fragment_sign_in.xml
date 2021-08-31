@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
-        android:text="Get Started"
+        android:text="@string/get_started"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +26,7 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:text="Enter your phone number to continue"
+        android:text="@string/enter_phone_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -39,7 +39,7 @@
         android:background="@drawable/rounded_outline_background"
         android:paddingHorizontal="16dp"
         android:paddingVertical="17dp"
-        android:text="+91"
+        android:text="@string/country_code"
         android:textColor="@color/text_black"
         app:layout_constraintBottom_toBottomOf="@+id/et_phone_number"
         app:layout_constraintStart_toStartOf="parent" />
@@ -51,7 +51,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
-        android:hint="Mobile Number"
+        android:hint="@string/mobile_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_country_code"
         app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
@@ -73,7 +73,7 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="40dp"
-        android:text="Continue"
+        android:text="@string/continue_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -1,14 +1,114 @@
 <resources>
     <string name="app_name">BharatSave</string>
+    <string name="bharat_save_title">Bharat Save</string>
+    <string name="bharat_save_subtitle">Learn. Plan. Invest.</string>
 
-    <string name="contact_us"><u>Contact Us</u></string>
-    <string name="resend_otp"><u>Resend</u></string>
-    <string name="edit_phone_text">&lt;u>%1$s&lt;/u></string>
+    <!--    global-->
+    <string name="continue_text">Continue</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
+
     <!--    dummy link to google for now-->
     <string name="terms_and_conditions_text">By registering, I agree to the <a href="https://www.google.com"><b><u>T&amp;C</u></b></a></string>
 
+    <!--    auth-->
+    <string name="verify_phone">Verify your phone</string>
+    <string name="otp_sent">OTP sent to</string>
+    <string name="edit_phone_text">&lt;u>%1$s&lt;/u></string>
+    <string name="otp_not_received">Didn\'t receive yet?</string>
+    <string name="resend_otp"><u>Resend</u></string>
+    <string name="enter_phone_number">Enter your phone number to continue</string>
+    <string name="country_code">+91</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="details">Details</string>
+    <string name="details_subtitle">Add your details to create an account</string>
+    <string name="full_name">Full Name</string>
+    <string name="email_address_optional">Email Address (optional)</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="referral_code_if_any">Referral Code (if any)</string>
+    <string name="begin_your_journey">Begin Your Journey</string>
+
+    <!--    home-->
+    <string name="home">Home</string>
     <string name="buy_currency_text">Buy in Rupees</string>
     <string name="buy_quantity_text">Buy in quantity</string>
     <string name="sell_currency_text">Amount of gold to sell</string>
     <string name="sell_quantity_text">Sell in quantity</string>
+    <string name="live_gold_price">LIVE GOLD PRICE</string>
+    <string name="gold_balance">YOUR GOLD</string>
+    <string name="sell_gold">sell gold</string>
+    <string name="request_delivery">request delivery</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="rupees_500">₹500</string>
+    <string name="rupees_1000">₹1000</string>
+    <string name="rupees_5000">₹5000</string>
+    <string name="rupees_10000">₹10,000</string>
+    <string name="total_price">Total Price</string>
+    <string name="plus_sign">+</string>
+    <string name="equal_sign">=</string>
+    <string name="total_weight">Total Weight</string>
+    <string name="buy_gold">Buy Gold</string>
+    <string name="learn_more">learn more</string>
+    <string name="start_now">start now</string>
+    <string name="invest_change">Invest your\nspare changes</string>
+    <string name="invest_periodic">Invest daily,\nweekly or monthly</string>
+    <string name="digital_gold">Digital Gold</string>
+    <string name="gold_24k_desc">24K gold based electronic money</string>
+    <string name="one_gram">1 gm</string>
+    <string name="why_bharat_save">Why choose\nBharat Save?</string>
+    <string name="security_privacy">Security and\nPrivacy Measures</string>
+    <string name="learn_more_save_learn">learn more on\nsaveLearn</string>
+
+    <!--    add plan-->
+    <string name="add_investment_plan">Add investment plan</string>
+    <string name="plans_title">Plans</string>
+    <string name="plans_subtitle">You can add a plan to start saving towards your goals</string>
+    <string name="set_up_autopay">Set up Autopay</string>
+
+    <!--    request delivery-->
+    <string name="request_delivery_title">Request Delivery</string>
+    <string name="money_invested">Money Invested</string>
+    <string name="gold_weight">Worth of gold held</string>
+    <string name="portfolio_value">Portfolio Value</string>
+    <string name="gold_24k">24K</string>
+    <string name="delivery_amount_option">Amount of gold to deliver</string>
+    <string name="select_an_option">Select an option</string>
+    <string name="making_charges_note">Making charges applicable</string>
+    <string name="making_charges">MAKING CHARGES</string>
+    <string name="gst_percent">+3% GST</string>
+
+    <!--    plan details-->
+    <string name="add_details">Add Details</string>
+    <string name="plan_details_subtitle">You can add a plan to start saving towards your goals</string>
+    <string name="amount_to_invest">Amount to invest</string>
+    <string name="start_from">Start from</string>
+    <string name="pick_date">Pick date…</string>
+
+    <!--    plan summary-->
+    <string name="at_a_glance">At a glance</string>
+    <string name="transactions">Transactions</string>
+    <string name="this_week">this week</string>
+    <string name="this_month">this month</string>
+    <string name="this_year">this year</string>
+
+    <!--    profile-->
+    <string name="profile">Profile</string>
+    <string name="log_out">log out</string>
+    <string name="edit_profile">edit profile</string>
+    <string name="saved_cards_accounts">Your cards and linked accounts</string>
+    <string name="referral_text">Refer your friends</string>
+    <string name="referral_desc">Spread the word. Upon successful referral, we will credit both of your wallets with Gold worth ₹ 50</string>
+
+    <!--    transactions-->
+    <string name="recent_transactions">Recent Transactions</string>
+
+    <!--    withdraw-->
+    <string name="withdraw">Withdraw</string>
+    <string name="money_transfer_note">Money will be transferred to your UPI wallet</string>
+    <string name="proceed_to_sell">Proceed to sell</string>
+
+    <!--    learn-->
+    <string name="why_bharat_save_title">Why Bharat Save</string>
+    <string name="more_articles">More Articles</string>
+
 </resources>

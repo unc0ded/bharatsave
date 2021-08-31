@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="40dp"
-        android:text="Get Started"
+        android:text="@string/get_started"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
-            android:text="Recent Transactions"
+            android:text="@string/recent_transactions"
             android:textColor="?attr/colorOnBackground"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Money Invested"
+                    android:text="@string/money_invested"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Worth of gold held"
+                    android:text="@string/gold_weight"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Portfolio Value"
+                    android:text="@string/portfolio_value"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -155,21 +155,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:checked="true"
-                android:text="this week" />
+                android:text="@string/this_week" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/filter_month"
                 style="?attr/chipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="this month" />
+                android:text="@string/this_month" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/filter_year"
                 style="?attr/chipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="this year" />
+                android:text="@string/this_year" />
 
         </com.google.android.material.chip.ChipGroup>
 

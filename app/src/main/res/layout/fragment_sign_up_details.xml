@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
-        android:text="Details"
+        android:text="@string/details"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +26,7 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:text="Add your details to create an account"
+        android:text="@string/details_subtitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
-        android:hint="Full Name"
+        android:hint="@string/full_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_subtitle">
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:hint="Email Address (optional)"
+        android:hint="@string/email_address_optional"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_full_name">
@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:hint="Pin Code"
+        android:hint="@string/pin_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_email">
@@ -97,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:hint="Referral Code (if any)"
+        android:hint="@string/referral_code_if_any"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_postal_code">
@@ -119,7 +119,7 @@
         android:layout_marginBottom="40dp"
         android:backgroundTint="@color/button_background_state_list"
         android:enabled="false"
-        android:text="Begin Your Journey"
+        android:text="@string/begin_your_journey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

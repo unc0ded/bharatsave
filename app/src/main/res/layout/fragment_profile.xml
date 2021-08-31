@@ -18,7 +18,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
             android:gravity="center"
-            android:text="Profile"
+            android:text="@string/profile"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
-            android:text="log out"
+            android:text="@string/log_out"
             app:layout_constraintBottom_toBottomOf="@id/tv_page_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_page_title" />
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="edit profile"
+            android:text="@string/edit_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_email" />
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="15dp"
-            android:text="Your cards and linked accounts"
+            android:text="@string/saved_cards_accounts"
             android:textAlignment="textStart"
             app:icon="@drawable/ic_chevron_right_black_24dp"
             app:iconGravity="end"
@@ -110,7 +110,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Refer your friends"
+            android:text="@string/referral_text"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_linked" />
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="15dp"
-            android:text="Spread the word. Upon successful referral, we will credit both of your wallets with Gold worth ₹ 50"
+            android:text="@string/referral_desc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_refer_heading" />

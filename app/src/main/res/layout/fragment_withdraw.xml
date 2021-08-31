@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
-            android:text="Withdraw"
+            android:text="@string/withdraw"
             android:textColor="?attr/colorOnBackground"
             android:textSize="17sp"
             app:layout_constraintStart_toEndOf="@id/btn_back"
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Money Invested"
+                    android:text="@string/money_invested"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Worth of gold held"
+                    android:text="@string/gold_weight"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Portfolio Value"
+                    android:text="@string/portfolio_value"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -172,7 +172,7 @@
             android:background="@drawable/rounded_outline_small"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
-            android:text="24K"
+            android:text="@string/gold_24k"
             android:textAppearance="@style/TextAppearance.App.Title"
             android:textColor="?attr/colorSecondary"
             android:textSize="10sp"
@@ -227,7 +227,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="10dp"
-            android:hint="Enter amount"
+            android:hint="@string/enter_amount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toggle_group_sell_option"
@@ -267,7 +267,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:tag="500"
-                    android:text="₹500"
+                    android:text="@string/rupees_500"
                     app:chipIcon="@drawable/ic_add_black_24dp" />
 
                 <com.google.android.material.chip.Chip
@@ -276,7 +276,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tag="1000"
-                    android:text="₹1000"
+                    android:text="@string/rupees_1000"
                     app:chipIcon="@drawable/ic_add_black_24dp" />
 
                 <com.google.android.material.chip.Chip
@@ -285,7 +285,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tag="5000"
-                    android:text="₹5000"
+                    android:text="@string/rupees_5000"
                     app:chipIcon="@drawable/ic_add_black_24dp" />
 
                 <com.google.android.material.chip.Chip
@@ -295,7 +295,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:tag="10000"
-                    android:text="₹10,000"
+                    android:text="@string/rupees_10000"
                     app:chipIcon="@drawable/ic_add_black_24dp" />
 
             </com.google.android.material.chip.ChipGroup>
@@ -308,7 +308,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="10dp"
-            android:text="Money will be transferred to your UPI wallet"
+            android:text="@string/money_transfer_note"
             android:textAppearance="@style/TextAppearance.App.Light"
             android:textColor="@color/unfocused_grey"
             app:layout_constraintStart_toStartOf="parent"
@@ -345,7 +345,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/eina01_regular"
-                    android:text="Digital Gold"
+                    android:text="@string/digital_gold"
                     android:textColor="@color/text_black"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_gold"
@@ -358,12 +358,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/eina01_regular"
-                    android:text="₹ 4,654.78"
                     android:textColor="@color/text_black"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_gold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/iv_gold" />
+                    app:layout_constraintTop_toTopOf="@+id/iv_gold"
+                    tools:text="₹ 4,654.78" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_digital_gold_subtitle"
@@ -372,7 +372,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/eina01_regular"
-                    android:text="24K gold based electronic money"
+                    android:text="@string/gold_24k_desc"
                     android:textColor="@color/text_black"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -384,7 +384,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/eina01_bold"
-                    android:text="1 gm"
+                    android:text="@string/one_gram"
                     android:textColor="@color/text_black"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_digital_gold_subtitle"
@@ -420,7 +420,7 @@
                     android:layout_marginEnd="20dp"
                     android:backgroundTint="?attr/colorSecondary"
                     android:outlineProvider="none"
-                    android:text="learn more"
+                    android:text="@string/learn_more"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_gold_bars"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/iv_gold_bars" />
@@ -436,7 +436,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginVertical="20dp"
             android:backgroundTint="?attr/colorSecondary"
-            android:text="Proceed to sell"
+            android:text="@string/proceed_to_sell"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/eina01_bold"
-        android:text="Bharat Save"
+        android:text="@string/bharat_save_title"
         android:textColor="@color/brand_blue"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
         style="@style/Widget.App.TextView.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Learn. Plan. Invest."
+        android:text="@string/bharat_save_subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />

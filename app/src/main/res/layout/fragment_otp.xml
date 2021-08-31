@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
-        android:text="Verify your phone"
+        android:text="@string/verify_phone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +25,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="OTP sent to"
+        android:text="@string/otp_sent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -42,7 +42,7 @@
         app:iconTint="@color/text_bluish_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
-        tools:text="@string/edit_phone_text" />
+        tools:text="&lt;u>+91 7777777777&lt;/u>" />
 
     <com.chaos.view.PinView
         android:id="@+id/et_otp"
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:text="Didn't receive yet?"
+        android:text="@string/otp_not_received"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_otp" />
 
@@ -111,7 +111,7 @@
         android:layout_marginBottom="40dp"
         android:backgroundTint="@color/button_background_state_list"
         android:enabled="false"
-        android:text="Next"
+        android:text="@string/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
