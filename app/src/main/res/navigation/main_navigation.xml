@@ -24,14 +24,6 @@
             app:popExitAnim="@android:anim/slide_out_right" />
 
         <action
-            android:id="@+id/action_round_up_details"
-            app:destination="@id/nav_details_round_up"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
-
-        <action
             android:id="@+id/action_save_learn"
             app:destination="@id/nav_learn"
             app:enterAnim="@anim/slide_in_right"
@@ -79,13 +71,23 @@
         android:id="@+id/nav_add_plan"
         android:name="com.bharatsave.goldapp.view.main.home.AddPlanFragment"
         android:label="fragment_add_plan"
-        tools:layout="@layout/fragment_add_plan" />
+        tools:layout="@layout/fragment_add_plan" >
+
+        <action
+            android:id="@+id/action_plan_details"
+            app:destination="@id/nav_plan_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_details_round_up"
-        android:name="com.bharatsave.goldapp.view.main.home.RoundUpDetailsFragment"
-        android:label="fragment_round_up_details"
-        tools:layout="@layout/fragment_round_up_details">
+        android:id="@+id/nav_plan_details"
+        android:name="com.bharatsave.goldapp.view.main.home.PlanDetailsFragment"
+        android:label="fragment_plan_details"
+        tools:layout="@layout/fragment_plan_details">
 
         <action
             android:id="@+id/action_finish_plan"
@@ -96,6 +98,10 @@
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/nav_home"
             app:popUpToInclusive="true" />
+
+        <argument
+            android:name="plan"
+            app:argType="com.bharatsave.goldapp.model.SavePlan" />
 
     </fragment>
 

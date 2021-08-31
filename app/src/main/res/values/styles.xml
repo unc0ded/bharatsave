@@ -20,6 +20,7 @@
         <item name="listPopupWindowStyle">@style/Widget.App.PopupMenu.ListPopupWindow</item>
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <item name="chipStyle">@style/Widget.App.Chip.Choice</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.App.MaterialCalendar</item>
     </style>
 
     <style name="Widget.App.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
@@ -116,7 +117,6 @@
 
     <style name="Widget.App.AutoCompleteTextView.OutlinedBox" parent="Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox">
         <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_black</item>
     </style>
 
@@ -185,6 +185,42 @@
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
+    <style name="Widget.App.MaterialCalendar.HeaderSelection" parent="Widget.MaterialComponents.MaterialCalendar.HeaderSelection">
+        <item name="android:fontFamily">@font/eina01_regular</item>
+    </style>
+
+    <style name="Widget.App.MaterialCalendar.HeaderTitle" parent="Widget.MaterialComponents.MaterialCalendar.HeaderTitle">
+        <item name="android:fontFamily">@font/eina01_regular</item>
+    </style>
+
+    <style name="Widget.App.MaterialCalendar.HeaderCancelButton" parent="Widget.MaterialComponents.MaterialCalendar.HeaderCancelButton">
+        <item name="android:fontFamily">@font/eina01_semi_bold</item>
+    </style>
+
+    <style name="Widget.App.MaterialCalendar.HeaderConfirmButton" parent="Widget.MaterialComponents.MaterialCalendar.HeaderConfirmButton">
+        <item name="android:fontFamily">@font/eina01_semi_bold</item>
+    </style>
+
+    <style name="Widget.App.MaterialCalendar.DayOfWeekLabel" parent="Widget.MaterialComponents.MaterialCalendar.DayOfWeekLabel">
+        <item name="android:fontFamily">@font/eina01_regular</item>
+    </style>
+
+    <style name="Widget.App.MaterialCalendar.DayTextView" parent="Widget.MaterialComponents.MaterialCalendar.DayTextView">
+        <item name="android:fontFamily">@font/eina01_regular</item>
+    </style>
+
+    <style name="Widget.App.MaterialCalendar.MonthTextView" parent="Widget.MaterialComponents.MaterialCalendar.MonthTextView">
+        <item name="android:fontFamily">@font/eina01_regular</item>
+    </style>
+
+    <style name="Widget.App.MaterialCalendar.YearNavigationButton" parent="Widget.MaterialComponents.MaterialCalendar.YearNavigationButton">
+        <item name="android:fontFamily">@font/eina01_regular</item>
+    </style>
+
+    <style name="Widget.App.Button.TextButton.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:fontFamily">@font/eina01_semi_bold</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.BottomSheet" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">20dp</item>
@@ -204,6 +240,19 @@
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+
+    <style name="ThemeOverlay.App.MaterialCalendar" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="materialCalendarHeaderSelection">@style/Widget.App.MaterialCalendar.HeaderSelection</item>
+        <item name="materialCalendarHeaderTitle">@style/Widget.App.MaterialCalendar.HeaderTitle</item>
+        <item name="materialCalendarHeaderCancelButton">@style/Widget.App.MaterialCalendar.HeaderCancelButton</item>
+        <item name="materialCalendarHeaderConfirmButton">@style/Widget.App.MaterialCalendar.HeaderConfirmButton</item>
+        <item name="materialCalendarDayOfWeekLabel">@style/Widget.App.MaterialCalendar.DayOfWeekLabel</item>
+        <item name="materialCalendarDay">@style/Widget.App.MaterialCalendar.DayTextView</item>
+        <item name="materialCalendarMonth">@style/Widget.App.MaterialCalendar.MonthTextView</item>
+        <item name="materialCalendarYearNavigationButton">@style/Widget.App.MaterialCalendar.YearNavigationButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button.TextButton.Dialog</item>
     </style>
 
     <style name="ThemeOverlay.App.ExposedDropdownMenu" parent="">

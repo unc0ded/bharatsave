@@ -66,11 +66,7 @@ class AddPlanFragment : Fragment() {
             val checkedItem =
                 binding.gridPlanCards.children.filter { (it as CheckablePlanCard).isChecked }
                     .elementAt(0) as CheckablePlanCard
-            Toast.makeText(
-                context,
-                checkedItem.findViewById<MaterialTextView>(R.id.tv_plan_name).text,
-                Toast.LENGTH_SHORT
-            ).show()
+            findNavController().navigate(AddPlanFragmentDirections.actionPlanDetails(checkedItem.getPlanName()))
         }
     }
 

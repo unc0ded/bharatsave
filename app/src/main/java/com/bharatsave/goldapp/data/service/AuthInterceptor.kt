@@ -1,5 +1,6 @@
 package com.bharatsave.goldapp.data.service
 
+import android.util.Log
 import com.bharatsave.goldapp.data.repository.PreferenceRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -13,6 +14,7 @@ class AuthInterceptor @Inject constructor(private val preferenceRepository: Pref
         val authToken = runBlocking {
             preferenceRepository.getAuthToken()
         }
+        Log.d("authToken", authToken)
         return chain.proceed(
             if (authToken.isNotEmpty()) request.newBuilder()
                 .header("Authorization", "Bearer $authToken")

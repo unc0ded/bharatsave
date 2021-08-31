@@ -1,7 +1,8 @@
 package com.bharatsave.goldapp.data.service
 
 import com.bharatsave.goldapp.model.AuthResponse
-import com.bharatsave.goldapp.model.GoldRate
+import com.bharatsave.goldapp.model.BalanceDetail
+import com.bharatsave.goldapp.model.augmont.GoldRate
 import com.bharatsave.goldapp.model.User
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -17,4 +18,7 @@ interface AugmontService {
 
     @GET("augmont/goldrate")
     suspend fun goldRate(): GoldRate
+
+    @POST("augmont/buy")
+    suspend fun purchaseGold(@Body map: Map<String, String>): BalanceDetail
 }

@@ -13,9 +13,11 @@ import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.CheckablePlanCardBinding
+import com.bharatsave.goldapp.model.SavePlan
 import com.bharatsave.goldapp.util.getThemeColorFromAttr
 import com.bharatsave.goldapp.util.toPx
 import com.google.android.material.card.MaterialCardView
+import java.util.*
 
 class CheckablePlanCard(context: Context) : MaterialCardView(context) {
 
@@ -67,9 +69,8 @@ class CheckablePlanCard(context: Context) : MaterialCardView(context) {
                 binding.tvPlanDescription.setTextColor(
                     context.getThemeColorFromAttr(if (isChecked) R.attr.colorPrimary else R.attr.colorOnBackground)
                 )
-                binding.ivPlanImage.elevation = (if (isChecked) 0 else 4).toPx
                 binding.ivPlanImage.backgroundTintList =
-                    ColorStateList.valueOf(context.getThemeColorFromAttr(if (isChecked) R.attr.colorPrimary else R.attr.colorSurface))
+                    if (isChecked) ColorStateList.valueOf(context.getThemeColorFromAttr(R.attr.colorPrimary)) else null
             }
         }
     }
@@ -77,6 +78,16 @@ class CheckablePlanCard(context: Context) : MaterialCardView(context) {
     fun setPlanName(name: String) {
         binding.tvPlanName.text = name
     }
+
+    fun getPlanName(): SavePlan = SavePlan.valueOf(
+        when (binding.tvPlanName.text.toString()) {
+            "Round Up" -> "ROUND_UP"
+            "Daily Savings" -> "DAILY_SAVINGS"
+            "Weekly Savings" -> "WEEKLY_SAVINGS"
+            "Monthly Savings" -> "MONTHLY_SAVINGS"
+            else -> throw Exception("Unknown Plan Type")
+        }
+    )
 
     fun setPlanDescription(description: String) {
         binding.tvPlanDescription.text = description

@@ -1,8 +1,8 @@
 package com.bharatsave.goldapp.di
 
-import com.bharatsave.goldapp.data.repository.PreferenceRepository
 import com.bharatsave.goldapp.data.service.AugmontService
 import com.bharatsave.goldapp.data.service.AuthInterceptor
+import com.bharatsave.goldapp.data.service.PaytmService
 import com.bharatsave.goldapp.data.service.UserService
 import dagger.Module
 import dagger.Provides
@@ -13,14 +13,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 object RetrofitModule {
 
-    private const val BASE_URL = "https://api.bharatsave.com/"
+    private const val BASE_URL = "https://api.bharatsave.com"
 
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
@@ -58,4 +57,8 @@ object RetrofitModule {
     @Singleton
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun providePaytmService(retrofit: Retrofit): PaytmService = retrofit.create()
 }

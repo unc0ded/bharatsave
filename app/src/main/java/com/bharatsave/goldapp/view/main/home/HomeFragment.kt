@@ -1,6 +1,7 @@
 package com.bharatsave.goldapp.view.main.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -9,19 +10,31 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentHomeBinding
+import com.bharatsave.goldapp.model.PaytmTransaction
 import com.bharatsave.goldapp.util.getThemeColorFromAttr
 import com.bharatsave.goldapp.util.setCustomSpanString
 import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
+import com.bharatsave.goldapp.util.textChanges
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.textfield.TextInputEditText
+import com.paytm.pgsdk.PaytmOrder
+import com.paytm.pgsdk.PaytmPaymentTransactionCallback
+import com.paytm.pgsdk.TransactionManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.text.DecimalFormat
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -31,11 +44,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private val viewModel by viewModels<HomeViewModel>()
 
-    private val decimalFormat by lazy {
-        DecimalFormat("#,##0.00")
+    private val normalDecimalFormat by lazy {
+        DecimalFormat("#,##,##0.00")
+    }
+    private val longDecimalFormat by lazy {
+        DecimalFormat("##0.0000")
     }
     private var buyAmount: Float = 0f
     private var buyQuantity: Float = 0f
+
+    private lateinit var orderId: String
+
+    private val TRANSACTION_REQUEST_CODE = 102
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,24 +77,36 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = null
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == TRANSACTION_REQUEST_CODE && data != null) {
+            Toast.makeText(
+                context,
+                data.getStringExtra("nativeSdkForMerchantMessage") + data.getStringExtra("response"),
+                Toast.LENGTH_SHORT
+            ).show()
+            viewModel.getTransactionStatus(orderId)
+        }
+    }
+
     private fun setupObservers() {
         viewModel.goldRateData.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.tvLiveGoldPrice.text =
-                    "₹${decimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+                    "₹${normalDecimalFormat.format(it.first.goldPrice.toFloat())}/gm"
                 binding.tvDigitalGoldPrice.text =
-                    "₹${decimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+                    "₹${normalDecimalFormat.format(it.first.goldPrice.toFloat())}/gm"
                 binding.tvGoldBalancePrice.text =
-                    "₹${decimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+                    "₹${normalDecimalFormat.format(it.first.goldPrice.toFloat())}/gm"
             }
         }
+
         viewModel.balanceData.observe(viewLifecycleOwner) {
-            if (it.goldBalance.toFloat() != 0f) {
+            if (it != null && it.goldBalance.toFloat() != 0f) {
                 binding.cardLiveGold.visibility = View.GONE
                 viewModel.goldRateData.value?.run {
                     binding.tvGoldCurrentValue.text =
-                        "₹${decimalFormat.format(first.totalSellPrice.toFloat() * it.goldBalance.toFloat())}/gm"
-                    binding.tvGoldCurrentValueChange.text = "${decimalFormat.format(second)}%"
+                        "₹${normalDecimalFormat.format(first.totalSellPrice.toFloat() * it.goldBalance.toFloat())}/gm"
+                    binding.tvGoldCurrentValueChange.text = "${normalDecimalFormat.format(second)}%"
                     binding.tvGoldCurrentValueChange.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         if (second > 0) R.drawable.ic_arrow_drop_up_black_24dp else R.drawable.ic_arrow_drop_down_black_24dp,
                         0,
@@ -82,7 +114,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         0
                     )
                 }
-                binding.tvGoldBalance.text = "${decimalFormat.format(it.goldBalance.toFloat())}gms"
+                binding.tvGoldBalance.text =
+                    "${normalDecimalFormat.format(it.goldBalance.toFloat())}gms"
                 binding.cardGoldBalance.visibility = View.VISIBLE
                 binding.ivFloatingLogo.visibility = View.VISIBLE
                 binding.btnSellGold.visibility = View.VISIBLE
@@ -95,8 +128,117 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 binding.btnRequestDelivery.visibility = View.GONE
             }
         }
+
+        viewModel.transactionToken.observe(viewLifecycleOwner) {
+            if (it != null) {
+                orderId = it.orderId
+                val paytmOrder = PaytmOrder(
+                    it.orderId,
+                    it.merchantId,
+                    it.transactionToken,
+                    it.amount,
+                    "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=${it.orderId}"
+                )
+                val transactionManager =
+                    TransactionManager(paytmOrder, object : PaytmPaymentTransactionCallback {
+                        override fun onTransactionResponse(inResponse: Bundle?) {
+                            Toast.makeText(
+                                context,
+                                "Payment Transaction response" + inResponse.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            viewModel.getTransactionStatus(it.orderId)
+                        }
+
+                        override fun networkNotAvailable() {
+                            Toast.makeText(
+                                context,
+                                "Network unavailable: Please try again",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        override fun onErrorProceed(p0: String?) {
+                            Toast.makeText(context, "Error proceed: $p0", Toast.LENGTH_LONG).show()
+                        }
+
+                        override fun clientAuthenticationFailed(p0: String?) {
+                            Toast.makeText(
+                                context,
+                                "Client authentication failed: $p0",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        override fun someUIErrorOccurred(p0: String?) {
+                            Toast.makeText(context, "UI error: $p0", Toast.LENGTH_LONG).show()
+                        }
+
+                        override fun onErrorLoadingWebPage(p0: Int, p1: String?, p2: String?) {
+                            Toast.makeText(
+                                context,
+                                "Error loading web page: $p1 $p2",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        override fun onBackPressedCancelTransaction() {
+                            Toast.makeText(
+                                context,
+                                "Transaction Cancelled: User pressed back",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        override fun onTransactionCancel(p0: String?, p1: Bundle?) {
+                            Toast.makeText(
+                                context,
+                                "Transaction Cancelled: $p0 " + p1.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+                transactionManager.startTransaction(activity, TRANSACTION_REQUEST_CODE)
+            }
+        }
+
+        viewModel.transactionStatus.observe(viewLifecycleOwner) {
+            if (it != null) {
+                if (it.status.contains("success", true)) {
+                    Toast.makeText(
+                        context,
+                        "Transaction complete!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    viewModel.buyGold(
+                        hashMapOf(
+                            "amount" to it.transactionAmount,
+                            "transactionId" to it.transactionId,
+                            "buyPrice" to viewModel.goldRateData.value!!.first.goldPrice,
+                            "blockId" to viewModel.goldRateData.value!!.first.blockId
+                        )
+                    )
+                    viewModel.saveTransaction(
+                        PaytmTransaction(
+                            it.orderId,
+                            it.transactionId,
+                            it.bankTransactionId,
+                            it.transactionAmount,
+                            ZonedDateTime.parse(
+                                it.date,
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss")
+                            ).toInstant().toEpochMilli()
+                        )
+                    )
+                } else {
+                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     private fun setupViews() {
         binding.tvPlansHeading.setCustomTypefaceSpanString(
             "save",
@@ -200,19 +342,94 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        binding.etBuyAmount.editText?.doOnTextChanged { text, _, _, _ ->
-            when (binding.toggleGroupBuyOption.checkedRadioButtonId) {
-                R.id.toggle_buy_currency -> buyAmount =
-                    if (text.toString().isNotBlank()) text.toString().toFloat() else 0f
-                R.id.toggle_buy_quantity -> buyQuantity =
-                    if (text.toString().isNotBlank()) text.toString().toFloat() else 0f
-            }
-        }
+        (binding.etBuyAmount.editText as TextInputEditText).textChanges().debounce(500)
+            .onEach { text ->
+                when (binding.toggleGroupBuyOption.checkedRadioButtonId) {
+                    R.id.toggle_buy_currency -> {
+                        if (text.toString().isNotBlank()) {
+                            buyAmount = text.toString().toFloat()
+                            if (buyAmount > 1000000) {
+                                binding.etBuyAmount.error = "Please enter amount lower than 100,000"
+                                binding.cardBuyDetails.visibility = View.GONE
+                            } else {
+                                binding.etBuyAmount.error = ""
+                                viewModel.goldRateData.value?.first?.run {
+                                    val weight = buyAmount / totalBuyPrice.toFloat()
+                                    val baseAmount = weight * goldPrice.toFloat()
+                                    val taxAmount = baseAmount * 0.03
+                                    val totalAmount = baseAmount + taxAmount
+                                    binding.tvBaseAmount.text =
+                                        "₹${normalDecimalFormat.format(baseAmount)}"
+                                    binding.tvTotalBuyAmount.text =
+                                        "₹${normalDecimalFormat.format(totalAmount)}"
+                                    binding.tvGstAmount.text =
+                                        "GST ₹${normalDecimalFormat.format(taxAmount)}"
+                                    binding.tvBuyWeight.text =
+                                        "${longDecimalFormat.format(weight)}gms"
+                                }
+                                binding.cardBuyDetails.visibility = View.VISIBLE
+                            }
+                        } else {
+                            buyAmount = 0f
+                            binding.cardBuyDetails.visibility = View.GONE
+                        }
+                    }
+                    R.id.toggle_buy_quantity -> {
+                        if (text.toString().isNotBlank()) {
+                            buyQuantity = text.toString().toFloat()
+                            if (buyQuantity > 250) {
+                                binding.etBuyAmount.error = "Please enter lower quantity"
+                                binding.cardBuyDetails.visibility = View.GONE
+                            } else {
+                                binding.etBuyAmount.error = ""
+                                viewModel.goldRateData.value?.first?.run {
+                                    val baseAmount = buyQuantity * goldPrice.toFloat()
+                                    val taxAmount = baseAmount * 0.03
+                                    val totalAmount = baseAmount + taxAmount
+                                    val weight = totalAmount / totalBuyPrice.toFloat()
+                                    binding.tvBaseAmount.text =
+                                        "₹${normalDecimalFormat.format(baseAmount)}"
+                                    binding.tvTotalBuyAmount.text =
+                                        "₹${normalDecimalFormat.format(totalAmount)}"
+                                    binding.tvGstAmount.text =
+                                        "GST ₹${normalDecimalFormat.format(taxAmount)}"
+                                    binding.tvBuyWeight.text =
+                                        "${longDecimalFormat.format(weight)}gms"
+                                }
+                                binding.cardBuyDetails.visibility = View.VISIBLE
+                            }
+                        } else {
+                            buyQuantity = 0f
+                            binding.cardBuyDetails.visibility = View.GONE
+                        }
+                    }
+                }
+            }.launchIn(lifecycleScope)
 
         binding.chipAdd500.setOnClickListener(this)
         binding.chipAdd1000.setOnClickListener(this)
         binding.chipAdd5000.setOnClickListener(this)
         binding.chipAdd10000.setOnClickListener(this)
+
+        binding.btnBuyGold.setOnClickListener {
+            if (!binding.etBuyAmount.error.isNullOrBlank()) {
+                Toast.makeText(context, binding.etBuyAmount.error.toString(), Toast.LENGTH_SHORT)
+                    .show()
+            } else if ((binding.etBuyAmount.editText as TextInputEditText).text.isNullOrBlank()) {
+                Toast.makeText(context, "Please enter an amount or quantity", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                viewModel.startTransaction(
+                    hashMapOf(
+                        "amount" to normalDecimalFormat.parse(
+                            binding.tvTotalBuyAmount.text.split(
+                                "₹"
+                            )[1]
+                        ).toFloat().toString()
+                    )
+                )
+            }
+        }
 
         binding.btnSellGold.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionWithdraw()) }
         binding.btnRequestDelivery.setOnClickListener {

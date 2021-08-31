@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bharatsave</string>
+    <string name="app_name">BharatSave</string>
 
     <string name="contact_us"><u>Contact Us</u></string>
     <string name="resend_otp"><u>Resend</u></string>

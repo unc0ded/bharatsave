@@ -1,4 +1,4 @@
-package com.bharatsave.goldapp.model
+package com.bharatsave.goldapp.model.augmont
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
