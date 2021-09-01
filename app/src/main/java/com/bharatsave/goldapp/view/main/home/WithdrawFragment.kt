@@ -15,7 +15,9 @@ import com.bharatsave.goldapp.databinding.FragmentWithdrawBinding
 import com.bharatsave.goldapp.util.increaseHitArea
 import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WithdrawFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentWithdrawBinding? = null

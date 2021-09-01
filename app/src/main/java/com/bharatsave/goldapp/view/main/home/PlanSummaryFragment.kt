@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.databinding.FragmentPlanSummaryBinding
 import com.bharatsave.goldapp.util.increaseHitArea
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PlanSummaryFragment : Fragment() {
 
     private var _binding: FragmentPlanSummaryBinding? = null

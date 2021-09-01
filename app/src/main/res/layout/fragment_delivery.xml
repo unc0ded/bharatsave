@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".view.main.home.DeliveryFragment">
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -202,6 +203,7 @@
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="none"
             android:textAppearance="@style/TextAppearance.App.Subtitle"
             android:textColor="?attr/colorOnBackground" />
 
@@ -211,13 +213,13 @@
         android:id="@+id/tv_marking_charges_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_gold_delivery_option"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/making_charges_note"
         android:textAppearance="@style/TextAppearance.App.Light"
         android:textColor="@color/unfocused_grey"
-        android:text="@string/making_charges_note"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_gold_delivery_option" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_making_charges"
@@ -225,6 +227,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_marking_charges_title">
@@ -240,8 +243,6 @@
                 android:layout_marginVertical="10dp"
                 android:layout_marginStart="16dp"
                 android:background="@drawable/circle_background"
-                android:backgroundTint="?attr/colorSurface"
-                android:elevation="4dp"
                 android:padding="8dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_money"
@@ -256,7 +257,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/making_charges"
+                android:text="@string/making_delivery_charges"
                 android:textAppearance="@style/TextAppearance.App.Base"
                 android:textColor="?attr/colorOnBackground"
                 app:layout_constraintStart_toEndOf="@id/iv_making_charges"
@@ -275,21 +276,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_making_charges"
                 app:layout_constraintTop_toBottomOf="@id/tv_making_charges_label"
-                tools:text="₹4,65/ 4.76gm" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_gst_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@string/gst_percent"
-                android:textAppearance="@style/TextAppearance.App.Base"
-                android:textColor="?attr/colorOnBackground"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@id/tv_making_charges_label"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:text="₹400" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

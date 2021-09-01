@@ -2,14 +2,18 @@ package com.bharatsave.goldapp.view.main.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import androidx.core.widget.TextViewCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -20,6 +24,7 @@ import com.bharatsave.goldapp.util.getThemeColorFromAttr
 import com.bharatsave.goldapp.util.setCustomSpanString
 import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
 import com.bharatsave.goldapp.util.textChanges
+import com.bharatsave.goldapp.view.main.MainViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.textfield.TextInputEditText
@@ -42,7 +47,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<HomeViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     private val normalDecimalFormat by lazy {
         DecimalFormat("#,##,##0.00")
@@ -65,7 +71,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-    @ExperimentalCoroutinesApi
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Basic badge with no count
 //        initBadge(binding.btnOptions, 0)
@@ -85,12 +91,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 data.getStringExtra("nativeSdkForMerchantMessage") + data.getStringExtra("response"),
                 Toast.LENGTH_SHORT
             ).show()
-            viewModel.getTransactionStatus(orderId)
+            homeViewModel.getTransactionStatus(orderId)
         }
     }
 
     private fun setupObservers() {
-        viewModel.goldRateData.observe(viewLifecycleOwner) {
+        mainViewModel.goldRateData.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.tvLiveGoldPrice.text =
                     "₹${normalDecimalFormat.format(it.first.goldPrice.toFloat())}/gm"
@@ -101,10 +107,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        viewModel.balanceData.observe(viewLifecycleOwner) {
+        mainViewModel.balanceData.observe(viewLifecycleOwner) {
             if (it != null && it.goldBalance.toFloat() != 0f) {
                 binding.cardLiveGold.visibility = View.GONE
-                viewModel.goldRateData.value?.run {
+                mainViewModel.goldRateData.value?.run {
                     binding.tvGoldCurrentValue.text =
                         "₹${normalDecimalFormat.format(first.totalSellPrice.toFloat() * it.goldBalance.toFloat())}"
                     binding.tvGoldCurrentValueChange.text = "${normalDecimalFormat.format(second)}%"
@@ -114,6 +120,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         0,
                         0
                     )
+                    TextViewCompat.setCompoundDrawableTintList(binding.tvGoldCurrentValueChange, ColorStateList.valueOf(ContextCompat.getColor(requireContext(), if (second > 0) R.color.icon_green else R.color.icon_red)))
                 }
                 binding.tvGoldBalance.text =
                     "${longDecimalFormat.format(it.goldBalance.toFloat())}gms"
@@ -130,7 +137,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        viewModel.transactionToken.observe(viewLifecycleOwner) {
+        homeViewModel.transactionToken.observe(viewLifecycleOwner) {
             if (it != null) {
                 orderId = it.orderId
                 val paytmOrder = PaytmOrder(
@@ -148,7 +155,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                 "Payment Transaction response" + inResponse.toString(),
                                 Toast.LENGTH_LONG
                             ).show()
-                            viewModel.getTransactionStatus(it.orderId)
+                            homeViewModel.getTransactionStatus(it.orderId)
                         }
 
                         override fun networkNotAvailable() {
@@ -203,7 +210,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        viewModel.transactionStatus.observe(viewLifecycleOwner) {
+        homeViewModel.transactionStatus.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it.status.contains("success", true)) {
                     Toast.makeText(
@@ -211,14 +218,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         "Transaction complete!",
                         Toast.LENGTH_SHORT
                     ).show()
-                    viewModel.buyGold(
+                    homeViewModel.buyGold(
                         hashMapOf(
                             "amount" to it.transactionAmount,
-                            "buyPrice" to viewModel.goldRateData.value!!.first.goldPrice,
-                            "blockId" to viewModel.goldRateData.value!!.first.blockId
+                            "buyPrice" to mainViewModel.goldRateData.value!!.first.goldPrice,
+                            "blockId" to mainViewModel.goldRateData.value!!.first.blockId
                         )
                     )
-                    viewModel.saveTransaction(
+                    homeViewModel.saveTransaction(
                         PaytmTransaction(
                             it.orderId,
                             it.transactionId,
@@ -352,7 +359,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                 binding.cardBuyDetails.visibility = View.GONE
                             } else {
                                 binding.etBuyAmount.error = ""
-                                viewModel.goldRateData.value?.first?.run {
+                                mainViewModel.goldRateData.value?.first?.run {
                                     buyQuantity = buyAmount / totalBuyPrice.toFloat()
                                     binding.tvCheckoutAmount.text =
                                         "₹${normalDecimalFormat.format(buyAmount)}"
@@ -374,7 +381,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                 binding.cardBuyDetails.visibility = View.GONE
                             } else {
                                 binding.etBuyAmount.error = ""
-                                viewModel.goldRateData.value?.first?.run {
+                                mainViewModel.goldRateData.value?.first?.run {
                                     buyAmount = buyQuantity * totalBuyPrice.toFloat()
                                     binding.tvCheckoutAmount.text =
                                         "₹${normalDecimalFormat.format(buyAmount)}"
@@ -403,7 +410,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             } else if ((binding.etBuyAmount.editText as TextInputEditText).text.isNullOrBlank()) {
                 Toast.makeText(context, R.string.error_enter_something, Toast.LENGTH_SHORT).show()
             } else {
-                viewModel.startTransaction(
+                homeViewModel.startTransaction(
                     hashMapOf(
                         "amount" to normalDecimalFormat.parse(
                             binding.tvCheckoutAmount.text.split(

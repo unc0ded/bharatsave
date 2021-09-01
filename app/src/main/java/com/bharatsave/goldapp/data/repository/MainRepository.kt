@@ -29,6 +29,12 @@ class MainRepository @Inject constructor(
 
     fun getStoredGoldRates() = mainDao.getGoldRates()
 
+    suspend fun getRecordCount() = mainDao.getGoldRateEntryCount()
+
+    suspend fun clearExtraRecords() {
+        mainDao.deleteOldRates()
+    }
+
     suspend fun fetchBalanceData() = userService.balanceDetails()
 
     suspend fun updateUserBalance(balanceDetail: BalanceDetail, phoneNumber: String) {

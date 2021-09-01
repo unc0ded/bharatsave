@@ -76,7 +76,7 @@
     <string name="delivery_amount_option">Amount of gold to deliver</string>
     <string name="select_an_option">Select an option</string>
     <string name="making_charges_note">Making charges applicable</string>
-    <string name="making_charges">MAKING CHARGES</string>
+    <string name="making_delivery_charges">MAKING &amp; DELIVERY CHARGES</string>
     <string name="gst_percent">+3% GST</string>
 
     <!--    plan details-->
@@ -112,5 +112,17 @@
     <!--    learn-->
     <string name="why_bharat_save_title">Why Bharat Save</string>
     <string name="more_articles">More Articles</string>
+
+    <string-array name="delivery_list">
+        <item>Augmont 0.1GM Gold Coin</item>
+        <item>Augmont 0.5GM Gold Coin</item>
+        <item>Augmont 1GM Gold Coin</item>
+        <item>Augmont 2GM Gold Coin</item>
+        <item>Augmont 5GM Gold Coin</item>
+        <item>Augmont 8GM Gold Coin</item>
+        <item>Augmont 10GM Gold Coin</item>
+        <item>Augmont 20GM Gold Coin</item>
+        <item>Augmont 50GM Gold Coin</item>
+    </string-array>
 
 </resources>

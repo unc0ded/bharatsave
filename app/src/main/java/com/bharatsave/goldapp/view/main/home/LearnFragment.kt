@@ -11,7 +11,9 @@ import com.bharatsave.goldapp.databinding.FragmentLearnBinding
 import com.bharatsave.goldapp.util.getThemeColorFromAttr
 import com.bharatsave.goldapp.util.increaseHitArea
 import com.bharatsave.goldapp.util.setCustomSpanString
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LearnFragment : Fragment() {
 
     private var _binding: FragmentLearnBinding? = null

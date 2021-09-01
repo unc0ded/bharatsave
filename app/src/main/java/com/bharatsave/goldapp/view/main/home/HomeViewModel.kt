@@ -25,26 +25,6 @@ class HomeViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
 
-    private val _goldRateData =
-        mainRepository.getStoredGoldRates()
-            .map {
-                if (it.isNotEmpty()) {
-                    if (it.size == 2) {
-                        val percentChange =
-                            ((it[0].goldPrice.toFloat() - it[1].goldPrice.toFloat()) / it[1].goldPrice.toFloat()) * 100
-                        Pair(it[0], percentChange)
-                    } else Pair(it[0], 0f)
-                } else null
-            }
-            .asLiveData(Dispatchers.Default + viewModelScope.coroutineContext)
-    val goldRateData: LiveData<Pair<GoldRate, Float>?>
-        get() = _goldRateData
-
-    private val _balanceData =
-        mainRepository.getStoredBalanceDetails().asLiveData(viewModelScope.coroutineContext)
-    val balanceData: LiveData<BalanceDetail>
-        get() = _balanceData
-
     private val _subscriptionToken = MutableLiveData<PaytmSubscriptionToken>()
     val subscriptionToken: LiveData<PaytmSubscriptionToken>
         get() = _subscriptionToken
@@ -60,51 +40,6 @@ class HomeViewModel @Inject constructor(
     private val _transactionStatus = MutableLiveData<PaytmTransactionStatus>()
     val transactionStatus: LiveData<PaytmTransactionStatus>
         get() = _transactionStatus
-
-    init {
-        viewModelScope.launch {
-            val existingRateData = mainRepository.getLastGoldRate()
-            if (existingRateData != null) {
-                if (Instant.now() > Instant.ofEpochMilli(existingRateData.timeStamp)
-                        .plus(5, ChronoUnit.MINUTES)
-                ) {
-                    val freshRateData = mainRepository.fetchGoldRates()
-                    mainRepository.saveGoldRate(freshRateData)
-                }
-            } else {
-                val freshRateData = mainRepository.fetchGoldRates()
-                mainRepository.saveGoldRate(freshRateData)
-            }
-        }
-        viewModelScope.launch {
-            val balance = mainRepository.fetchBalanceData()
-            mainRepository.updateUserBalance(balance, preferenceRepository.getPhoneNumber())
-        }
-    }
-
-    fun getGoldRates() {
-        viewModelScope.launch {
-            val existingRateData = mainRepository.getLastGoldRate()
-            if (existingRateData != null) {
-                if (Instant.now() > Instant.ofEpochMilli(existingRateData.timeStamp)
-                        .plus(5, ChronoUnit.MINUTES)
-                ) {
-                    val freshRateData = mainRepository.fetchGoldRates()
-                    mainRepository.saveGoldRate(freshRateData)
-                }
-            } else {
-                val freshRateData = mainRepository.fetchGoldRates()
-                mainRepository.saveGoldRate(freshRateData)
-            }
-        }
-    }
-
-    fun getBalanceData() {
-        viewModelScope.launch {
-            val balance = mainRepository.fetchBalanceData()
-            mainRepository.updateUserBalance(balance, preferenceRepository.getPhoneNumber())
-        }
-    }
 
     fun createPlan(bodyMap: Map<String, String>) {
         viewModelScope.launch {

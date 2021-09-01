@@ -10,7 +10,7 @@ interface MainDao {
     suspend fun insertGoldRate(goldRate: GoldRate)
 
     @Query("SELECT * FROM gold_rates ORDER BY timeStamp DESC LIMIT 1")
-    suspend fun getLastGoldRate(): GoldRate
+    suspend fun getLastGoldRate(): GoldRate?
 
     @Query("SELECT * FROM gold_rates ORDER BY timeStamp DESC LIMIT 2")
     fun getGoldRates(): Flow<List<GoldRate>>
