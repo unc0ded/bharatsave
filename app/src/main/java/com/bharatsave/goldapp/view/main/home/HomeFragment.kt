@@ -65,6 +65,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Basic badge with no count
 //        initBadge(binding.btnOptions, 0)
@@ -105,7 +106,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 binding.cardLiveGold.visibility = View.GONE
                 viewModel.goldRateData.value?.run {
                     binding.tvGoldCurrentValue.text =
-                        "₹${normalDecimalFormat.format(first.totalSellPrice.toFloat() * it.goldBalance.toFloat())}/gm"
+                        "₹${normalDecimalFormat.format(first.totalSellPrice.toFloat() * it.goldBalance.toFloat())}"
                     binding.tvGoldCurrentValueChange.text = "${normalDecimalFormat.format(second)}%"
                     binding.tvGoldCurrentValueChange.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         if (second > 0) R.drawable.ic_arrow_drop_up_black_24dp else R.drawable.ic_arrow_drop_down_black_24dp,
@@ -115,7 +116,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     )
                 }
                 binding.tvGoldBalance.text =
-                    "${normalDecimalFormat.format(it.goldBalance.toFloat())}gms"
+                    "${longDecimalFormat.format(it.goldBalance.toFloat())}gms"
                 binding.cardGoldBalance.visibility = View.VISIBLE
                 binding.ivFloatingLogo.visibility = View.VISIBLE
                 binding.btnSellGold.visibility = View.VISIBLE
@@ -213,7 +214,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     viewModel.buyGold(
                         hashMapOf(
                             "amount" to it.transactionAmount,
-                            "transactionId" to it.transactionId,
                             "buyPrice" to viewModel.goldRateData.value!!.first.goldPrice,
                             "blockId" to viewModel.goldRateData.value!!.first.blockId
                         )
@@ -274,7 +274,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             SpannableString(resources.getString(R.string.buy_quantity_text)).apply {
                 setSpan(UnderlineSpan(), 0, this.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
-        binding.tvLiveGoldPrice.text = "₹4,654.78/gm"
 
         binding.btnPlanPeriodic.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionAddPlan())
@@ -301,7 +300,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     binding.svChipGroup.visibility = View.VISIBLE
                     binding.etBuyAmount.prefixText = "₹"
                     binding.etBuyAmount.suffixText = ""
-                    binding.etBuyAmount.hint = "Enter amount"
+                    binding.etBuyAmount.hint = getString(R.string.enter_amount)
                     if (buyAmount != 0f) {
                         (binding.etBuyAmount.editText as TextInputEditText).run {
                             setText(buyAmount.toString())
@@ -327,7 +326,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     binding.svChipGroup.visibility = View.GONE
                     binding.etBuyAmount.prefixText = ""
                     binding.etBuyAmount.suffixText = "gm"
-                    binding.etBuyAmount.hint = "Enter quantity"
+                    binding.etBuyAmount.hint = getString(R.string.enter_quantity)
                     if (buyQuantity != 0f) {
                         (binding.etBuyAmount.editText as TextInputEditText).run {
                             setText(buyQuantity.toString())
@@ -349,23 +348,16 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         if (text.toString().isNotBlank()) {
                             buyAmount = text.toString().toFloat()
                             if (buyAmount > 1000000) {
-                                binding.etBuyAmount.error = "Please enter amount lower than 100,000"
+                                binding.etBuyAmount.error = getString(R.string.error_lower_amount)
                                 binding.cardBuyDetails.visibility = View.GONE
                             } else {
                                 binding.etBuyAmount.error = ""
                                 viewModel.goldRateData.value?.first?.run {
-                                    val weight = buyAmount / totalBuyPrice.toFloat()
-                                    val baseAmount = weight * goldPrice.toFloat()
-                                    val taxAmount = baseAmount * 0.03
-                                    val totalAmount = baseAmount + taxAmount
-                                    binding.tvBaseAmount.text =
-                                        "₹${normalDecimalFormat.format(baseAmount)}"
-                                    binding.tvTotalBuyAmount.text =
-                                        "₹${normalDecimalFormat.format(totalAmount)}"
-                                    binding.tvGstAmount.text =
-                                        "GST ₹${normalDecimalFormat.format(taxAmount)}"
-                                    binding.tvBuyWeight.text =
-                                        "${longDecimalFormat.format(weight)}gms"
+                                    buyQuantity = buyAmount / totalBuyPrice.toFloat()
+                                    binding.tvCheckoutAmount.text =
+                                        "₹${normalDecimalFormat.format(buyAmount)}"
+                                    binding.tvCheckoutWeight.text =
+                                        "${longDecimalFormat.format(buyQuantity)}gms"
                                 }
                                 binding.cardBuyDetails.visibility = View.VISIBLE
                             }
@@ -378,23 +370,16 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         if (text.toString().isNotBlank()) {
                             buyQuantity = text.toString().toFloat()
                             if (buyQuantity > 250) {
-                                binding.etBuyAmount.error = "Please enter lower quantity"
+                                binding.etBuyAmount.error = getString(R.string.error_lower_quantity)
                                 binding.cardBuyDetails.visibility = View.GONE
                             } else {
                                 binding.etBuyAmount.error = ""
                                 viewModel.goldRateData.value?.first?.run {
-                                    val baseAmount = buyQuantity * goldPrice.toFloat()
-                                    val taxAmount = baseAmount * 0.03
-                                    val totalAmount = baseAmount + taxAmount
-                                    val weight = totalAmount / totalBuyPrice.toFloat()
-                                    binding.tvBaseAmount.text =
-                                        "₹${normalDecimalFormat.format(baseAmount)}"
-                                    binding.tvTotalBuyAmount.text =
-                                        "₹${normalDecimalFormat.format(totalAmount)}"
-                                    binding.tvGstAmount.text =
-                                        "GST ₹${normalDecimalFormat.format(taxAmount)}"
-                                    binding.tvBuyWeight.text =
-                                        "${longDecimalFormat.format(weight)}gms"
+                                    buyAmount = buyQuantity * totalBuyPrice.toFloat()
+                                    binding.tvCheckoutAmount.text =
+                                        "₹${normalDecimalFormat.format(buyAmount)}"
+                                    binding.tvCheckoutWeight.text =
+                                        "${longDecimalFormat.format(buyQuantity)}gms"
                                 }
                                 binding.cardBuyDetails.visibility = View.VISIBLE
                             }
@@ -416,16 +401,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 Toast.makeText(context, binding.etBuyAmount.error.toString(), Toast.LENGTH_SHORT)
                     .show()
             } else if ((binding.etBuyAmount.editText as TextInputEditText).text.isNullOrBlank()) {
-                Toast.makeText(context, "Please enter an amount or quantity", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(context, R.string.error_enter_something, Toast.LENGTH_SHORT).show()
             } else {
                 viewModel.startTransaction(
                     hashMapOf(
                         "amount" to normalDecimalFormat.parse(
-                            binding.tvTotalBuyAmount.text.split(
+                            binding.tvCheckoutAmount.text.split(
                                 "₹"
                             )[1]
-                        ).toFloat().toString()
+                        )?.toFloat().toString()
                     )
                 )
             }

@@ -494,84 +494,44 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_buy_amount_label"
+                    android:id="@+id/tv_checkout_label"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/total_price"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/checkout"
                     android:textAppearance="@style/TextAppearance.App.Title"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_base_amount"
+                    android:id="@+id/tv_checkout_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:textAppearance="@style/TextAppearance.App.Subtitle"
+                    android:textColor="?attr/colorOnBackground"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_buy_amount_label"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_checkout_card"
                     tools:text="₹4,456.35" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_plus_sign"
+                    android:id="@+id/tv_gst_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:includeFontPadding="false"
-                    android:text="@string/plus_sign"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_base_amount"
-                    app:layout_constraintStart_toEndOf="@id/tv_base_amount"
-                    app:layout_constraintTop_toTopOf="@id/tv_base_amount" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_gst_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_base_amount"
-                    app:layout_constraintStart_toEndOf="@id/tv_plus_sign"
-                    app:layout_constraintTop_toTopOf="@id/tv_base_amount"
-                    tools:text="GST ₹24.65" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_equal_sign"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:includeFontPadding="false"
-                    android:text="@string/equal_sign"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_gst_amount"
-                    app:layout_constraintStart_toEndOf="@id/tv_gst_amount"
-                    app:layout_constraintTop_toTopOf="@id/tv_gst_amount" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_total_buy_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:textAppearance="@style/TextAppearance.App.Title"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_base_amount"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/includes_gst"
+                    android:textAppearance="@style/TextAppearance.App.Light"
+                    android:textColor="?attr/colorOnBackground"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_checkout_amount"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@id/tv_equal_sign"
-                    app:layout_constraintTop_toTopOf="@id/tv_base_amount"
-                    tools:text="₹4,480" />
+                    app:layout_constraintTop_toTopOf="@id/tv_checkout_amount" />
 
                 <com.google.android.material.divider.MaterialDivider
-                    android:id="@+id/divider_buy_price_card"
+                    android:id="@+id/divider_checkout_card"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -579,33 +539,21 @@
                     app:dividerInsetStart="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_base_amount" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_checkout_label" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_buy_weight_label"
+                    android:id="@+id/tv_checkout_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="@string/total_weight"
-                    android:textAppearance="@style/TextAppearance.App.Title"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider_buy_price_card" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_buy_weight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="20dp"
                     android:textAppearance="@style/TextAppearance.App.Title"
                     android:textColor="?attr/colorSecondary"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_buy_weight_label"
+                    app:layout_constraintTop_toBottomOf="@id/tv_checkout_amount"
                     tools:text="6.53gms" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -803,12 +751,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/eina01_regular"
-                    tools:text="₹ 4,654.78"
                     android:textColor="@color/text_black"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_gold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/iv_gold" />
+                    app:layout_constraintTop_toTopOf="@+id/iv_gold"
+                    tools:text="₹ 4,654.78" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_digital_gold_subtitle"

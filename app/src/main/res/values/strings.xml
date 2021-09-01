@@ -39,14 +39,16 @@
     <string name="sell_gold">sell gold</string>
     <string name="request_delivery">request delivery</string>
     <string name="enter_amount">Enter amount</string>
+    <string name="enter_quantity">Enter quantity</string>
+    <string name="error_lower_amount">Please enter amount lower than 100,000</string>
+    <string name="error_lower_quantity">Please enter lower quantity</string>
+    <string name="error_enter_something">Please enter an amount or quantity</string>
     <string name="rupees_500">₹500</string>
     <string name="rupees_1000">₹1000</string>
     <string name="rupees_5000">₹5000</string>
     <string name="rupees_10000">₹10,000</string>
-    <string name="total_price">Total Price</string>
-    <string name="plus_sign">+</string>
-    <string name="equal_sign">=</string>
-    <string name="total_weight">Total Weight</string>
+    <string name="checkout">Checkout Details</string>
+    <string name="includes_gst">Includes GST</string>
     <string name="buy_gold">Buy Gold</string>
     <string name="learn_more">learn more</string>
     <string name="start_now">start now</string>
