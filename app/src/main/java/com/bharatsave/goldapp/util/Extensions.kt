@@ -197,3 +197,5 @@ fun EditText.textChanges(): Flow<CharSequence?> {
         awaitClose { removeTextChangedListener(listener) }
     }.onStart { emit(text) }
 }
+
+fun stringHashMapOf(vararg pairs: Pair<String, String>) = StringHashMap(pairs.size).apply { putAll(pairs) }

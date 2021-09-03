@@ -7,15 +7,23 @@ import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doOnTextChanged
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentWithdrawBinding
-import com.bharatsave.goldapp.util.increaseHitArea
-import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
+import com.bharatsave.goldapp.util.*
+import com.bharatsave.goldapp.view.main.MainViewModel
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class WithdrawFragment : Fragment(), View.OnClickListener {
@@ -23,8 +31,20 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentWithdrawBinding? = null
     private val binding get() = _binding!!
 
+    private val normalDecimalFormat by lazy {
+        DecimalFormat("#,##,##0.00")
+    }
+
+    private val longDecimalFormat by lazy {
+        DecimalFormat("#0.0000")
+    }
+
+    private val mainViewModel by activityViewModels<MainViewModel>()
+
     private var sellAmount: Float = 0f
     private var sellQuantity: Float = 0f
+    private var currentAmountBalance: Float = 0f
+    private var currentWeightBalance: Float = 0f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +58,7 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupObservers()
         setupViews()
     }
 
@@ -46,6 +67,32 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
         _binding = null
     }
 
+    private fun setupObservers() {
+        mainViewModel.balanceData.observe(viewLifecycleOwner) {
+            if (it != null) {
+                currentWeightBalance = it.goldBalance.toFloat()
+                binding.tvInvestment.text =
+                    "₹${normalDecimalFormat.format(it.amountInvested.toFloat())}"
+                binding.tvGoldWorth.text =
+                    "${normalDecimalFormat.format(currentWeightBalance)}gm"
+                mainViewModel.goldRateData.value?.first?.run {
+                    currentAmountBalance = it.goldBalance.toFloat() * totalSellPrice.toFloat()
+                    binding.tvPortfolioValue.text =
+                        "₹${normalDecimalFormat.format(currentAmountBalance)}"
+                }
+            }
+        }
+
+        mainViewModel.goldRateData.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.tvDigitalGoldPrice.text =
+                    "₹${normalDecimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+            }
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     private fun setupViews() {
         binding.tvTitleSellGold.setCustomTypefaceSpanString(
             "sell",
@@ -67,7 +114,8 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
         binding.toggleGroupSellOption.setOnCheckedChangeListener { _, buttonId ->
             when (buttonId) {
                 R.id.toggle_sell_currency -> {
-                    binding.toggleSellCurrency.text = resources.getString(R.string.sell_currency_text)
+                    binding.toggleSellCurrency.text =
+                        resources.getString(R.string.sell_currency_text)
                     binding.toggleSellQuantity.text =
                         SpannableString(resources.getString(R.string.sell_quantity_text)).apply {
                             setSpan(
@@ -93,7 +141,8 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
                     } else (binding.etSellAmount.editText as TextInputEditText).setText("")
                 }
                 R.id.toggle_sell_quantity -> {
-                    binding.toggleSellQuantity.text = resources.getString(R.string.sell_quantity_text)
+                    binding.toggleSellQuantity.text =
+                        resources.getString(R.string.sell_quantity_text)
                     binding.toggleSellCurrency.text =
                         SpannableString(resources.getString(R.string.sell_currency_text)).apply {
                             setSpan(
@@ -121,19 +170,105 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        binding.etSellAmount.editText?.doOnTextChanged { text, _, _, _ ->
-            when (binding.toggleGroupSellOption.checkedRadioButtonId) {
-                R.id.toggle_sell_currency -> sellAmount =
-                    if (text.toString().isNotBlank()) text.toString().toFloat() else 0f
-                R.id.toggle_sell_quantity -> sellQuantity =
-                    if (text.toString().isNotBlank()) text.toString().toFloat() else 0f
-            }
-        }
+        (binding.etSellAmount.editText as TextInputEditText).textChanges().debounce(500)
+            .onEach { text ->
+                when (binding.toggleGroupSellOption.checkedRadioButtonId) {
+                    R.id.toggle_sell_currency -> {
+                        if (text.toString().isNotBlank()) {
+                            sellAmount = text.toString().toFloat()
+                            if (sellAmount > currentAmountBalance) {
+                                binding.etSellAmount.error = "Amount exceeds balance"
+                                binding.cardSellDetails.visibility = View.GONE
+                            } else {
+                                binding.etSellAmount.isErrorEnabled = false
+                                mainViewModel.goldRateData.value?.first?.run {
+                                    binding.tvCurrentRate.text = "at $totalSellPrice/gm"
+                                    sellQuantity = sellAmount / totalSellPrice.toFloat()
+                                    binding.tvSellAmount.text =
+                                        "₹${normalDecimalFormat.format(sellAmount)}"
+                                    binding.tvSellWeight.text =
+                                        "${longDecimalFormat.format(sellQuantity)}gms"
+                                }
+                                binding.cardSellDetails.visibility = View.VISIBLE
+                            }
+                        } else {
+                            sellAmount = 0f
+                            binding.cardSellDetails.visibility = View.GONE
+                        }
+                    }
+                    R.id.toggle_sell_quantity -> {
+                        if (text.toString().isNotBlank()) {
+                            sellQuantity = text.toString().toFloat()
+                            if (sellQuantity > currentWeightBalance) {
+                                binding.etSellAmount.error = "Weight exceeds balance"
+                                binding.cardSellDetails.visibility = View.GONE
+                            } else {
+                                binding.etSellAmount.isErrorEnabled = false
+                                mainViewModel.goldRateData.value?.first?.run {
+                                    binding.tvCurrentRate.text = "at $totalSellPrice/gm"
+                                    sellAmount = sellQuantity * totalSellPrice.toFloat()
+                                    binding.tvSellAmount.text =
+                                        "₹${normalDecimalFormat.format(sellAmount)}"
+                                    binding.tvSellWeight.text =
+                                        "${longDecimalFormat.format(sellQuantity)}gms"
+                                }
+                                binding.cardSellDetails.visibility = View.VISIBLE
+                            }
+                        } else {
+                            sellQuantity = 0f
+                            binding.cardSellDetails.visibility = View.GONE
+                        }
+                    }
+                }
+            }.launchIn(lifecycleScope)
 
         binding.chipAdd500.setOnClickListener(this)
         binding.chipAdd1000.setOnClickListener(this)
         binding.chipAdd5000.setOnClickListener(this)
         binding.chipAdd10000.setOnClickListener(this)
+
+        binding.btnSellProceed.setOnClickListener {
+            if (!binding.etSellAmount.error.isNullOrBlank()) {
+                Toast.makeText(context, binding.etSellAmount.error.toString(), Toast.LENGTH_SHORT)
+                    .show()
+            } else if ((binding.etSellAmount.editText as TextInputEditText).text.isNullOrBlank()) {
+                Toast.makeText(context, R.string.error_enter_something, Toast.LENGTH_SHORT).show()
+            } else {
+                findNavController().navigate(
+                    WithdrawFragmentDirections.actionSelectBank(
+                        stringHashMapOf(
+                            when (binding.toggleGroupSellOption.checkedRadioButtonId) {
+                                R.id.toggle_sell_currency -> "amount" to normalDecimalFormat.format(
+                                    sellAmount
+                                )
+                                R.id.toggle_sell_quantity -> "quantity" to longDecimalFormat.format(
+                                    sellQuantity
+                                )
+                                else -> throw UnsupportedOperationException("Neither of amount or quantity toggle selected")
+                            },
+                            "blockId" to mainViewModel.goldRateData.value?.first!!.blockId,
+                            "lockPrice" to mainViewModel.goldRateData.value?.first!!.totalSellPrice
+                        )
+                    )
+                )
+//                findNavController().navigate(
+//                    R.id.action_select_bank,
+//                    bundleOf(
+//                        when (binding.toggleGroupSellOption.checkedRadioButtonId) {
+//                            R.id.toggle_sell_currency -> "amount" to normalDecimalFormat.format(
+//                                sellAmount
+//                            )
+//                            R.id.toggle_sell_quantity -> "quantity" to longDecimalFormat.format(
+//                                sellQuantity
+//                            )
+//                            else -> throw UnsupportedOperationException("Neither of amount or quantity toggle selected")
+//                        },
+//                        "blockId" to mainViewModel.goldRateData.value?.first!!.blockId,
+//                        "lockPrice" to mainViewModel.goldRateData.value?.first!!.totalSellPrice
+//                    )
+//                )
+            }
+        }
     }
 
     override fun onClick(v: View?) {

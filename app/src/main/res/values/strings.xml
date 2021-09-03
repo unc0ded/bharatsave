@@ -106,8 +106,20 @@
 
     <!--    withdraw-->
     <string name="withdraw">Withdraw</string>
-    <string name="money_transfer_note">Money will be transferred to your UPI wallet</string>
+    <string name="sell_details">Sell Details</string>
+    <string name="money_transfer_note">Money will be transferred to your bank account</string>
     <string name="proceed_to_sell">Proceed to sell</string>
+
+    <!--    bank selection-->
+    <string name="add_bank_account">add bank account</string>
+    <string name="account_name">Account Name</string>
+    <string name="ifsc_code">IFSC Code</string>
+    <string name="account_number">Account Number</string>
+    <string name="bank_details">BANK DETAILS</string>
+    <string name="select_bank">SELECT BANK</string>
+    <string name="confirm_bank_account">Confirm Bank Account</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">create</string>
 
     <!--    learn-->
     <string name="why_bharat_save_title">Why Bharat Save</string>

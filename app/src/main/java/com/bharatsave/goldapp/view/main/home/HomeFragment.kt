@@ -120,7 +120,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         0,
                         0
                     )
-                    TextViewCompat.setCompoundDrawableTintList(binding.tvGoldCurrentValueChange, ColorStateList.valueOf(ContextCompat.getColor(requireContext(), if (second > 0) R.color.icon_green else R.color.icon_red)))
+                    TextViewCompat.setCompoundDrawableTintList(
+                        binding.tvGoldCurrentValueChange,
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                if (second > 0) R.color.icon_green else R.color.icon_red
+                            )
+                        )
+                    )
                 }
                 binding.tvGoldBalance.text =
                     "${longDecimalFormat.format(it.goldBalance.toFloat())}gms"
@@ -356,9 +364,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             buyAmount = text.toString().toFloat()
                             if (buyAmount > 1000000) {
                                 binding.etBuyAmount.error = getString(R.string.error_lower_amount)
-                                binding.cardBuyDetails.visibility = View.GONE
+                                binding.cardCheckoutDetails.visibility = View.GONE
                             } else {
-                                binding.etBuyAmount.error = ""
+                                binding.etBuyAmount.isErrorEnabled = false
                                 mainViewModel.goldRateData.value?.first?.run {
                                     buyQuantity = buyAmount / totalBuyPrice.toFloat()
                                     binding.tvCheckoutAmount.text =
@@ -366,11 +374,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                     binding.tvCheckoutWeight.text =
                                         "${longDecimalFormat.format(buyQuantity)}gms"
                                 }
-                                binding.cardBuyDetails.visibility = View.VISIBLE
+                                binding.cardCheckoutDetails.visibility = View.VISIBLE
                             }
                         } else {
                             buyAmount = 0f
-                            binding.cardBuyDetails.visibility = View.GONE
+                            binding.cardCheckoutDetails.visibility = View.GONE
                         }
                     }
                     R.id.toggle_buy_quantity -> {
@@ -378,9 +386,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             buyQuantity = text.toString().toFloat()
                             if (buyQuantity > 250) {
                                 binding.etBuyAmount.error = getString(R.string.error_lower_quantity)
-                                binding.cardBuyDetails.visibility = View.GONE
+                                binding.cardCheckoutDetails.visibility = View.GONE
                             } else {
-                                binding.etBuyAmount.error = ""
+                                binding.etBuyAmount.isErrorEnabled = false
                                 mainViewModel.goldRateData.value?.first?.run {
                                     buyAmount = buyQuantity * totalBuyPrice.toFloat()
                                     binding.tvCheckoutAmount.text =
@@ -388,11 +396,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                                     binding.tvCheckoutWeight.text =
                                         "${longDecimalFormat.format(buyQuantity)}gms"
                                 }
-                                binding.cardBuyDetails.visibility = View.VISIBLE
+                                binding.cardCheckoutDetails.visibility = View.VISIBLE
                             }
                         } else {
                             buyQuantity = 0f
-                            binding.cardBuyDetails.visibility = View.GONE
+                            binding.cardCheckoutDetails.visibility = View.GONE
                         }
                     }
                 }
@@ -412,11 +420,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
             } else {
                 homeViewModel.startTransaction(
                     hashMapOf(
-                        "amount" to normalDecimalFormat.parse(
-                            binding.tvCheckoutAmount.text.split(
-                                "₹"
-                            )[1]
-                        )?.toFloat().toString()
+                        "amount" to normalDecimalFormat.format(
+                            buyAmount
+                        )
                     )
                 )
             }

@@ -302,6 +302,87 @@
 
         </HorizontalScrollView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_sell_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sv_chip_group">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_sell_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/sell_details"
+                    android:textAppearance="@style/TextAppearance.App.Title"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_sell_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle"
+                    android:textColor="?attr/colorOnBackground"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_sell_card"
+                    tools:text="₹4,456.35" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_current_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    tools:text="at ₹4,456.35/gm"
+                    android:textAppearance="@style/TextAppearance.App.Light"
+                    android:textColor="?attr/colorOnBackground"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_sell_amount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_sell_amount" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider_sell_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:dividerInsetEnd="20dp"
+                    app:dividerInsetStart="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sell_label" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_sell_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:textAppearance="@style/TextAppearance.App.Title"
+                    android:textColor="?attr/colorSecondary"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sell_amount"
+                    tools:text="6.53gms" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_money_transfer_info"
             android:layout_width="wrap_content"
@@ -312,7 +393,7 @@
             android:textAppearance="@style/TextAppearance.App.Light"
             android:textColor="@color/unfocused_grey"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sv_chip_group" />
+            app:layout_constraintTop_toBottomOf="@id/card_sell_details" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_digital_gold"

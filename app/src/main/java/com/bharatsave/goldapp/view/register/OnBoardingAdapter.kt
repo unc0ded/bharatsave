@@ -15,7 +15,11 @@ class OnBoardingAdapter(private val itemList: List<OnBoardingItem>, private val 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnBoardingViewHolder =
         OnBoardingViewHolder(
-            PagerViewOnboardingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            PagerViewOnboardingBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
 
     override fun onBindViewHolder(holder: OnBoardingViewHolder, position: Int) {

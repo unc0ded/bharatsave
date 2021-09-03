@@ -15,14 +15,14 @@ interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM user_table")
-    suspend fun getUserWithBanks(): UserBank
+    suspend fun getUserWithBanks(): UserWithBanks
 
     @Query("SELECT * FROM banks_list")
     suspend fun getUserBanks(): List<BankDetail>
 
     @Transaction
     @Query("SELECT * FROM user_table")
-    suspend fun getUserWithPlans(): UserPlan
+    suspend fun getUserWithPlans(): UserWithPlans
 
     @Query("SELECT * FROM plans_table")
     suspend fun getUserPlans(): List<PlanDetail>
@@ -35,6 +35,9 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveBank(bankDetail: BankDetail)
 
     @Update
     suspend fun updateUser(user: User)

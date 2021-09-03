@@ -1,12 +1,10 @@
 package com.bharatsave.goldapp.view.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.bharatsave.goldapp.data.repository.MainRepository
 import com.bharatsave.goldapp.data.repository.PreferenceRepository
 import com.bharatsave.goldapp.model.BalanceDetail
+import com.bharatsave.goldapp.model.BankDetail
 import com.bharatsave.goldapp.model.augmont.GoldRate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +39,10 @@ class MainViewModel @Inject constructor(
         mainRepository.getStoredBalanceDetails().asLiveData(viewModelScope.coroutineContext)
     val balanceData: LiveData<BalanceDetail>
         get() = _balanceData
+
+    private val _banksData = MutableLiveData<List<BankDetail>>()
+    val banksData: LiveData<List<BankDetail>>
+        get() = _banksData
 
     init {
         viewModelScope.launch {
@@ -88,6 +90,13 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             val balance = mainRepository.fetchBalanceData()
             mainRepository.updateUserBalance(balance, preferenceRepository.getPhoneNumber())
+        }
+    }
+
+    fun getUserBankList() {
+        viewModelScope.launch {
+            val banksList = mainRepository.fetchUserBanksList()
+            _banksData.value = banksList
         }
     }
 }

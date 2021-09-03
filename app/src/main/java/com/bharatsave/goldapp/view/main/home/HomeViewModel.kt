@@ -3,20 +3,18 @@ package com.bharatsave.goldapp.view.main.home
 import androidx.lifecycle.*
 import com.bharatsave.goldapp.data.repository.MainRepository
 import com.bharatsave.goldapp.data.repository.PreferenceRepository
-import com.bharatsave.goldapp.model.BalanceDetail
 import com.bharatsave.goldapp.model.PaytmTransaction
 import com.bharatsave.goldapp.model.PlanDetail
-import com.bharatsave.goldapp.model.augmont.GoldRate
 import com.bharatsave.goldapp.model.paytm.PaytmSubscriptionStatus
 import com.bharatsave.goldapp.model.paytm.PaytmSubscriptionToken
 import com.bharatsave.goldapp.model.paytm.PaytmTransactionStatus
 import com.bharatsave.goldapp.model.paytm.PaytmTransactionToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.temporal.ChronoUnit
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,6 +38,14 @@ class HomeViewModel @Inject constructor(
     private val _transactionStatus = MutableLiveData<PaytmTransactionStatus>()
     val transactionStatus: LiveData<PaytmTransactionStatus>
         get() = _transactionStatus
+
+    private val _bankCreateStatus = MutableLiveData<String>()
+    val bankCreateStatus: LiveData<String>
+        get() = _bankCreateStatus
+
+    private val _sellGoldStatus = MutableLiveData<String>()
+    val sellGoldStatus: LiveData<String>
+        get() = _sellGoldStatus
 
     fun createPlan(bodyMap: Map<String, String>) {
         viewModelScope.launch {
@@ -85,6 +91,51 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val balanceData = mainRepository.startGoldPurchase(bodyMap)
             mainRepository.updateUserBalance(balanceData, preferenceRepository.getPhoneNumber())
+        }
+    }
+
+    fun sellGold(bodyMap: HashMap<String, String>) {
+        viewModelScope.launch {
+            try {
+                bodyMap["mobileNumber"] = preferenceRepository.getPhoneNumber()
+                val balanceData = mainRepository.withdrawMoney(bodyMap)
+                mainRepository.updateUserBalance(balanceData, preferenceRepository.getPhoneNumber())
+                _sellGoldStatus.value = "SUCCESS"
+            } catch (cause: Throwable) {
+                when (cause) {
+                    is IOException -> _sellGoldStatus.value = "FAILED: ${cause.message}"
+                    is HttpException -> withContext(Dispatchers.IO) {
+                        _sellGoldStatus.postValue(
+                            "FAILED: ${
+                                cause.response()?.errorBody()?.string()
+                            }"
+                        )
+                    }
+                    else -> _sellGoldStatus.value = cause.message
+                }
+            }
+        }
+    }
+
+    fun createUserBank(bodyMap: Map<String, String>) {
+        viewModelScope.launch {
+            try {
+                val bankDetail = mainRepository.registerUserBank(bodyMap)
+                mainRepository.addUserBank(bankDetail)
+                _bankCreateStatus.value = "SUCCESS"
+            } catch (cause: Throwable) {
+                when (cause) {
+                    is IOException -> _bankCreateStatus.value = "FAILED: ${cause.message}"
+                    is HttpException -> withContext(Dispatchers.IO) {
+                        _bankCreateStatus.postValue(
+                            "FAILED: ${
+                                cause.response()?.errorBody()?.string()
+                            }"
+                        )
+                    }
+                    else -> _bankCreateStatus.value = cause.message
+                }
+            }
         }
     }
 }

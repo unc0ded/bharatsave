@@ -5,11 +5,8 @@ import com.bharatsave.goldapp.data.db.UserDao
 import com.bharatsave.goldapp.data.service.AugmontService
 import com.bharatsave.goldapp.data.service.PaytmService
 import com.bharatsave.goldapp.data.service.UserService
-import com.bharatsave.goldapp.model.BalanceDetail
-import com.bharatsave.goldapp.model.PaytmTransaction
-import com.bharatsave.goldapp.model.PlanDetail
+import com.bharatsave.goldapp.model.*
 import com.bharatsave.goldapp.model.augmont.GoldRate
-import com.bharatsave.goldapp.model.User
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
@@ -74,4 +71,12 @@ class MainRepository @Inject constructor(
 
     suspend fun startGoldPurchase(bodyMap: Map<String, String>) =
         augmontService.purchaseGold(bodyMap)
+
+    suspend fun withdrawMoney(bodyMap: Map<String, String>) = augmontService.sellGold(bodyMap)
+
+    suspend fun fetchUserBanksList() = userDao.getUserBanks()
+
+    suspend fun registerUserBank(bodyMap: Map<String, String>) = augmontService.createBank(bodyMap)
+
+    suspend fun addUserBank(bankDetail: BankDetail) = userDao.saveBank(bankDetail)
 }
