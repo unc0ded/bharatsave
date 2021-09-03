@@ -46,6 +46,18 @@
         app:tabPaddingStart="8dp"
         app:tabRippleColor="@null" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_selected_icon"
+        android:layout_width="16dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_check_circle_outline_black_24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/pager_bank_list"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@id/pager_bank_list"
+        app:layout_constraintTop_toTopOf="@id/pager_bank_list" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_bank"
         style="?attr/borderlessButtonStyle"

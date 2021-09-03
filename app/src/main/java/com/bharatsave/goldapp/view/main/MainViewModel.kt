@@ -67,6 +67,10 @@ class MainViewModel @Inject constructor(
             val balance = mainRepository.fetchBalanceData()
             mainRepository.updateUserBalance(balance, preferenceRepository.getPhoneNumber())
         }
+        viewModelScope.launch {
+            val banksList = mainRepository.fetchUserBanksList()
+            mainRepository.saveUserBanks(banksList)
+        }
     }
 
     fun getGoldRates() {
@@ -95,7 +99,7 @@ class MainViewModel @Inject constructor(
 
     fun getUserBankList() {
         viewModelScope.launch {
-            val banksList = mainRepository.fetchUserBanksList()
+            val banksList = mainRepository.getStoredBanksList()
             _banksData.value = banksList
         }
     }

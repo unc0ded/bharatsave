@@ -74,9 +74,11 @@ class MainRepository @Inject constructor(
 
     suspend fun withdrawMoney(bodyMap: Map<String, String>) = augmontService.sellGold(bodyMap)
 
-    suspend fun fetchUserBanksList() = userDao.getUserBanks()
+    suspend fun fetchUserBanksList() = userService.userBankDetails()
+
+    suspend fun getStoredBanksList() = userDao.getUserBanks()
 
     suspend fun registerUserBank(bodyMap: Map<String, String>) = augmontService.createBank(bodyMap)
 
-    suspend fun addUserBank(bankDetail: BankDetail) = userDao.saveBank(bankDetail)
+    suspend fun saveUserBanks(bankDetails: List<BankDetail>) = userDao.insertBanks(*bankDetails.toTypedArray())
 }

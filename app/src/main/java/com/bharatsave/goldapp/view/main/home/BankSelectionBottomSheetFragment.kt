@@ -11,8 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import androidx.viewpager2.widget.ViewPager2
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentBankSelectionBottomSheetBinding
 import com.bharatsave.goldapp.view.main.MainViewModel
@@ -71,11 +71,19 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
                     binding.indicatorBanks,
                     binding.pagerBankList
                 ) { _, _ -> }.attach()
-                TransitionManager.beginDelayedTransition(bottomSheet, AutoTransition())
+
+                TransitionManager.beginDelayedTransition(bottomSheet)
                 binding.pagerBankList.isVisible = true
-                binding.indicatorBanks.isVisible = true
+                if (it.size > 1) binding.indicatorBanks.isVisible = true
+                binding.ivSelectedIcon.isVisible = true
+
+                binding.pagerBankList.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                    override fun onPageScrollStateChanged(state: Int) {
+                        binding.ivSelectedIcon.isVisible = state == ViewPager2.SCROLL_STATE_IDLE
+                    }
+                })
             } else {
-                TransitionManager.beginDelayedTransition(bottomSheet, AutoTransition())
+                TransitionManager.beginDelayedTransition(bottomSheet)
                 binding.pagerBankList.isVisible = false
                 binding.indicatorBanks.isVisible = false
             }
@@ -109,7 +117,7 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
         bottomSheet = dialog!!.findViewById(R.id.design_bottom_sheet)
 
         binding.btnAddBank.setOnClickListener {
-            TransitionManager.beginDelayedTransition(bottomSheet, AutoTransition())
+            TransitionManager.beginDelayedTransition(bottomSheet)
             binding.cardAddBankDetails.isVisible = !binding.cardAddBankDetails.isVisible
         }
 

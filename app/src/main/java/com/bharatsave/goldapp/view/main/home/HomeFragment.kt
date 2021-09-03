@@ -8,10 +8,10 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -109,7 +109,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         mainViewModel.balanceData.observe(viewLifecycleOwner) {
             if (it != null && it.goldBalance.toFloat() != 0f) {
-                binding.cardLiveGold.visibility = View.GONE
+                binding.cardLiveGold.isVisible = false
                 mainViewModel.goldRateData.value?.run {
                     binding.tvGoldCurrentValue.text =
                         "₹${normalDecimalFormat.format(first.totalSellPrice.toFloat() * it.goldBalance.toFloat())}"
@@ -132,16 +132,16 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 }
                 binding.tvGoldBalance.text =
                     "${longDecimalFormat.format(it.goldBalance.toFloat())}gms"
-                binding.cardGoldBalance.visibility = View.VISIBLE
-                binding.ivFloatingLogo.visibility = View.VISIBLE
-                binding.btnSellGold.visibility = View.VISIBLE
-                binding.btnRequestDelivery.visibility = View.VISIBLE
+                binding.cardGoldBalance.isVisible = true
+                binding.ivFloatingLogo.isVisible = true
+                binding.btnSellGold.isVisible = true
+                binding.btnRequestDelivery.isVisible = true
             } else {
-                binding.cardLiveGold.visibility = View.VISIBLE
-                binding.cardGoldBalance.visibility = View.GONE
-                binding.ivFloatingLogo.visibility = View.GONE
-                binding.btnSellGold.visibility = View.GONE
-                binding.btnRequestDelivery.visibility = View.GONE
+                binding.cardLiveGold.isVisible = true
+                binding.cardGoldBalance.isVisible = false
+                binding.ivFloatingLogo.isVisible = false
+                binding.btnSellGold.isVisible = false
+                binding.btnRequestDelivery.isVisible = false
             }
         }
 

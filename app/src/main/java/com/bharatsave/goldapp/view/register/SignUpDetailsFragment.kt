@@ -83,7 +83,6 @@ class SignUpDetailsFragment : Fragment() {
             if (validDetailsProvided(fullName, email, args.phone)) {
                 viewModel.signUp(
                     User(
-                        id = null,
                         name = fullName,
                         email = email,
                         phoneNumber = args.phone,

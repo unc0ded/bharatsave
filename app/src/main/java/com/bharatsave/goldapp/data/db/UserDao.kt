@@ -37,7 +37,7 @@ interface UserDao {
     suspend fun insertUser(user: User)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveBank(bankDetail: BankDetail)
+    suspend fun insertBanks(vararg bankDetails: BankDetail)
 
     @Update
     suspend fun updateUser(user: User)

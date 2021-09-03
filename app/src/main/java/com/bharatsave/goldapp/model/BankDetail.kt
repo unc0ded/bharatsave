@@ -13,7 +13,7 @@ data class BankDetail(
     @Json(name = "accountNumber")
     val accountNo: String,
     val accountName: String,
-    val bankName: String,
+    val bankName: String? = null,
     @Json(name = "uniqueId")
     val userId: String
 )

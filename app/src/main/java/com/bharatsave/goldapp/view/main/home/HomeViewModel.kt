@@ -121,7 +121,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val bankDetail = mainRepository.registerUserBank(bodyMap)
-                mainRepository.addUserBank(bankDetail)
+                mainRepository.saveUserBanks(listOf(bankDetail))
                 _bankCreateStatus.value = "SUCCESS"
             } catch (cause: Throwable) {
                 when (cause) {
