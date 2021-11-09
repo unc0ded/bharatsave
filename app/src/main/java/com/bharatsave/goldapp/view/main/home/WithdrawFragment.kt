@@ -76,7 +76,7 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
                 binding.tvGoldWorth.text =
                     "${normalDecimalFormat.format(currentWeightBalance)}gm"
                 mainViewModel.goldRateData.value?.first?.run {
-                    currentAmountBalance = it.goldBalance.toFloat() * totalSellPrice.toFloat()
+                    currentAmountBalance = it.goldBalance.toFloat() * sellPrice.toFloat()
                     binding.tvPortfolioValue.text =
                         "₹${normalDecimalFormat.format(currentAmountBalance)}"
                 }
@@ -86,7 +86,7 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
         mainViewModel.goldRateData.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.tvDigitalGoldPrice.text =
-                    "₹${normalDecimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+                    "₹${normalDecimalFormat.format(it.first.buyPrice.toFloat())}/gm"
             }
         }
     }
@@ -182,8 +182,8 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
                             } else {
                                 binding.etSellAmount.isErrorEnabled = false
                                 mainViewModel.goldRateData.value?.first?.run {
-                                    binding.tvCurrentRate.text = "at $totalSellPrice/gm"
-                                    sellQuantity = sellAmount / totalSellPrice.toFloat()
+                                    binding.tvCurrentRate.text = "at $sellPrice/gm"
+                                    sellQuantity = sellAmount / sellPrice.toFloat()
                                     binding.tvSellAmount.text =
                                         "₹${normalDecimalFormat.format(sellAmount)}"
                                     binding.tvSellWeight.text =
@@ -205,8 +205,8 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
                             } else {
                                 binding.etSellAmount.isErrorEnabled = false
                                 mainViewModel.goldRateData.value?.first?.run {
-                                    binding.tvCurrentRate.text = "at $totalSellPrice/gm"
-                                    sellAmount = sellQuantity * totalSellPrice.toFloat()
+                                    binding.tvCurrentRate.text = "at $sellPrice/gm"
+                                    sellAmount = sellQuantity * sellPrice.toFloat()
                                     binding.tvSellAmount.text =
                                         "₹${normalDecimalFormat.format(sellAmount)}"
                                     binding.tvSellWeight.text =
@@ -247,7 +247,7 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
                                 else -> throw UnsupportedOperationException("Neither of amount or quantity toggle selected")
                             },
                             "blockId" to mainViewModel.goldRateData.value?.first!!.blockId,
-                            "lockPrice" to mainViewModel.goldRateData.value?.first!!.totalSellPrice
+                            "lockPrice" to mainViewModel.goldRateData.value?.first!!.sellPrice
                         )
                     )
                 )

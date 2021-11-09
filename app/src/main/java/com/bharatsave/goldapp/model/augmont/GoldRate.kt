@@ -10,10 +10,9 @@ import java.time.LocalDateTime
 @JsonClass(generateAdapter = true)
 data class GoldRate(
     val blockId: String,
-    val goldPrice: String,
-    val tax: String,
-    val totalBuyPrice: String,
-    val totalSellPrice: String,
+    val buyPrice: String,
+    val buyGst: String,
+    val sellPrice: String,
     @PrimaryKey
     val timeStamp: Long = Instant.now().toEpochMilli()
 )

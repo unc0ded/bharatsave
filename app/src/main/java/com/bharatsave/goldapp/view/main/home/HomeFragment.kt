@@ -99,11 +99,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         mainViewModel.goldRateData.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.tvLiveGoldPrice.text =
-                    "₹${normalDecimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+                    "₹${normalDecimalFormat.format(it.first.buyPrice.toFloat())}/gm"
                 binding.tvDigitalGoldPrice.text =
-                    "₹${normalDecimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+                    "₹${normalDecimalFormat.format(it.first.buyPrice.toFloat())}/gm"
                 binding.tvGoldBalancePrice.text =
-                    "₹${normalDecimalFormat.format(it.first.goldPrice.toFloat())}/gm"
+                    "₹${normalDecimalFormat.format(it.first.buyPrice.toFloat())}/gm"
             }
         }
 
@@ -112,7 +112,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 binding.cardLiveGold.isVisible = false
                 mainViewModel.goldRateData.value?.run {
                     binding.tvGoldCurrentValue.text =
-                        "₹${normalDecimalFormat.format(first.totalSellPrice.toFloat() * it.goldBalance.toFloat())}"
+                        "₹${normalDecimalFormat.format(first.sellPrice.toFloat() * it.goldBalance.toFloat())}"
                     binding.tvGoldCurrentValueChange.text = "${normalDecimalFormat.format(second)}%"
                     binding.tvGoldCurrentValueChange.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         if (second > 0) R.drawable.ic_arrow_drop_up_black_24dp else R.drawable.ic_arrow_drop_down_black_24dp,
@@ -229,7 +229,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     homeViewModel.buyGold(
                         hashMapOf(
                             "amount" to it.transactionAmount,
-                            "buyPrice" to mainViewModel.goldRateData.value!!.first.goldPrice,
+                            "buyPrice" to mainViewModel.goldRateData.value!!.first.buyPrice,
                             "blockId" to mainViewModel.goldRateData.value!!.first.blockId
                         )
                     )
@@ -368,7 +368,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             } else {
                                 binding.etBuyAmount.isErrorEnabled = false
                                 mainViewModel.goldRateData.value?.first?.run {
-                                    buyQuantity = buyAmount / totalBuyPrice.toFloat()
+                                    buyQuantity = buyAmount / (buyPrice + buyGst).toFloat()
                                     binding.tvCheckoutAmount.text =
                                         "₹${normalDecimalFormat.format(buyAmount)}"
                                     binding.tvCheckoutWeight.text =
@@ -390,7 +390,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             } else {
                                 binding.etBuyAmount.isErrorEnabled = false
                                 mainViewModel.goldRateData.value?.first?.run {
-                                    buyAmount = buyQuantity * totalBuyPrice.toFloat()
+                                    buyAmount = buyQuantity * (buyPrice + buyGst).toFloat()
                                     binding.tvCheckoutAmount.text =
                                         "₹${normalDecimalFormat.format(buyAmount)}"
                                     binding.tvCheckoutWeight.text =
