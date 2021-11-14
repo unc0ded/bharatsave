@@ -16,6 +16,10 @@ class MainRepository @Inject constructor(
     private val userDao: UserDao,
     private val mainDao: MainDao
 ) {
+    suspend fun getBuyList() = augmontService.getBuyList()
+
+    suspend fun getSellList() = augmontService.getsellList()
+
     suspend fun fetchGoldRates() = augmontService.goldRate()
 
     suspend fun getLastGoldRate() = mainDao.getLastGoldRate()
@@ -52,7 +56,7 @@ class MainRepository @Inject constructor(
     suspend fun updatePlan(planDetail: PlanDetail) {
         userDao.saveUserPlan(planDetail)
     }
-
+    // is this for one day thing?
     suspend fun initiateManualCollect(bodyMap: Map<String, String>) =
         paytmService.manualCollect(bodyMap)
 

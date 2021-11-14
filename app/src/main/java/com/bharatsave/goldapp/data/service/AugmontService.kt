@@ -1,10 +1,7 @@
 package com.bharatsave.goldapp.data.service
 
-import com.bharatsave.goldapp.model.AuthResponse
-import com.bharatsave.goldapp.model.BalanceDetail
-import com.bharatsave.goldapp.model.BankDetail
+import com.bharatsave.goldapp.model.*
 import com.bharatsave.goldapp.model.augmont.GoldRate
-import com.bharatsave.goldapp.model.User
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -28,4 +25,10 @@ interface AugmontService {
 
     @POST("augmont/userbankcreate")
     suspend fun createBank(@Body map: Map<String, String>): BankDetail
+
+    @GET("augmont/buylist")
+    suspend fun getBuyList() : List<BuyTransactionListItem>
+
+    @GET("augmont/selllist")
+    suspend fun getsellList() : List<SellTransactionListItem>
 }

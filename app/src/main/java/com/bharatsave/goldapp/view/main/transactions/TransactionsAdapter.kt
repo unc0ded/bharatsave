@@ -56,7 +56,7 @@ class TransactionsAdapter(private val transactionList: List<Transaction>) :
                     transactionItem.dateTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.US))
                 tvGoldWorth.text = transactionItem.goldWorth.toString() + " gm"
                 tvTxnAmount.text =
-                    (if (transactionItem.amount > 0) "+ ₹" else "- ₹") + transactionItem.amount
+                    (if (transactionItem.amount > 0) "+ ₹" + transactionItem.amount else "- ₹" + transactionItem.amount*-1)
             }
         }
     }
