@@ -30,5 +30,5 @@ interface AugmontService {
     suspend fun getBuyList() : List<BuyTransactionListItem>
 
     @GET("augmont/selllist")
-    suspend fun getsellList() : List<SellTransactionListItem>
+    suspend fun getSellList() : List<SellTransactionListItem>
 }

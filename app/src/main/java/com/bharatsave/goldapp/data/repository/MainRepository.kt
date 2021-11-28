@@ -18,7 +18,7 @@ class MainRepository @Inject constructor(
 ) {
     suspend fun getBuyList() = augmontService.getBuyList()
 
-    suspend fun getSellList() = augmontService.getsellList()
+    suspend fun getSellList() = augmontService.getSellList()
 
     suspend fun fetchGoldRates() = augmontService.goldRate()
 

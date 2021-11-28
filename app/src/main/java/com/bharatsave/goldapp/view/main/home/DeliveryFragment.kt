@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentDeliveryBinding
@@ -62,7 +61,7 @@ class DeliveryFragment : Fragment() {
                     "${normalDecimalFormat.format(it.goldBalance.toFloat())}gm"
                 viewModel.goldRateData.value?.first?.run {
                     binding.tvPortfolioValue.text =
-                        "₹${normalDecimalFormat.format(it.goldBalance.toFloat() * this.totalSellPrice.toFloat())}"
+                        "₹${normalDecimalFormat.format(it.goldBalance.toFloat() * this.sellPrice.toFloat())}"
                 }
                 deliveryOptions = resources.getStringArray(R.array.delivery_list).asList().run {
                     when {
