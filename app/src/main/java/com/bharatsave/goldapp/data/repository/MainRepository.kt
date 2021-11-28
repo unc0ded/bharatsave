@@ -48,6 +48,10 @@ class MainRepository @Inject constructor(
 
     fun getStoredBalanceDetails() = userDao.getBalanceDetails()
 
+    suspend fun updateGoldBalance(goldBalance: String, userId: String) {
+        userDao.updateGoldBalance(goldBalance, userId)
+    }
+
     suspend fun startPlan(bodyMap: Map<String, String>) = paytmService.createSubscription(bodyMap)
 
     suspend fun fetchSubscriptionStatus(subscriptionId: String) =
@@ -84,5 +88,20 @@ class MainRepository @Inject constructor(
 
     suspend fun registerUserBank(bodyMap: Map<String, String>) = augmontService.createBank(bodyMap)
 
-    suspend fun saveUserBanks(bankDetails: List<BankDetail>) = userDao.insertBanks(*bankDetails.toTypedArray())
+    suspend fun saveUserBanks(bankDetails: List<BankDetail>) =
+        userDao.insertBanks(*bankDetails.toTypedArray())
+
+    suspend fun fetchGoldProductList() = augmontService.goldProducts()
+
+    suspend fun fetchUserAddresses() = userService.userAddresses()
+
+    suspend fun getStoredAddresses() = userDao.getAddresses()
+
+    suspend fun saveAddresses(addresses: List<AddressDetail>) =
+        userDao.insertAddresses(*addresses.toTypedArray())
+
+    suspend fun registerUserAddress(bodyMap: Map<String, String>) =
+        augmontService.createAddress(bodyMap)
+
+    suspend fun placeOrder(bodyMap: Map<String, String>) = augmontService.orderProduct(bodyMap)
 }

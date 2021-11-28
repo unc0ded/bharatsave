@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_outline_padded_background"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_address_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textAppearance="@style/TextAppearance.App.Title"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Firstname Lastname" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_full_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.App.Subtitle"
+        android:textColor="@color/text_grey"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_address_name"
+        tools:text="12A, ABC Gardens, Near KLM Shopping Mall, Andheri, Mumbai - 401088" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_pin_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.App.Subtitle"
+        android:textColor="@color/text_grey"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_full_address"
+        tools:text="703426" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/rounded_filled_background"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.App.Light"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/tv_address_name"
+        app:layout_constraintStart_toEndOf="@id/tv_address_name"
+        app:layout_constraintTop_toTopOf="@id/tv_address_name"
+        tools:text="Home" />
+
+</merge>

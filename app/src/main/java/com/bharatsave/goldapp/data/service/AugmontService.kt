@@ -26,6 +26,15 @@ interface AugmontService {
     @POST("augmont/userbankcreate")
     suspend fun createBank(@Body map: Map<String, String>): BankDetail
 
+    @GET("augmont/products")
+    suspend fun goldProducts(): List<GoldCoin>
+
+    @POST("augmont/address")
+    suspend fun createAddress(@Body map: Map<String, String>): AddressDetail
+
+    @POST("augmont/order")
+    suspend fun orderProduct(@Body map: Map<String, String>): OrderResponse
+
     @GET("augmont/buylist")
     suspend fun getBuyList() : List<BuyTransactionListItem>
 

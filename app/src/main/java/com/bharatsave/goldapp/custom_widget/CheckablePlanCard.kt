@@ -42,8 +42,6 @@ class CheckablePlanCard(context: Context) : MaterialCardView(context) {
             setCheckedIconResource(R.drawable.ic_done_black_24dp)
             checkedIconTint =
                 ColorStateList.valueOf(context.getThemeColorFromAttr(R.attr.colorPrimary))
-            backgroundTintList =
-                ColorStateList.valueOf(context.getThemeColorFromAttr(R.attr.colorSurface))
             setOnClickListener {
                 this.isChecked = !this.isChecked
 
@@ -91,6 +89,12 @@ class CheckablePlanCard(context: Context) : MaterialCardView(context) {
 
     fun setPlanDescription(description: String) {
         binding.tvPlanDescription.text = description
+    }
+
+    fun setIconText(top: String, middle: String, bottom: String) {
+        binding.tvTopWord.text = top
+        binding.tvMiddleWord.text = middle
+        binding.tvBottomWord.text = bottom
     }
 
     fun useLinearLayout() {

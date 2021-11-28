@@ -71,7 +71,7 @@
         android:id="@+id/nav_add_plan"
         android:name="com.bharatsave.goldapp.view.main.home.AddPlanFragment"
         android:label="fragment_add_plan"
-        tools:layout="@layout/fragment_add_plan" >
+        tools:layout="@layout/fragment_add_plan">
 
         <action
             android:id="@+id/action_plan_details"
@@ -115,7 +115,7 @@
         android:id="@+id/nav_withdraw"
         android:name="com.bharatsave.goldapp.view.main.home.WithdrawFragment"
         android:label="fragment_withdraw"
-        tools:layout="@layout/fragment_withdraw" >
+        tools:layout="@layout/fragment_withdraw">
 
         <action
             android:id="@+id/action_select_bank"
@@ -127,16 +127,36 @@
         android:id="@+id/nav_delivery"
         android:name="com.bharatsave.goldapp.view.main.home.DeliveryFragment"
         android:label="fragment_delivery"
-        tools:layout="@layout/fragment_delivery" />
+        tools:layout="@layout/fragment_delivery">
+
+        <action
+            android:id="@+id/action_select_delivery_address"
+            app:destination="@id/nav_delivery_address" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/nav_delivery_address"
+        android:name="com.bharatsave.goldapp.view.main.home.DeliveryAddressBottomSheetFragment"
+        android:label="fragment_delivery_address_bottom_sheet"
+        tools:layout="@layout/fragment_delivery_address_bottom_sheet" >
+
+        <argument
+            android:name="productId"
+            app:argType="string" />
+
+    </dialog>
 
     <dialog
         android:id="@+id/nav_bank_selection"
         android:name="com.bharatsave.goldapp.view.main.home.BankSelectionBottomSheetFragment"
         android:label="fragment_bank_selection"
-        tools:layout="@layout/fragment_bank_selection_bottom_sheet" >
+        tools:layout="@layout/fragment_bank_selection_bottom_sheet">
+
         <argument
             android:name="sellParameters"
             app:argType="com.bharatsave.goldapp.util.StringHashMap" />
+
     </dialog>
 
 </navigation>

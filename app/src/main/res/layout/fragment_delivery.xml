@@ -282,4 +282,29 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_delivery_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_intro_screen_4"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/btn_select_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_select_address"
+        style="@style/Widget.App.Button.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/select_address"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,14 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.children
 import androidx.navigation.fragment.findNavController
-import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.custom_widget.CheckablePlanCard
 import com.bharatsave.goldapp.databinding.FragmentAddPlanBinding
 import com.bharatsave.goldapp.util.increaseHitArea
-import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +36,7 @@ class AddPlanFragment : Fragment() {
             CheckablePlanCard(requireContext()).apply {
                 useGridLayout()
                 setPlanName("Daily Savings")
+                setIconText("tue", "wed", "thurs")
                 setPlanDescription("Save something on a daily basis. Move closer to your goals")
                 setMarginsDp(start = 40, end = 5, top = 10, bottom = 10)
             }
@@ -48,6 +46,7 @@ class AddPlanFragment : Fragment() {
             CheckablePlanCard(requireContext()).apply {
                 useGridLayout()
                 setPlanName("Weekly Savings")
+                setIconText("week", "week", "week")
                 setPlanDescription("Grow your savings with investments, week by week")
                 setMarginsDp(start = 5, end = 40, top = 10, bottom = 10)
             }
@@ -57,6 +56,7 @@ class AddPlanFragment : Fragment() {
             CheckablePlanCard(requireContext()).apply {
                 useGridLayout()
                 setPlanName("Monthly Savings")
+                setIconText("feb", "april", "may")
                 setPlanDescription("Invest every month whenever you get paid, with auto-pay")
                 setMarginsDp(start = 40, end = 5, top = 10, bottom = 10)
             }

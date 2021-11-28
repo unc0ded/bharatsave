@@ -78,6 +78,15 @@
     <string name="making_charges_note">Making charges applicable</string>
     <string name="making_delivery_charges">MAKING &amp; DELIVERY CHARGES</string>
     <string name="gst_percent">+3% GST</string>
+    <string name="select_address">Select Address</string>
+    <string name="select_delivery_address">SELECT DELIVERY ADDRESS</string>
+    <string name="add_new_address">ADD NEW ADDRESS</string>
+    <string name="new_address">new address</string>
+    <string name="full_address">Full Address</string>
+    <string name="label_optional">Label (optional)</string>
+    <string name="name">Name</string>
+    <string name="save_address">save</string>
+    <string name="place_order">place order</string>
 
     <!--    plan details-->
     <string name="add_details">Add Details</string>
@@ -92,6 +101,7 @@
     <string name="this_week">this week</string>
     <string name="this_month">this month</string>
     <string name="this_year">this year</string>
+    <string name="close_plan">close plan</string>
 
     <!--    profile-->
     <string name="profile">Profile</string>

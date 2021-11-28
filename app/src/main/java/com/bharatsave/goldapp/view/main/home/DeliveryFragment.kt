@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentDeliveryBinding
+import com.bharatsave.goldapp.model.GoldCoin
 import com.bharatsave.goldapp.util.increaseHitArea
 import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
 import com.bharatsave.goldapp.view.main.MainViewModel
@@ -27,9 +30,16 @@ class DeliveryFragment : Fragment() {
         DecimalFormat("#,##,##0.00")
     }
 
-    private val viewModel by activityViewModels<MainViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
+    private val homeViewModel by viewModels<HomeViewModel>()
 
-    private lateinit var deliveryOptions: List<String>
+    private var productId: String = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        homeViewModel.getGoldDeliveryOptions()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,9 +52,15 @@ class DeliveryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        productId = savedInstanceState?.getString("productId", "") ?: ""
 
         setupViews()
         setupObservers()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("productId", productId)
     }
 
     override fun onDestroyView() {
@@ -53,32 +69,23 @@ class DeliveryFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.balanceData.observe(viewLifecycleOwner) {
+        mainViewModel.balanceData.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.tvInvestment.text =
                     "₹${normalDecimalFormat.format(it.amountInvested.toFloat())}"
                 binding.tvGoldWorth.text =
                     "${normalDecimalFormat.format(it.goldBalance.toFloat())}gm"
-                viewModel.goldRateData.value?.first?.run {
+                mainViewModel.goldRateData.value?.first?.run {
                     binding.tvPortfolioValue.text =
                         "₹${normalDecimalFormat.format(it.goldBalance.toFloat() * this.sellPrice.toFloat())}"
                 }
-                deliveryOptions = resources.getStringArray(R.array.delivery_list).asList().run {
-                    when {
-                        it.goldBalance.toFloat() < 0.1f -> take(0)
-                        it.goldBalance.toFloat() < 0.5f -> take(1)
-                        it.goldBalance.toFloat() < 1f -> take(2)
-                        it.goldBalance.toFloat() < 2f -> take(3)
-                        it.goldBalance.toFloat() < 5f -> take(4)
-                        it.goldBalance.toFloat() < 8f -> take(5)
-                        it.goldBalance.toFloat() < 10f -> take(6)
-                        it.goldBalance.toFloat() < 20f -> take(7)
-                        it.goldBalance.toFloat() < 50f -> take(8)
-                        else -> this
-                    }
-                }
+            }
+        }
+
+        homeViewModel.productData.observe(viewLifecycleOwner) {
+            if (it != null && it.isNotEmpty()) {
                 (binding.etGoldDeliveryOption.editText as MaterialAutoCompleteTextView).setAdapter(
-                    ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, deliveryOptions)
+                    ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, it)
                 )
             }
         }
@@ -98,19 +105,28 @@ class DeliveryFragment : Fragment() {
         }
 
         (binding.etGoldDeliveryOption.editText as MaterialAutoCompleteTextView).setOnItemClickListener { _, _, position, _ ->
-            binding.tvMakingChargesPrice.text = when (position) {
-                0 -> "₹200"
-                1 -> "₹300"
-                2 -> "₹350"
-                3 -> "₹400"
-                4 -> "₹500"
-                5 -> "₹650"
-                6 -> "₹800"
-                7 -> "₹1100"
-                8 -> "₹2100"
-                else -> "N/A"
+            binding.tvMakingChargesPrice.text = try {
+                (((binding.etGoldDeliveryOption.editText as MaterialAutoCompleteTextView).adapter as ArrayAdapter<*>).getItem(
+                    position
+                ) as GoldCoin).makingCharges
+            } catch (e: ClassCastException) {
+                "N/A"
             }
-            binding.cardMakingCharges.visibility = View.VISIBLE
+            productId =
+                (((binding.etGoldDeliveryOption.editText as MaterialAutoCompleteTextView).adapter as ArrayAdapter<*>).getItem(
+                    position
+                ) as GoldCoin).sku
+            binding.cardMakingCharges.isVisible = true
+            binding.btnSelectAddress.isVisible = true
+            binding.ivDeliveryBackground.isVisible = true
+        }
+
+        binding.btnSelectAddress.setOnClickListener {
+            findNavController().navigate(
+                DeliveryFragmentDirections.actionSelectDeliveryAddress(
+                    productId
+                )
+            )
         }
     }
 }

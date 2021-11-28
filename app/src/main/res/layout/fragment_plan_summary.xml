@@ -48,6 +48,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_plan_details_title" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_close_plan"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:includeFontPadding="true"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:text="@string/close_plan"
+            app:icon="@drawable/ic_delete_black_24dp"
+            app:iconPadding="4dp"
+            app:iconSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_overview_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/tv_overview_title"
+            app:layout_constraintTop_toTopOf="@id/tv_overview_title" />
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_summary"
             android:layout_width="0dp"
@@ -207,12 +229,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/eina01_regular"
-                    tools:text="₹ 4,654.78"
                     android:textColor="@color/text_black"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_gold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/iv_gold" />
+                    app:layout_constraintTop_toTopOf="@+id/iv_gold"
+                    tools:text="₹ 4,654.78" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_digital_gold_subtitle"

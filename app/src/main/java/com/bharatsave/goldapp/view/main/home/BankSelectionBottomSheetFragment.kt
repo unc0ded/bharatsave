@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,7 +14,6 @@ import androidx.transition.TransitionManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentBankSelectionBottomSheetBinding
-import com.bharatsave.goldapp.view.main.MainViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputEditText
@@ -27,7 +25,6 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentBankSelectionBottomSheetBinding? = null
     private val binding get() = _binding!!
 
-    private val mainViewModel by activityViewModels<MainViewModel>()
     private val homeViewModel by viewModels<HomeViewModel>()
 
     private val args by navArgs<BankSelectionBottomSheetFragmentArgs>()
@@ -37,7 +34,7 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel.getUserBankList()
+        homeViewModel.getUserBankList()
     }
 
     override fun onCreateView(
@@ -63,7 +60,7 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupObservers() {
-        mainViewModel.banksData.observe(this) {
+        homeViewModel.banksData.observe(viewLifecycleOwner) {
             if (it != null && it.isNotEmpty()) {
                 val adapter = BankListAdapter(it.asReversed())
                 binding.pagerBankList.adapter = adapter
@@ -94,7 +91,7 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
                 if (it.contains("success", true)) {
                     Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show()
                     binding.cardAddBankDetails.isVisible = false
-                    mainViewModel.getUserBankList()
+                    homeViewModel.getUserBankList()
                 } else {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
                 }

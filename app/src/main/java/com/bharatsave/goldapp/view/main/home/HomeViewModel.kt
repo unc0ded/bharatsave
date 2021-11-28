@@ -3,8 +3,7 @@ package com.bharatsave.goldapp.view.main.home
 import androidx.lifecycle.*
 import com.bharatsave.goldapp.data.repository.MainRepository
 import com.bharatsave.goldapp.data.repository.PreferenceRepository
-import com.bharatsave.goldapp.model.PaytmTransaction
-import com.bharatsave.goldapp.model.PlanDetail
+import com.bharatsave.goldapp.model.*
 import com.bharatsave.goldapp.model.paytm.PaytmSubscriptionStatus
 import com.bharatsave.goldapp.model.paytm.PaytmSubscriptionToken
 import com.bharatsave.goldapp.model.paytm.PaytmTransactionStatus
@@ -39,6 +38,10 @@ class HomeViewModel @Inject constructor(
     val transactionStatus: LiveData<PaytmTransactionStatus>
         get() = _transactionStatus
 
+    private val _banksData = MutableLiveData<List<BankDetail>>()
+    val banksData: LiveData<List<BankDetail>>
+        get() = _banksData
+
     private val _bankCreateStatus = MutableLiveData<String>()
     val bankCreateStatus: LiveData<String>
         get() = _bankCreateStatus
@@ -46,6 +49,26 @@ class HomeViewModel @Inject constructor(
     private val _sellGoldStatus = MutableLiveData<String>()
     val sellGoldStatus: LiveData<String>
         get() = _sellGoldStatus
+
+    private val _productData = MutableLiveData<List<GoldCoin>>()
+    val productData: LiveData<List<GoldCoin>>
+        get() = _productData
+
+    private val _addressData = MutableLiveData<List<AddressDetail>>()
+    val addressData: LiveData<List<AddressDetail>>
+        get() = _addressData
+
+    private val _addressCreateStatus = MutableLiveData<String>()
+    val addressCreateStatus: LiveData<String>
+        get() = _addressCreateStatus
+
+    private val _orderData = MutableLiveData<OrderDetail>()
+    val orderData: LiveData<OrderDetail>
+        get() = _orderData
+
+    private val _orderStatus = MutableLiveData<String>()
+    val orderStatus: LiveData<String>
+        get() = _orderStatus
 
     fun createPlan(bodyMap: Map<String, String>) {
         viewModelScope.launch {
@@ -117,6 +140,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getUserBankList() {
+        viewModelScope.launch {
+            val banksList = mainRepository.getStoredBanksList()
+            _banksData.value = banksList
+        }
+    }
+
     fun createUserBank(bodyMap: Map<String, String>) {
         viewModelScope.launch {
             try {
@@ -134,6 +164,68 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                     else -> _bankCreateStatus.value = cause.message
+                }
+            }
+        }
+    }
+
+    fun getGoldDeliveryOptions() {
+        viewModelScope.launch {
+            val productList = mainRepository.fetchGoldProductList()
+            _productData.value = productList
+        }
+    }
+
+    fun getAddressList() {
+        viewModelScope.launch {
+            val addressList = mainRepository.getStoredAddresses()
+            _addressData.value = addressList
+        }
+    }
+
+    fun createUserAddress(bodyMap: Map<String, String>) {
+        viewModelScope.launch {
+            try {
+                val addressDetail = mainRepository.registerUserAddress(bodyMap)
+                mainRepository.saveAddresses(listOf(addressDetail))
+                _addressCreateStatus.value = "SUCCESS"
+            } catch (cause: Throwable) {
+                when (cause) {
+                    is IOException -> _addressCreateStatus.value = "FAILED: ${cause.message}"
+                    is HttpException -> withContext(Dispatchers.IO) {
+                        _addressCreateStatus.postValue(
+                            "FAILED: ${
+                                cause.response()?.errorBody()?.string()
+                            }"
+                        )
+                    }
+                    else -> _addressCreateStatus.value = cause.message
+                }
+            }
+        }
+    }
+
+    fun placeProductOrder(bodyMap: Map<String, String>) {
+        viewModelScope.launch {
+            try {
+                val orderResponse = mainRepository.placeOrder(bodyMap)
+                _orderData.value = orderResponse.orderDetails
+                _orderStatus.value = orderResponse.message
+                mainRepository.updateGoldBalance(
+                    orderResponse.goldBalance,
+                    orderResponse.orderDetails.id
+                )
+            } catch (cause: Throwable) {
+                when (cause) {
+                    is IOException -> _orderStatus.value = "FAILED: ${cause.message}"
+                    is HttpException -> withContext(Dispatchers.IO) {
+                        _orderStatus.postValue(
+                            "FAILED: ${
+                                cause.response()?.errorBody()?.string()
+                            }"
+                        )
+                    }
+                    else -> _orderStatus.value = cause.message
                 }
             }
         }
