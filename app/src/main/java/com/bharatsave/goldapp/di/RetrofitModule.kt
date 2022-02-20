@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Module
 object RetrofitModule {
 
-    private const val BASE_URL = "https://api.bharatsave.com"
+    private const val BASE_URL = "http://192.168.1.6:8000"
 
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {

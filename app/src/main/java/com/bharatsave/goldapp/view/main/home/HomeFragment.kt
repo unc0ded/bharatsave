@@ -368,7 +368,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             } else {
                                 binding.etBuyAmount.isErrorEnabled = false
                                 mainViewModel.goldRateData.value?.first?.run {
-                                    buyQuantity = buyAmount / (buyPrice + buyGst).toFloat()
+                                    buyQuantity =
+                                        buyAmount / (buyPrice.toFloat() + buyGst.toFloat())
                                     binding.tvCheckoutAmount.text =
                                         "₹${normalDecimalFormat.format(buyAmount)}"
                                     binding.tvCheckoutWeight.text =
@@ -390,7 +391,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             } else {
                                 binding.etBuyAmount.isErrorEnabled = false
                                 mainViewModel.goldRateData.value?.first?.run {
-                                    buyAmount = buyQuantity * (buyPrice + buyGst).toFloat()
+                                    buyAmount =
+                                        buyQuantity * (buyPrice.toFloat() + buyGst.toFloat())
                                     binding.tvCheckoutAmount.text =
                                         "₹${normalDecimalFormat.format(buyAmount)}"
                                     binding.tvCheckoutWeight.text =

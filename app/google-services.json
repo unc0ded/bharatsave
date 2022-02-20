@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "511380934505-sd3uprfru24rg7tkrgk0gupbv2afvgi4.apps.googleusercontent.com",
+          "client_id": "511380934505-2897fhfbn7f393q7hud0phi9lj455npc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bharatsave.goldapp",
-            "certificate_hash": "00cfc6fb16133709e7d48a7e1520377f3cc7c001"
+            "certificate_hash": "c3c45ca8b1d3c3e497e011aea597dd387641c50e"
           }
         },
         {
