@@ -40,7 +40,6 @@ class MainRepository @Inject constructor(
 
     suspend fun updateUserBalance(balanceDetail: BalanceDetail, phoneNumber: String) {
         userDao.updateBalanceDetails(
-            balanceDetail.amountInvested,
             balanceDetail.goldBalance,
             phoneNumber
         )
@@ -60,6 +59,7 @@ class MainRepository @Inject constructor(
     suspend fun updatePlan(planDetail: PlanDetail) {
         userDao.saveUserPlan(planDetail)
     }
+
     // is this for one day thing?
     suspend fun initiateManualCollect(bodyMap: Map<String, String>) =
         paytmService.manualCollect(bodyMap)
@@ -68,10 +68,6 @@ class MainRepository @Inject constructor(
         paytmService.initiateTransaction(bodyMap)
 
     suspend fun fetchTransactionStatus(orderId: String) = paytmService.transactionStatus(orderId)
-
-    suspend fun saveUserTransaction(transaction: PaytmTransaction) {
-        userDao.saveTransaction(transaction)
-    }
 
     suspend fun updateUser(user: User) {
         userDao.updateUser(user)
@@ -102,6 +98,13 @@ class MainRepository @Inject constructor(
 
     suspend fun registerUserAddress(bodyMap: Map<String, String>) =
         augmontService.createAddress(bodyMap)
+
+    suspend fun fetchTransactionsList() = userService.userTransactions()
+
+    suspend fun getStoredTransactions() = userDao.getTransactions()
+
+    suspend fun saveUserTransactions(transactions: List<TransactionItem>) =
+        userDao.insertTransactions(transactions)
 
     suspend fun placeOrder(bodyMap: Map<String, String>) = augmontService.orderProduct(bodyMap)
 }

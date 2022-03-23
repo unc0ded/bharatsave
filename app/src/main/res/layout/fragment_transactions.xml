@@ -1,188 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.main.transactions.TransactionsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_page_title"
+        style="@style/Widget.App.TextView.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/recent_transactions"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_page_title"
-            style="@style/Widget.App.TextView.Title"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_summary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_page_title">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="20dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_gold_held"
+                style="@style/Widget.App.TextView.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@id/guideline_50"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="5.65gm" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/Widget.App.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/gold_weight"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tv_gold_held"
+                app:layout_constraintStart_toStartOf="@id/tv_gold_held"
+                app:layout_constraintTop_toBottomOf="@id/tv_gold_held" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_portfolio_value"
+                style="@style/Widget.App.TextView.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline_50"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="₹565.45" />
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/Widget.App.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/portfolio_value"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tv_portfolio_value"
+                app:layout_constraintStart_toStartOf="@id/tv_portfolio_value"
+                app:layout_constraintTop_toBottomOf="@id/tv_portfolio_value" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_filters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_summary"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/filter_week"
+            style="?attr/chipStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp"
-            android:text="@string/recent_transactions"
-            android:textColor="?attr/colorOnBackground"
-            android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:text="@string/this_week" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_summary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="20dp"
-            app:cardElevation="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_page_title">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="20dp">
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_33"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.33" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_67"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.67" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_investment"
-                    style="@style/Widget.App.TextView.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="?attr/colorOnBackground"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@id/guideline_33"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="₹456.65" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/Widget.App.TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/money_invested"
-                    android:textColor="?attr/colorOnBackground"
-                    android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/tv_investment"
-                    app:layout_constraintStart_toStartOf="@id/tv_investment"
-                    app:layout_constraintTop_toBottomOf="@id/tv_investment" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_gold_worth"
-                    style="@style/Widget.App.TextView.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="?attr/colorOnBackground"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@id/guideline_67"
-                    app:layout_constraintStart_toEndOf="@+id/guideline_33"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="5.65gm" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/Widget.App.TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/gold_weight"
-                    android:textColor="?attr/colorOnBackground"
-                    android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/tv_gold_worth"
-                    app:layout_constraintStart_toStartOf="@id/tv_gold_worth"
-                    app:layout_constraintTop_toBottomOf="@id/tv_gold_worth" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_portfolio_value"
-                    style="@style/Widget.App.TextView.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="?attr/colorOnBackground"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/guideline_67"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="₹565.45" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    style="@style/Widget.App.TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/portfolio_value"
-                    android:textColor="?attr/colorOnBackground"
-                    android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/tv_portfolio_value"
-                    app:layout_constraintStart_toStartOf="@id/tv_portfolio_value"
-                    app:layout_constraintTop_toBottomOf="@id/tv_portfolio_value" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_filters"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/filter_month"
+            style="?attr/chipStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_summary"
-            app:selectionRequired="true"
-            app:singleSelection="true">
+            android:layout_height="match_parent"
+            android:text="@string/this_month" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_week"
-                style="?attr/chipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:checked="true"
-                android:text="@string/this_week" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/filter_year"
+            style="?attr/chipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/this_year" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_month"
-                style="?attr/chipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/this_month" />
+    </com.google.android.material.chip.ChipGroup>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_year"
-                style="?attr/chipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/this_year" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_txns"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_group_filters" />
 
-        </com.google.android.material.chip.ChipGroup>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_empty_list"
+        style="@style/Widget.App.TextView.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_group_filters"
+        tools:text="Nothing to see here..." />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_txns"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chip_group_filters" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

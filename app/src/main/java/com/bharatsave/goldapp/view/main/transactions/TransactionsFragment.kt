@@ -5,16 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentTransactionsBinding
-import com.bharatsave.goldapp.model.SavePlan
 import com.bharatsave.goldapp.model.Transaction
+import com.bharatsave.goldapp.model.TransactionType
 import com.bharatsave.goldapp.view.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
-import java.time.LocalDateTime
+import java.time.*
 import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
@@ -39,75 +40,114 @@ class TransactionsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val list: MutableList<Transaction.TransactionItem> = mutableListOf()
+        val list: MutableList<Transaction.TransactionDetail> = mutableListOf()
         binding.chipGroupFilters.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.filter_week -> {
-                    val finalList = sortFilterAndGroup(list, 7)
-                    binding.rvTxns.adapter = TransactionsAdapter(finalList)
+                    val finalList = filterAndGroup(list, 7)
+                    if (finalList.isEmpty()) {
+                        binding.rvTxns.isVisible = false
+                        binding.tvEmptyList.text = "No transactions in the last 7 days."
+                        binding.tvEmptyList.isVisible = true
+                    } else {
+                        binding.tvEmptyList.isVisible = false
+                        binding.rvTxns.adapter = TransactionsAdapter(finalList)
+                        binding.rvTxns.isVisible = true
+                    }
                 }
                 R.id.filter_month -> {
-                    val finalList = sortFilterAndGroup(list, 31)
-                    binding.rvTxns.adapter = TransactionsAdapter(finalList)
+                    val finalList = filterAndGroup(list, 31)
+                    if (finalList.isEmpty()) {
+                        binding.rvTxns.isVisible = false
+                        binding.tvEmptyList.text = "No transactions in the last month."
+                        binding.tvEmptyList.isVisible = true
+                    } else {
+                        binding.tvEmptyList.isVisible = false
+                        binding.rvTxns.adapter = TransactionsAdapter(finalList)
+                        binding.rvTxns.isVisible = true
+                    }
                 }
                 R.id.filter_year -> {
-                    val finalList = sortFilterAndGroup(list, 365)
-                    binding.rvTxns.adapter = TransactionsAdapter(finalList)
+                    val finalList = filterAndGroup(list, 365)
+                    if (finalList.isEmpty()) {
+                        binding.rvTxns.isVisible = false
+                        binding.tvEmptyList.text = "No transactions in the last year."
+                        binding.tvEmptyList.isVisible = true
+                    } else {
+                        binding.tvEmptyList.isVisible = false
+                        binding.rvTxns.adapter = TransactionsAdapter(finalList)
+                        binding.rvTxns.isVisible = true
+                    }
+                }
+                else -> {
+                    val finalList = filterAndGroup(list)
+                    if (finalList.isEmpty()) {
+                        binding.rvTxns.isVisible = false
+                        binding.tvEmptyList.text = "No transactions yetr."
+                        binding.tvEmptyList.isVisible = true
+                    } else {
+                        binding.tvEmptyList.isVisible = false
+                        binding.rvTxns.adapter = TransactionsAdapter(finalList)
+                        binding.rvTxns.isVisible = true
+                    }
                 }
             }
         }
 
         mainViewModel.balanceData.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.tvInvestment.text =
-                    "₹${normalDecimalFormat.format(it.amountInvested.toFloat())}"
-                binding.tvGoldWorth.text =
-                    "${normalDecimalFormat.format(it.goldBalance.toFloat())}gm"
+            if (!it.isNullOrBlank()) {
+                binding.tvGoldHeld.text =
+                    "${normalDecimalFormat.format(it.toFloat())}gm"
                 mainViewModel.goldRateData.value?.first?.run {
                     binding.tvPortfolioValue.text =
-                        "₹${normalDecimalFormat.format(it.goldBalance.toFloat() * this.sellPrice.toFloat())}"
+                        "₹${normalDecimalFormat.format(it.toFloat() * this.sellPrice.toFloat())}"
                 }
             }
         }
 
-        transactionViewModel.buyList.observe(viewLifecycleOwner) {
-            for (transaction in it) {
-                var timedatestring = transaction.createdAt
-                timedatestring = timedatestring.replace("T", " ")
-                timedatestring = timedatestring.removeRange(16 until timedatestring.length)
-                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                val dt = LocalDateTime.parse(timedatestring, formatter)
-                list.add(
-                    Transaction.TransactionItem(
-                        dt,
-                        transaction.inclTaxRate,
-                        transaction.qty,
-                        SavePlan.DAILY_SAVINGS
-                    )
-                )
-            }
-            val finalList = sortFilterAndGroup(list, 7)
-            binding.rvTxns.adapter = TransactionsAdapter(finalList)
-        }
+        transactionViewModel.transactionList.observe(viewLifecycleOwner) {
+            if (it != null && it.isNotEmpty()) {
+                for (transaction in it) {
+                    val dateTime =
+                        Instant.parse(transaction.createdAt).atZone(ZoneId.systemDefault())
+                            .toLocalDateTime()
+                    when (transaction.txnType) {
+                        TransactionType.BUY -> list.add(
+                            Transaction.TransactionDetail(
+                                dateTime,
+                                transaction.totalAmount,
+                                transaction.quantity,
+                                type = TransactionType.BUY
+                            )
+                        )
+                        TransactionType.SELL -> list.add(
+                            Transaction.TransactionDetail(
+                                dateTime,
+                                transaction.totalAmount,
+                                transaction.quantity,
+                                type = TransactionType.SELL
+                            )
+                        )
+                        TransactionType.REDEEM -> list.add(
+                            Transaction.TransactionDetail(
+                                dateTime,
+                                goldWeight = transaction.quantity,
+                                description = transaction.productName,
+                                type = TransactionType.REDEEM
+                            )
+                        )
+                    }
+                }
 
-        transactionViewModel.sellList.observe(viewLifecycleOwner) {
-            for (transaction in it) {
-                var timedatestring = transaction.createdAt
-                timedatestring = timedatestring.replace("T", " ")
-                timedatestring = timedatestring.removeRange(16 until timedatestring.length)
-                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                val dt = LocalDateTime.parse(timedatestring, formatter)
-                list.add(
-                    Transaction.TransactionItem(
-                        dt,
-                        -1 * transaction.rate,
-                        transaction.qty,
-                        SavePlan.DAILY_SAVINGS
-                    )
-                )
+                val days = when (binding.chipGroupFilters.checkedChipId) {
+                    R.id.filter_week -> 7
+                    R.id.filter_month -> 30
+                    R.id.filter_year -> 365
+                    else -> null
+                }
+                val finalList = filterAndGroup(list, days)
+                binding.rvTxns.adapter = TransactionsAdapter(finalList)
             }
-            val finalList = sortFilterAndGroup(list, 7)
-            binding.rvTxns.adapter = TransactionsAdapter(finalList)
         }
     }
 
@@ -116,37 +156,30 @@ class TransactionsFragment : Fragment() {
         _binding = null
     }
 
-    private fun sortFilterAndGroup(
-        list: MutableList<Transaction.TransactionItem>,
-        filterType: Long
+    private fun filterAndGroup(
+        list: MutableList<Transaction.TransactionDetail>,
+        filterType: Int? = null
     ): List<Transaction> {
-        list.sortByDescending { it.dateTime }
-        val sortedList = mutableListOf<Transaction>()
-        val currentDate: LocalDateTime? = getCurrentDate()
+        val groupedList = mutableListOf<Transaction>()
+        val currentDate = LocalDate.now()
         for ((index, transaction) in list.withIndex()) {
-            if (currentDate?.minusDays(filterType)!!.isAfter(transaction.dateTime)) {
+            if (filterType != null && currentDate.minusDays(filterType.toLong())
+                    .isAfter(transaction.dateTime.toLocalDate())
+            ) {
                 break
             }
             if (index == 0) {
-                sortedList.add(Transaction.TransactionHeader(transaction.dateTime.toLocalDate()))
-                sortedList.add(transaction)
+                groupedList.add(Transaction.TransactionHeader(transaction.dateTime.toLocalDate()))
+                groupedList.add(transaction)
                 continue
             }
             if (!transaction.dateTime.toLocalDate()
                     .equals(list[index - 1].dateTime.toLocalDate())
             ) {
-                sortedList.add(Transaction.TransactionHeader(transaction.dateTime.toLocalDate()))
+                groupedList.add(Transaction.TransactionHeader(transaction.dateTime.toLocalDate()))
             }
-            sortedList.add(transaction)
+            groupedList.add(transaction)
         }
-        return sortedList
-    }
-
-    private fun getCurrentDate(): LocalDateTime? {
-        var current = LocalDateTime.now().toString()
-        current = current.replace("T", " ")
-        current = current.removeRange(16 until current.length)
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        return LocalDateTime.parse(current, formatter)
+        return groupedList
     }
 }

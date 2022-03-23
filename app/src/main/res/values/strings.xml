@@ -69,8 +69,7 @@
 
     <!--    request delivery-->
     <string name="request_delivery_title">Request Delivery</string>
-    <string name="money_invested">Money Invested</string>
-    <string name="gold_weight">Worth of gold held</string>
+    <string name="gold_weight">Gold held</string>
     <string name="portfolio_value">Portfolio Value</string>
     <string name="gold_24k">24K</string>
     <string name="delivery_amount_option">Amount of gold to deliver</string>

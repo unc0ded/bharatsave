@@ -18,6 +18,12 @@
     <color name="fill_grey">#F8F8FA</color>
     <color name="icon_green">#10CC0F</color>
     <color name="icon_red">#FF1B1B</color>
+    <color name="light_red">#ffc9b8</color>
+    <color name="focus_red">#c81300</color>
+    <color name="light_green">#a9f29f</color>
+    <color name="focus_green">#008200</color>
+    <color name="light_blue">#b1e2fb</color>
+    <color name="focus_blue">#034f96</color>
 
     <!--    blacks-->
     <color name="black">#FF000000</color>

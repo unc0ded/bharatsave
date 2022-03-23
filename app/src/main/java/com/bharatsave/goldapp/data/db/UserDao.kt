@@ -10,8 +10,8 @@ interface UserDao {
     @Query("SELECT * FROM user_table")
     suspend fun getUser(): User
 
-    @Query("SELECT amountInvested, goldBalance FROM user_table")
-    fun getBalanceDetails(): Flow<BalanceDetail>
+    @Query("SELECT goldBalance FROM user_table")
+    fun getBalanceDetails(): Flow<String>
 
     @Transaction
     @Query("SELECT * FROM user_table")
@@ -23,6 +23,9 @@ interface UserDao {
     @Query("SELECT * FROM address_list")
     suspend fun getAddresses(): List<AddressDetail>
 
+    @Query("SELECT * FROM transactions_list")
+    suspend fun getTransactions(): List<TransactionItem>
+
     @Transaction
     @Query("SELECT * FROM user_table")
     suspend fun getUserWithPlans(): UserWithPlans
@@ -33,8 +36,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveUserPlan(planDetail: PlanDetail)
 
-    @Insert
-    suspend fun saveTransaction(transaction: PaytmTransaction)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTransactions(transactions: List<TransactionItem>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)
@@ -48,8 +51,8 @@ interface UserDao {
     @Update
     suspend fun updateUser(user: User)
 
-    @Query("UPDATE user_table SET amountInvested = :totalAmount, goldBalance = :goldBalance WHERE phoneNumber = :phoneNumber")
-    suspend fun updateBalanceDetails(totalAmount: String, goldBalance: String, phoneNumber: String)
+    @Query("UPDATE user_table SET goldBalance = :goldBalance WHERE phoneNumber = :phoneNumber")
+    suspend fun updateBalanceDetails(goldBalance: String, phoneNumber: String)
 
     @Query("UPDATE user_table SET goldBalance = :goldBalance WHERE id = :userId")
     suspend fun updateGoldBalance(goldBalance: String, userId: String)

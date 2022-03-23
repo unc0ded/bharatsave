@@ -19,14 +19,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentHomeBinding
-import com.bharatsave.goldapp.model.PaytmTransaction
 import com.bharatsave.goldapp.util.getThemeColorFromAttr
 import com.bharatsave.goldapp.util.setCustomSpanString
 import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
 import com.bharatsave.goldapp.util.textChanges
 import com.bharatsave.goldapp.view.main.MainViewModel
-import com.google.android.material.badge.BadgeDrawable
-import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.textfield.TextInputEditText
 import com.paytm.pgsdk.PaytmOrder
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
@@ -38,8 +35,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.text.DecimalFormat
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -73,8 +68,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // Basic badge with no count
-//        initBadge(binding.btnOptions, 0)
         setupObservers()
         setupViews()
     }
@@ -108,11 +101,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
 
         mainViewModel.balanceData.observe(viewLifecycleOwner) {
-            if (it != null && it.goldBalance.toFloat() != 0f) {
+            if (!it.isNullOrBlank() && it.toFloat() != 0f) {
                 binding.cardLiveGold.isVisible = false
                 mainViewModel.goldRateData.value?.run {
                     binding.tvGoldCurrentValue.text =
-                        "₹${normalDecimalFormat.format(first.sellPrice.toFloat() * it.goldBalance.toFloat())}"
+                        "₹${normalDecimalFormat.format(first.sellPrice.toFloat() * it.toFloat())}"
                     binding.tvGoldCurrentValueChange.text = "${normalDecimalFormat.format(second)}%"
                     binding.tvGoldCurrentValueChange.setCompoundDrawablesRelativeWithIntrinsicBounds(
                         if (second > 0) R.drawable.ic_arrow_drop_up_black_24dp else R.drawable.ic_arrow_drop_down_black_24dp,
@@ -131,7 +124,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     )
                 }
                 binding.tvGoldBalance.text =
-                    "${longDecimalFormat.format(it.goldBalance.toFloat())}gms"
+                    "${longDecimalFormat.format(it.toFloat())}gms"
                 binding.cardGoldBalance.isVisible = true
                 binding.ivFloatingLogo.isVisible = true
                 binding.btnSellGold.isVisible = true
@@ -214,6 +207,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             ).show()
                         }
                     })
+                transactionManager.setShowPaymentUrl("https://secure-stage.paytm.in/theia/api/v1/showPaymentPage")
                 transactionManager.startTransaction(activity, TRANSACTION_REQUEST_CODE)
             }
         }
@@ -233,18 +227,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             "blockId" to mainViewModel.goldRateData.value!!.first.blockId
                         )
                     )
-                    homeViewModel.saveTransaction(
-                        PaytmTransaction(
-                            it.orderId,
-                            it.transactionId,
-                            it.bankTransactionId,
-                            it.transactionAmount,
-                            ZonedDateTime.parse(
-                                it.date,
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss")
-                            ).toInstant().toEpochMilli()
-                        )
-                    )
+                    // TODO cancel paytm transaction if gold buy order does not go through
                 } else {
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
@@ -252,8 +235,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    @ExperimentalCoroutinesApi
     @FlowPreview
+    @ExperimentalCoroutinesApi
     private fun setupViews() {
         binding.tvPlansHeading.setCustomTypefaceSpanString(
             "save",
@@ -437,25 +420,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             )
         }
         binding.btnLearn.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionSaveLearn()) }
-    }
-
-    @SuppressLint("UnsafeOptInUsageError")
-    private fun initBadge(view: View, notificationCount: Int) {
-        view.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                BadgeDrawable.create(requireContext()).run {
-                    if (notificationCount == 0) {
-                        clearNumber()
-                    } else number = notificationCount
-                    backgroundColor = ContextCompat.getColor(requireContext(), R.color.brand_gold)
-                    verticalOffset = 10
-                    horizontalOffset = 10
-                    BadgeUtils.attachBadgeDrawable(this, binding.btnOptions)
-                }
-                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
     }
 
     override fun onClick(v: View?) {

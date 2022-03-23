@@ -104,12 +104,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun saveTransaction(transaction: PaytmTransaction) {
-        viewModelScope.launch {
-            mainRepository.saveUserTransaction(transaction)
-        }
-    }
-
     fun buyGold(bodyMap: Map<String, String>) {
         viewModelScope.launch {
             val balanceData = mainRepository.startGoldPurchase(bodyMap)

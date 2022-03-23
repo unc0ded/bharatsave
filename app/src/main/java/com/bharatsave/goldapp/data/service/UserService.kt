@@ -1,9 +1,6 @@
 package com.bharatsave.goldapp.data.service
 
-import com.bharatsave.goldapp.model.AddressDetail
-import com.bharatsave.goldapp.model.BalanceDetail
-import com.bharatsave.goldapp.model.BankDetail
-import com.bharatsave.goldapp.model.User
+import com.bharatsave.goldapp.model.*
 import retrofit2.http.GET
 
 interface UserService {
@@ -13,6 +10,9 @@ interface UserService {
 
     @GET("user/balance")
     suspend fun balanceDetails(): BalanceDetail
+
+    @GET("user/transactions")
+    suspend fun userTransactions(): List<TransactionItem>
 
     @GET("user/bankDetails")
     suspend fun userBankDetails(): List<BankDetail>

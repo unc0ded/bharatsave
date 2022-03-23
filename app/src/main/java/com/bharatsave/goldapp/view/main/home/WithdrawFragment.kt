@@ -69,14 +69,12 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
 
     private fun setupObservers() {
         mainViewModel.balanceData.observe(viewLifecycleOwner) {
-            if (it != null) {
-                currentWeightBalance = it.goldBalance.toFloat()
-                binding.tvInvestment.text =
-                    "₹${normalDecimalFormat.format(it.amountInvested.toFloat())}"
-                binding.tvGoldWorth.text =
+            if (!it.isNullOrBlank()) {
+                currentWeightBalance = it.toFloat()
+                binding.tvGoldHeld.text =
                     "${normalDecimalFormat.format(currentWeightBalance)}gm"
                 mainViewModel.goldRateData.value?.first?.run {
-                    currentAmountBalance = it.goldBalance.toFloat() * sellPrice.toFloat()
+                    currentAmountBalance = it.toFloat() * sellPrice.toFloat()
                     binding.tvPortfolioValue.text =
                         "₹${normalDecimalFormat.format(currentAmountBalance)}"
                 }

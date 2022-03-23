@@ -36,7 +36,7 @@ class MainViewModel @Inject constructor(
 
     private val _balanceData =
         mainRepository.getStoredBalanceDetails().asLiveData(viewModelScope.coroutineContext)
-    val balanceData: LiveData<BalanceDetail>
+    val balanceData: LiveData<String>
         get() = _balanceData
 
     init {
@@ -69,6 +69,10 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             val addressList = mainRepository.fetchUserAddresses()
             mainRepository.saveAddresses(addressList)
+        }
+        viewModelScope.launch {
+            val transactionList = mainRepository.fetchTransactionsList()
+            mainRepository.saveUserTransactions(transactionList)
         }
     }
 

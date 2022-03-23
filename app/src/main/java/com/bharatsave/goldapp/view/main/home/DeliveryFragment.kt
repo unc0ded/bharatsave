@@ -70,14 +70,12 @@ class DeliveryFragment : Fragment() {
 
     private fun setupObservers() {
         mainViewModel.balanceData.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.tvInvestment.text =
-                    "₹${normalDecimalFormat.format(it.amountInvested.toFloat())}"
-                binding.tvGoldWorth.text =
-                    "${normalDecimalFormat.format(it.goldBalance.toFloat())}gm"
+            if (!it.isNullOrBlank()) {
+                binding.tvGoldHeld.text =
+                    "${normalDecimalFormat.format(it.toFloat())}gm"
                 mainViewModel.goldRateData.value?.first?.run {
                     binding.tvPortfolioValue.text =
-                        "₹${normalDecimalFormat.format(it.goldBalance.toFloat() * this.sellPrice.toFloat())}"
+                        "₹${normalDecimalFormat.format(it.toFloat() * this.sellPrice.toFloat())}"
                 }
             }
         }

@@ -26,22 +26,37 @@
             tools:text="1:45 PM" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_gold_worth"
+            android:id="@+id/tv_gold_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:textAppearance="@style/TextAppearance.App.Title"
             android:textColor="?attr/colorSecondary"
             android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tv_time"
+            app:layout_constraintEnd_toStartOf="@id/tv_txn_type"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1.36 gm" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_plan_name"
+            android:id="@+id/tv_txn_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:textAppearance="@style/TextAppearance.App.Title"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_gold_weight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_gold_weight"
+            android:background="@drawable/rounded_filled_background"
+            tools:backgroundTint="@color/light_green"
+            tools:text="BUY"
+            tools:textColor="@color/focus_green" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_txn_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
@@ -52,7 +67,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_time"
-            tools:text="Daily Savings" />
+            tools:text="Direct Purchase" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_txn_amount"
@@ -64,8 +79,8 @@
             android:textColor="@color/text_lighter_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_gold_worth"
-            tools:text="+ ₹433.78" />
+            app:layout_constraintTop_toBottomOf="@id/tv_gold_weight"
+            tools:text="₹433.78" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

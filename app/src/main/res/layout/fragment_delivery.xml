@@ -49,56 +49,22 @@
             android:layout_marginVertical="20dp">
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_33"
+                android:id="@+id/guideline_50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.33" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_67"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.67" />
+                app:layout_constraintGuide_percent="0.5" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_investment"
+                android:id="@+id/tv_gold_held"
                 style="@style/Widget.App.TextView.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@id/guideline_33"
+                app:layout_constraintEnd_toStartOf="@id/guideline_50"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="₹456.65" />
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/Widget.App.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/money_invested"
-                android:textColor="?attr/colorOnBackground"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/tv_investment"
-                app:layout_constraintStart_toStartOf="@id/tv_investment"
-                app:layout_constraintTop_toBottomOf="@id/tv_investment" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_gold_worth"
-                style="@style/Widget.App.TextView.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="?attr/colorOnBackground"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@id/guideline_67"
-                app:layout_constraintStart_toEndOf="@+id/guideline_33"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="5.65gm" />
 
@@ -112,9 +78,9 @@
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/tv_gold_worth"
-                app:layout_constraintStart_toStartOf="@id/tv_gold_worth"
-                app:layout_constraintTop_toBottomOf="@id/tv_gold_worth" />
+                app:layout_constraintEnd_toEndOf="@id/tv_gold_held"
+                app:layout_constraintStart_toStartOf="@id/tv_gold_held"
+                app:layout_constraintTop_toBottomOf="@id/tv_gold_held" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_portfolio_value"
@@ -125,7 +91,7 @@
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/guideline_67"
+                app:layout_constraintStart_toEndOf="@+id/guideline_50"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="₹565.45" />
 
@@ -302,7 +268,6 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginBottom="20dp"
         android:text="@string/select_address"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

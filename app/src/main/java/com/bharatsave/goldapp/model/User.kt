@@ -20,6 +20,5 @@ data class User(
     val phoneNumber: String,
     @Json(name = "userPincode")
     val pinCode: String = "",
-    @Embedded
-    val balanceDetail: BalanceDetail = BalanceDetail()
+    val goldBalance: String = "0"
 )

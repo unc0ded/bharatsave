@@ -4,11 +4,12 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 sealed class Transaction {
-    class TransactionItem(
+    class TransactionDetail(
         val dateTime: LocalDateTime,
-        val amount: Float,
-        val goldWorth: Float,
-        val plan: SavePlan
+        val amount: String? = null,
+        val goldWeight: String,
+        val description: String? = null,
+        val type: TransactionType
     ) : Transaction()
 
     class TransactionHeader(val date: LocalDate) : Transaction()
