@@ -48,8 +48,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAddresses(vararg addresses: AddressDetail)
 
-    @Update
-    suspend fun updateUser(user: User)
+    @Query("UPDATE user_table SET name = :name, email = :email, pinCode = :pincode WHERE phoneNumber = :phone")
+    suspend fun updateUser(phone: String, name: String, email: String, pincode: String)
 
     @Query("UPDATE user_table SET goldBalance = :goldBalance WHERE phoneNumber = :phoneNumber")
     suspend fun updateBalanceDetails(goldBalance: String, phoneNumber: String)

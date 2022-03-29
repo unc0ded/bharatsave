@@ -59,7 +59,23 @@
         android:id="@+id/nav_profile"
         android:name="com.bharatsave.goldapp.view.main.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_edit_profile"
+            app:destination="@id/nav_edit_profile"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_edit_profile"
+        android:name="com.bharatsave.goldapp.view.main.profile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
 
     <activity
         android:id="@+id/registrationActivity"
@@ -139,7 +155,7 @@
         android:id="@+id/nav_delivery_address"
         android:name="com.bharatsave.goldapp.view.main.home.DeliveryAddressBottomSheetFragment"
         android:label="fragment_delivery_address_bottom_sheet"
-        tools:layout="@layout/fragment_delivery_address_bottom_sheet" >
+        tools:layout="@layout/fragment_delivery_address_bottom_sheet">
 
         <argument
             android:name="productId"

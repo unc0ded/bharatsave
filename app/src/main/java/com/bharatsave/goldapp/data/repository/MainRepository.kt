@@ -69,8 +69,10 @@ class MainRepository @Inject constructor(
 
     suspend fun fetchTransactionStatus(orderId: String) = paytmService.transactionStatus(orderId)
 
-    suspend fun updateUser(user: User) {
-        userDao.updateUser(user)
+    suspend fun updateUserDetails(user: User) = userService.updateDetails(user)
+
+    suspend fun saveUserDetails(user: User) {
+        userDao.updateUser(user.phoneNumber, user.name, user.email, user.pinCode)
     }
 
     suspend fun startGoldPurchase(bodyMap: Map<String, String>) =

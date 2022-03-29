@@ -1,6 +1,5 @@
 package com.bharatsave.goldapp.view.main.home
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle

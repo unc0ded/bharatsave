@@ -47,6 +47,10 @@ class ProfileFragment : Fragment() {
             binding.tvEmail.text = user?.email
         }
 
+        binding.btnEditProfile.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionEditProfile())
+        }
+
         // TODO use a custom view for the dialog
         binding.btnLogOut.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).setTitle("Log Out")

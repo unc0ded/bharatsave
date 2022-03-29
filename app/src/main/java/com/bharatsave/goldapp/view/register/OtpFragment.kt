@@ -174,7 +174,7 @@ class OtpFragment : Fragment() {
             }
         }
         viewModel.message.observe(viewLifecycleOwner) {
-            if (it.contains("User not found", true)) {
+            if (it.contains("Not found", true)) {
                 findNavController().navigate(OtpFragmentDirections.actionDetails(args.phone))
             } else {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
