@@ -207,7 +207,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                             ).show()
                         }
                     })
-                transactionManager.setShowPaymentUrl("https://secure-stage.paytm.in/theia/api/v1/showPaymentPage")
+                transactionManager.setShowPaymentUrl("https://securegw-stage.paytm.in/theia/api/v1/showPaymentPage")
                 transactionManager.startTransaction(activity, TRANSACTION_REQUEST_CODE)
             }
         }
