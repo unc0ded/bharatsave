@@ -1,13 +1,16 @@
 package com.bharatsave.goldapp.view.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.ActivityMainBinding
+import com.bharatsave.goldapp.view.main.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -24,10 +27,17 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         binding.bottomNav.setupWithNavController(navController)
 
-        binding.bottomNav.setOnItemReselectedListener {  }
+        binding.bottomNav.setOnItemReselectedListener { }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        val navHostFragment: Fragment? =
+            supportFragmentManager.findFragmentById(R.id.nav_host_home)
+        val activeFragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+        if (activeFragment != null && activeFragment is HomeFragment) {
+            activeFragment.onActivityResult(requestCode, resultCode, data)
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }
