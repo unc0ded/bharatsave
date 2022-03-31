@@ -5,15 +5,15 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class PaytmTransactionStatus(
-    val orderId: String,
+    val orderId: String = "",
     @Json(name = "txnId")
-    val transactionId: String,
+    val transactionId: String = "",
     @Json(name = "bankTxnId")
-    val bankTransactionId: String,
+    val bankTransactionId: String = "",
     @Json(name = "txnAmount")
-    val transactionAmount: String,
+    val transactionAmount: String = "",
     @Json(name = "txnDate")
-    val date: String,
+    val date: String = "",
     val status: String,
     val message: String
 )

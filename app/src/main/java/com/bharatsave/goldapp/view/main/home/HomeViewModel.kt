@@ -8,6 +8,7 @@ import com.bharatsave.goldapp.model.paytm.PaytmSubscriptionStatus
 import com.bharatsave.goldapp.model.paytm.PaytmSubscriptionToken
 import com.bharatsave.goldapp.model.paytm.PaytmTransactionStatus
 import com.bharatsave.goldapp.model.paytm.PaytmTransactionToken
+import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -99,8 +100,37 @@ class HomeViewModel @Inject constructor(
 
     fun getTransactionStatus(orderId: String) {
         viewModelScope.launch {
-            val status = mainRepository.fetchTransactionStatus(orderId)
-            _transactionStatus.value = status
+            try {
+                val status = mainRepository.fetchTransactionStatus(orderId)
+                _transactionStatus.value = status
+            } catch (cause: Throwable) {
+                when (cause) {
+                    is IOException -> _transactionStatus.value = PaytmTransactionStatus(
+                        status = "NETWORK_FAILURE",
+                        message = cause.message!!
+                    )
+                    is HttpException -> withContext(Dispatchers.IO) {
+                        val errorBody = cause.response()?.errorBody()?.string()
+                        val errorMsg = errorBody?.apply {
+                            val start = indexOf(':') + 2
+                            val end = indexOf('"', start) - 1
+                            substring(start..end)
+                        }
+                        _transactionStatus.postValue(
+                            PaytmTransactionStatus(
+                                status = "TXN_FAILURE",
+                                message = errorMsg!!
+                            )
+                        )
+                    }
+                    else -> _transactionStatus.postValue(
+                        PaytmTransactionStatus(
+                            status = "FAILURE",
+                            message = cause.message!!
+                        )
+                    )
+                }
+            }
         }
     }
 
