@@ -1,6 +1,10 @@
 package com.bharatsave.goldapp.view.main.home
 
-import androidx.lifecycle.*
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bharatsave.goldapp.data.repository.MainRepository
 import com.bharatsave.goldapp.data.repository.PreferenceRepository
 import com.bharatsave.goldapp.model.*
@@ -8,20 +12,20 @@ import com.bharatsave.goldapp.model.paytm.PaytmSubscriptionStatus
 import com.bharatsave.goldapp.model.paytm.PaytmSubscriptionToken
 import com.bharatsave.goldapp.model.paytm.PaytmTransactionStatus
 import com.bharatsave.goldapp.model.paytm.PaytmTransactionToken
-import com.squareup.moshi.Moshi
+import com.bharatsave.goldapp.view.launchIO
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
+import kotlin.collections.set
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val preferenceRepository: PreferenceRepository,
     private val mainRepository: MainRepository
 ) : ViewModel() {
+
+    private val TAG = "HomeViewModel"
 
     private val _subscriptionToken = MutableLiveData<PaytmSubscriptionToken>()
     val subscriptionToken: LiveData<PaytmSubscriptionToken>
@@ -72,186 +76,204 @@ class HomeViewModel @Inject constructor(
         get() = _orderStatus
 
     fun createPlan(bodyMap: Map<String, String>) {
-        viewModelScope.launch {
-            val tokenData = mainRepository.startPlan(bodyMap)
-            _subscriptionToken.value = tokenData
-        }
+        viewModelScope.launchIO(
+            action = {
+                val tokenData = mainRepository.startPlan(bodyMap)
+                _subscriptionToken.postValue(tokenData)
+            },
+            onError = {
+                Log.e(TAG, "#createPlan: ${it.message}")
+            }
+        )
     }
 
     fun getSubscriptionStatus(subscriptionId: String) {
-        viewModelScope.launch {
-            val status = mainRepository.fetchSubscriptionStatus(subscriptionId)
-            _subscriptionStatus.value = status
-        }
+        viewModelScope.launchIO(
+            action = {
+                val status = mainRepository.fetchSubscriptionStatus(subscriptionId)
+                _subscriptionStatus.postValue(status)
+            },
+            onError = {
+                Log.e(TAG, "#getSubscriptionStatus: ${it.message}")
+            }
+        )
     }
 
     fun updateUserPlanDetails(plan: PlanDetail) {
-        viewModelScope.launch {
-            mainRepository.updatePlan(plan)
-        }
+        viewModelScope.launchIO(
+            action = {
+                mainRepository.updatePlan(plan)
+            },
+            onError = {
+                Log.e(TAG, "#updateUserPlanDetails: ${it.message}")
+            }
+        )
     }
 
     fun startTransaction(bodyMap: Map<String, String>) {
-        viewModelScope.launch {
-            val tokenData = mainRepository.initiateTransaction(bodyMap)
-            _transactionToken.value = tokenData
-        }
+        viewModelScope.launchIO(
+            action = {
+                val tokenData = mainRepository.initiateTransaction(bodyMap)
+                _transactionToken.postValue(tokenData)
+            },
+            onError = {
+                Log.e(TAG, "#startTransaction: ${it.message}")
+            }
+        )
     }
 
     fun getTransactionStatus(orderId: String) {
-        viewModelScope.launch {
-            try {
+        viewModelScope.launchIO(
+            action = {
                 val status = mainRepository.fetchTransactionStatus(orderId)
-                _transactionStatus.value = status
-            } catch (cause: Throwable) {
+                _transactionStatus.postValue(status)
+            },
+            onError = { cause ->
                 when (cause) {
                     is IOException -> _transactionStatus.value = PaytmTransactionStatus(
                         status = "NETWORK_FAILURE",
                         message = cause.message!!
                     )
-                    is HttpException -> withContext(Dispatchers.IO) {
+                    is HttpException -> {
                         val errorBody = cause.response()?.errorBody()?.string()
                         val errorMsg = errorBody?.apply {
                             val start = indexOf(':') + 2
                             val end = indexOf('"', start) - 1
                             substring(start..end)
                         }
-                        _transactionStatus.postValue(
-                            PaytmTransactionStatus(
-                                status = "TXN_FAILURE",
-                                message = errorMsg!!
-                            )
-                        )
+                        _transactionStatus.value =
+                            PaytmTransactionStatus(status = "TXN_FAILURE", message = errorMsg!!)
                     }
-                    else -> _transactionStatus.postValue(
-                        PaytmTransactionStatus(
-                            status = "FAILURE",
-                            message = cause.message!!
-                        )
-                    )
+                    else -> _transactionStatus.value =
+                        PaytmTransactionStatus(status = "FAILURE", message = cause.message!!)
                 }
             }
-        }
+        )
     }
 
     fun buyGold(bodyMap: Map<String, String>) {
-        viewModelScope.launch {
-            val balanceData = mainRepository.startGoldPurchase(bodyMap)
-            mainRepository.updateUserBalance(balanceData, preferenceRepository.getPhoneNumber())
-        }
+        viewModelScope.launchIO(
+            action = {
+                val balanceData = mainRepository.startGoldPurchase(bodyMap)
+                mainRepository.updateUserBalance(balanceData, preferenceRepository.getPhoneNumber())
+            },
+            onError = {
+                Log.e(TAG, "#buyGold: ${it.message}")
+            }
+        )
     }
 
     fun sellGold(bodyMap: HashMap<String, String>) {
-        viewModelScope.launch {
-            try {
+        viewModelScope.launchIO(
+            action = {
                 bodyMap["mobileNumber"] = preferenceRepository.getPhoneNumber()
                 val balanceData = mainRepository.withdrawMoney(bodyMap)
                 mainRepository.updateUserBalance(balanceData, preferenceRepository.getPhoneNumber())
-                _sellGoldStatus.value = "SUCCESS"
-            } catch (cause: Throwable) {
-                when (cause) {
-                    is IOException -> _sellGoldStatus.value = "FAILED: ${cause.message}"
-                    is HttpException -> withContext(Dispatchers.IO) {
-                        _sellGoldStatus.postValue(
-                            "FAILED: ${
-                                cause.response()?.errorBody()?.string()
-                            }"
-                        )
-                    }
-                    else -> _sellGoldStatus.value = cause.message
+                _sellGoldStatus.postValue("SUCCESS")
+            },
+            onError = {
+                when (it) {
+                    is IOException -> _sellGoldStatus.value = "FAILED: ${it.message}"
+                    is HttpException -> _sellGoldStatus.value =
+                        "FAILED: ${it.response()?.errorBody()?.string()}"
+                    else -> _sellGoldStatus.value = it.message
                 }
             }
-        }
+        )
     }
 
     fun getUserBankList() {
-        viewModelScope.launch {
-            val banksList = mainRepository.getStoredBanksList()
-            _banksData.value = banksList
-        }
+        viewModelScope.launchIO(
+            action = {
+                val banksList = mainRepository.getStoredBanksList()
+                _banksData.postValue(banksList)
+            },
+            onError = {
+                Log.e(TAG, "#getUserBankList: ${it.message}")
+            }
+        )
     }
 
     fun createUserBank(bodyMap: Map<String, String>) {
-        viewModelScope.launch {
-            try {
+        viewModelScope.launchIO(
+            action = {
                 val bankDetail = mainRepository.registerUserBank(bodyMap)
                 mainRepository.saveUserBanks(listOf(bankDetail))
-                _bankCreateStatus.value = "SUCCESS"
-            } catch (cause: Throwable) {
-                when (cause) {
-                    is IOException -> _bankCreateStatus.value = "FAILED: ${cause.message}"
-                    is HttpException -> withContext(Dispatchers.IO) {
-                        _bankCreateStatus.postValue(
-                            "FAILED: ${
-                                cause.response()?.errorBody()?.string()
-                            }"
-                        )
-                    }
-                    else -> _bankCreateStatus.value = cause.message
+                _bankCreateStatus.postValue("SUCCESS")
+            },
+            onError = {
+                when (it) {
+                    is IOException -> _bankCreateStatus.value = "FAILED: ${it.message}"
+                    is HttpException ->
+                        _bankCreateStatus.value = "FAILED: ${it.response()?.errorBody()?.string()}"
+                    else -> _bankCreateStatus.value = it.message
                 }
             }
-        }
+        )
     }
 
     fun getGoldDeliveryOptions() {
-        viewModelScope.launch {
-            val productList = mainRepository.fetchGoldProductList()
-            _productData.value = productList
-        }
+        viewModelScope.launchIO(
+            action = {
+                val productList = mainRepository.fetchGoldProductList()
+                _productData.postValue(productList)
+            },
+            onError = {
+                Log.e(TAG, "#getGoldDeliveryOptions: ${it.message}")
+            }
+        )
     }
 
     fun getAddressList() {
-        viewModelScope.launch {
-            val addressList = mainRepository.getStoredAddresses()
-            _addressData.value = addressList
-        }
+        viewModelScope.launchIO(
+            action = {
+                val addressList = mainRepository.getStoredAddresses()
+                _addressData.postValue(addressList)
+            },
+            onError = {
+                Log.e(TAG, "#getAddressList ${it.message}")
+            }
+        )
     }
 
     fun createUserAddress(bodyMap: Map<String, String>) {
-        viewModelScope.launch {
-            try {
+        viewModelScope.launchIO(
+            action = {
                 val addressDetail = mainRepository.registerUserAddress(bodyMap)
                 mainRepository.saveAddresses(listOf(addressDetail))
-                _addressCreateStatus.value = "SUCCESS"
-            } catch (cause: Throwable) {
-                when (cause) {
-                    is IOException -> _addressCreateStatus.value = "FAILED: ${cause.message}"
-                    is HttpException -> withContext(Dispatchers.IO) {
-                        _addressCreateStatus.postValue(
-                            "FAILED: ${
-                                cause.response()?.errorBody()?.string()
-                            }"
-                        )
-                    }
-                    else -> _addressCreateStatus.value = cause.message
+                _addressCreateStatus.postValue("SUCCESS")
+            },
+            onError = {
+                when (it) {
+                    is IOException -> _addressCreateStatus.value = "FAILED: ${it.message}"
+                    is HttpException ->
+                        _addressCreateStatus.value =
+                            "FAILED: ${it.response()?.errorBody()?.string()}"
+                    else -> _addressCreateStatus.value = it.message
                 }
             }
-        }
+        )
     }
 
     fun placeProductOrder(bodyMap: Map<String, String>) {
-        viewModelScope.launch {
-            try {
+        viewModelScope.launchIO(
+            action = {
                 val orderResponse = mainRepository.placeOrder(bodyMap)
-                _orderData.value = orderResponse.orderDetails
-                _orderStatus.value = orderResponse.message
+                _orderData.postValue(orderResponse.orderDetails)
+                _orderStatus.postValue(orderResponse.message)
                 mainRepository.updateGoldBalance(
                     orderResponse.goldBalance,
                     orderResponse.orderDetails.id
                 )
-            } catch (cause: Throwable) {
-                when (cause) {
-                    is IOException -> _orderStatus.value = "FAILED: ${cause.message}"
-                    is HttpException -> withContext(Dispatchers.IO) {
-                        _orderStatus.postValue(
-                            "FAILED: ${
-                                cause.response()?.errorBody()?.string()
-                            }"
-                        )
-                    }
-                    else -> _orderStatus.value = cause.message
+            },
+            onError = {
+                when (it) {
+                    is IOException -> _orderStatus.value = "FAILED: ${it.message}"
+                    is HttpException ->
+                        _orderStatus.value = "FAILED: ${it.response()?.errorBody()?.string()}"
+                    else -> _orderStatus.value = it.message
                 }
             }
-        }
+        )
     }
 }

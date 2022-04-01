@@ -8,11 +8,9 @@ import com.bharatsave.goldapp.data.repository.AuthRepository
 import com.bharatsave.goldapp.data.repository.PreferenceRepository
 import com.bharatsave.goldapp.model.AuthResponse
 import com.bharatsave.goldapp.model.User
+import com.bharatsave.goldapp.view.launchIO
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -32,37 +30,35 @@ class RegistrationViewModel @Inject constructor(
         get() = _message
 
     fun login(phoneNumber: String) {
-        viewModelScope.launch {
-            try {
+        viewModelScope.launchIO(
+            action = {
                 val authResponse = authRepository.login(phoneNumber)
-                _response.value = authResponse
-            } catch (cause: Throwable) {
-                when (cause) {
-                    is IOException -> _message.value = cause.message
-                    is HttpException -> withContext(Dispatchers.IO) {
-                        _message.postValue(cause.response()?.errorBody()?.string())
-                    }
-                    else -> _message.value = cause.message
+                _response.postValue(authResponse)
+            },
+            onError = { error ->
+                when (error) {
+                    is IOException -> _message.value = error.message
+                    is HttpException -> _message.value = error.response()?.errorBody()?.string()
+                    else -> _message.value = error.message
                 }
             }
-        }
+        )
     }
 
     fun signUp(user: User) {
-        viewModelScope.launch {
-            try {
+        viewModelScope.launchIO(
+            action = {
                 val authResponse = authRepository.signUp(user)
-                _response.value = authResponse
-            } catch (cause: Throwable) {
-                when (cause) {
-                    is IOException -> _message.value = cause.message
-                    is HttpException -> withContext(Dispatchers.IO) {
-                        _message.postValue(cause.response()?.errorBody()?.string())
-                    }
-                    else -> _message.value = cause.message
+                _response.postValue(authResponse)
+            },
+            onError = { error ->
+                when (error) {
+                    is IOException -> _message.value = error.message
+                    is HttpException -> _message.value = error.response()?.errorBody()?.string()
+                    else -> _message.value = error.message
                 }
             }
-        }
+        )
     }
 
     fun saveAuthData(authToken: String, phoneNumber: String, firebaseId: String) {
@@ -84,8 +80,17 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun saveUser(user: User) {
-        viewModelScope.launch {
-            authRepository.insertUser(user)
-        }
+        viewModelScope.launchIO(
+            action = {
+                authRepository.insertUser(user)
+            },
+            onError = { error ->
+                when (error) {
+                    is IOException -> _message.value = error.message
+                    is HttpException -> _message.value = error.response()?.errorBody()?.string()
+                    else -> _message.value = error.message
+                }
+            }
+        )
     }
 }
