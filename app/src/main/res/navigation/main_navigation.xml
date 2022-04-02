@@ -69,6 +69,10 @@
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
 
+        <action
+            android:id="@+id/action_alert_referral_details"
+            app:destination="@id/nav_alert" />
+
     </fragment>
 
     <fragment
@@ -172,6 +176,19 @@
         <argument
             android:name="sellParameters"
             app:argType="com.bharatsave.goldapp.util.StringHashMap" />
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/nav_alert"
+        android:name="com.bharatsave.goldapp.view.alert.AlertBottomSheet"
+        android:label="bottom_sheet_alert"
+        tools:layout="@layout/bottom_sheet_alert">
+
+        <argument
+            android:name="alertData"
+            app:nullable="true"
+            app:argType="com.bharatsave.goldapp.model.AlertData" />
 
     </dialog>
 

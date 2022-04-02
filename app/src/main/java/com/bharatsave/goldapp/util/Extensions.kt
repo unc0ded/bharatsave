@@ -5,10 +5,8 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.SystemClock
-import android.text.Editable
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
 import android.view.TouchDelegate
@@ -22,8 +20,8 @@ import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
 import androidx.annotation.FontRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.text.HtmlCompat
 import androidx.core.view.doOnLayout
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.color.MaterialColors
@@ -58,12 +56,16 @@ fun View.clickWithThrottle(throttleTimeMillis: Long = 600L, onClick: () -> Unit)
     })
 }
 
-fun MaterialButton.generateRandomString(length: Int) {
+// TODO: this is temporary!
+fun MaterialButton.generateRandomString(prefixText: String, length: Int) {
     val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
     val randomString = (1..length)
         .map { allowedChars.random() }
         .joinToString("")
-    text = randomString
+    text = HtmlCompat.fromHtml(
+        "$prefixText <b>${randomString}</b>",
+        HtmlCompat.FROM_HTML_MODE_LEGACY
+    )
 }
 
 fun TextView.setCustomTypefaceSpanString(
@@ -198,4 +200,5 @@ fun EditText.textChanges(): Flow<CharSequence?> {
     }.onStart { emit(text) }
 }
 
-fun stringHashMapOf(vararg pairs: Pair<String, String>) = StringHashMap(pairs.size).apply { putAll(pairs) }
+fun stringHashMapOf(vararg pairs: Pair<String, String>) =
+    StringHashMap(pairs.size).apply { putAll(pairs) }

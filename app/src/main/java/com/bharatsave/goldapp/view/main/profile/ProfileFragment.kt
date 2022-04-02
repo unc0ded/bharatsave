@@ -4,15 +4,17 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.MainNavigationDirections
 import com.bharatsave.goldapp.databinding.FragmentProfileBinding
+import com.bharatsave.goldapp.model.AlertData
+import com.bharatsave.goldapp.util.DeviceUtils
 import com.bharatsave.goldapp.util.generateRandomString
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
@@ -40,7 +42,8 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.btnCopyReferral.generateRandomString(12)
+        // TODO: replace this, fetch referral code from backend
+        binding.btnCopyReferral.generateRandomString("Your referral code:", 12)
 
         viewModel.userData.observe(viewLifecycleOwner) { user ->
             binding.tvName.text = user?.name
@@ -79,9 +82,28 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnCopyReferral.setOnClickListener {
-            val clip = ClipData.newPlainText("referral", binding.btnCopyReferral.text)
-            clipboard.setPrimaryClip(clip)
-            Toast.makeText(context, "Referral code copied!", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(
+                ProfileFragmentDirections.actionAlertReferralDetails(
+                    AlertData(
+                        titleText = "Why Refer?",
+                        subTitleText = "Referring can help you earn chances to play games and win " +
+                                "prizes!! Everytime you refer a user, and they join, both the new " +
+                                "user and you earn a earn to play the games hosted by the " +
+                                "BharatSave team and chances to win exciting prizes",
+                        positiveText = "Understood, copy my code!",
+                        positiveAction = {
+                            val clip =
+                                ClipData.newPlainText("referral", binding.btnCopyReferral.text)
+                            clipboard.setPrimaryClip(clip)
+                            Toast.makeText(context, "Referral code copied!", Toast.LENGTH_SHORT)
+                                .show()
+
+                            DeviceUtils.vibrateDevice(activity, DeviceUtils.VibrationStrength.MEDIUM)
+                        },
+                        negativeText = "Cancel"
+                    )
+                )
+            )
         }
     }
 
