@@ -102,4 +102,9 @@ dependencies {
 
     // Paytm All-in-One SDK
     implementation 'com.paytm.appinvokesdk:appinvokesdk:1.6.8'
+
+    // Chucker
+    def chucker_version = "3.5.2"
+    debugImplementation "com.github.chuckerteam.chucker:library:$chucker_version"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$chucker_version"
 }

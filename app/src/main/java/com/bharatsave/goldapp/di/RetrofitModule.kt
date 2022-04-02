@@ -1,13 +1,18 @@
 package com.bharatsave.goldapp.di
 
+import android.content.Context
 import com.bharatsave.goldapp.data.service.AugmontService
 import com.bharatsave.goldapp.data.service.AuthInterceptor
 import com.bharatsave.goldapp.data.service.PaytmService
 import com.bharatsave.goldapp.data.service.UserService
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.internal.aggregatedroot.codegen._com_bharatsave_goldapp_GoldApplication
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -31,12 +36,21 @@ object RetrofitModule {
     @Singleton
     @Provides
     fun provideBasicOkHttpClient(
+        @ApplicationContext context: Context,
         interceptor: HttpLoggingInterceptor,
         authInterceptor: AuthInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(interceptor)
+            .addInterceptor(
+                ChuckerInterceptor.Builder(context)
+                    .collector(ChuckerCollector(context))
+                    .maxContentLength(250000L)
+                    .redactHeaders(emptySet())
+                    .alwaysReadResponseBody(true)
+                    .build()
+            )
             .build()
     }
 
