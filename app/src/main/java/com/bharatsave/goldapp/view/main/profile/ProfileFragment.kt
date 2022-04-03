@@ -16,6 +16,7 @@ import com.bharatsave.goldapp.databinding.FragmentProfileBinding
 import com.bharatsave.goldapp.model.AlertData
 import com.bharatsave.goldapp.util.DeviceUtils
 import com.bharatsave.goldapp.util.generateRandomString
+import com.bharatsave.goldapp.view.main.home.BottomSheetPurpose
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -76,9 +77,13 @@ class ProfileFragment : Fragment() {
                 .show()
         }
 
-        // TODO implement saved cards and accounts
         binding.btnLinked.setOnClickListener {
-            Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(
+                ProfileFragmentDirections.actionViewAccounts(
+                    purpose = BottomSheetPurpose.VIEW_ACCOUNTS,
+                    sellParameters = null
+                )
+            )
         }
 
         binding.btnCopyReferral.setOnClickListener {
@@ -98,7 +103,10 @@ class ProfileFragment : Fragment() {
                             Toast.makeText(context, "Referral code copied!", Toast.LENGTH_SHORT)
                                 .show()
 
-                            DeviceUtils.vibrateDevice(activity, DeviceUtils.VibrationStrength.MEDIUM)
+                            DeviceUtils.vibrateDevice(
+                                activity,
+                                DeviceUtils.VibrationStrength.MEDIUM
+                            )
                         },
                         negativeText = "Cancel"
                     )

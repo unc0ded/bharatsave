@@ -106,7 +106,7 @@
     <string name="profile">Profile</string>
     <string name="log_out">log out</string>
     <string name="edit_profile">edit profile</string>
-    <string name="saved_cards_accounts">Your cards and linked accounts</string>
+    <string name="saved_cards_accounts">Your linked accounts</string>
     <string name="referral_text">Refer your friends</string>
     <string name="referral_desc">Spread the word. Upon successful referral, we will credit both of your wallets with Gold worth ₹ 50</string>
 
@@ -125,7 +125,7 @@
     <string name="ifsc_code">IFSC Code</string>
     <string name="account_number">Account Number</string>
     <string name="bank_details">BANK DETAILS</string>
-    <string name="select_bank">SELECT BANK</string>
+    <string name="select_bank">select bank</string>
     <string name="confirm_bank_account">Confirm Bank Account</string>
     <string name="cancel">Cancel</string>
     <string name="create">create</string>
@@ -133,6 +133,8 @@
     <!--    learn-->
     <string name="why_bharat_save_title">Why Bharat Save</string>
     <string name="more_articles">More Articles</string>
+    <string name="your_bank_accounts">your bank accounts</string>
+    <string name="delete">Delete</string>
 
     <string-array name="delivery_list">
         <item>Augmont 0.1GM Gold Coin</item>

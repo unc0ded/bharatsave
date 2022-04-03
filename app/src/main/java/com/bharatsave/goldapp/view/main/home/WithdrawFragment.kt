@@ -14,7 +14,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentWithdrawBinding
-import com.bharatsave.goldapp.util.*
+import com.bharatsave.goldapp.util.increaseHitArea
+import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
+import com.bharatsave.goldapp.util.stringHashMapOf
+import com.bharatsave.goldapp.util.textChanges
 import com.bharatsave.goldapp.view.main.MainViewModel
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
@@ -234,7 +237,7 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
             } else {
                 findNavController().navigate(
                     WithdrawFragmentDirections.actionSelectBank(
-                        stringHashMapOf(
+                        sellParameters = stringHashMapOf(
                             when (binding.toggleGroupSellOption.checkedRadioButtonId) {
                                 R.id.toggle_sell_currency -> "amount" to normalDecimalFormat.format(
                                     sellAmount
@@ -246,7 +249,8 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
                             },
                             "blockId" to mainViewModel.goldRateData.value?.first!!.blockId,
                             "lockPrice" to mainViewModel.goldRateData.value?.first!!.sellPrice
-                        )
+                        ),
+                        purpose = BottomSheetPurpose.SELECT_BANK
                     )
                 )
 //                findNavController().navigate(

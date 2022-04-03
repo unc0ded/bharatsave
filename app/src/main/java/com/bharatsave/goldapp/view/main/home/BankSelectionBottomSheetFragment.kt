@@ -1,6 +1,7 @@
 package com.bharatsave.goldapp.view.main.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +20,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 
+enum class BottomSheetPurpose {
+    SELECT_BANK,
+    VIEW_ACCOUNTS
+}
+
 @AndroidEntryPoint
 class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
+
+    private val TAG = "BankSelectionBS"
 
     private var _binding: FragmentBankSelectionBottomSheetBinding? = null
     private val binding get() = _binding!!
@@ -30,6 +38,10 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
     private val args by navArgs<BankSelectionBottomSheetFragmentArgs>()
 
     private lateinit var bottomSheet: ViewGroup
+
+    interface DeleteBankAccountListener {
+        fun onDeleteBankAccount(bankAccountId: String, noOfAccountsLinked: Int)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +62,8 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         isCancelable = false
-        setupObservers()
-        setupViews()
+        setupObservers(args.purpose)
+        setupViews(args.purpose)
     }
 
     override fun onDestroyView() {
@@ -59,10 +71,27 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    private fun setupObservers() {
+    private fun setupObservers(purpose: BottomSheetPurpose) {
         homeViewModel.banksData.observe(viewLifecycleOwner) {
             if (it != null && it.isNotEmpty()) {
-                val adapter = BankListAdapter(it.asReversed())
+                val adapter = BankListAdapter(
+                    it.asReversed(),
+                    purpose,
+                    viewLifecycleOwner,
+                    if (purpose == BottomSheetPurpose.VIEW_ACCOUNTS) {
+                        object : DeleteBankAccountListener {
+                            override fun onDeleteBankAccount(
+                                bankAccountId: String,
+                                noOfAccountsLinked: Int
+                            ) {
+                                // TODO: remove this and make api call
+                                Toast.makeText(context, "delete clicked", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        null
+                    }
+                )
                 binding.pagerBankList.adapter = adapter
                 TabLayoutMediator(
                     binding.indicatorBanks,
@@ -72,11 +101,18 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
                 TransitionManager.beginDelayedTransition(bottomSheet)
                 binding.pagerBankList.isVisible = true
                 if (it.size > 1) binding.indicatorBanks.isVisible = true
-                binding.ivSelectedIcon.isVisible = true
+                if (purpose == BottomSheetPurpose.SELECT_BANK) {
+                    binding.ivSelectedIcon.isVisible = true
+                } else {
+                    binding.ivSelectedIcon.visibility = View.GONE
+                }
 
-                binding.pagerBankList.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                binding.pagerBankList.registerOnPageChangeCallback(object :
+                    ViewPager2.OnPageChangeCallback() {
                     override fun onPageScrollStateChanged(state: Int) {
-                        binding.ivSelectedIcon.isVisible = state == ViewPager2.SCROLL_STATE_IDLE
+                        if (purpose == BottomSheetPurpose.SELECT_BANK) {
+                            binding.ivSelectedIcon.isVisible = state == ViewPager2.SCROLL_STATE_IDLE
+                        }
                     }
                 })
             } else {
@@ -110,8 +146,14 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setupViews() {
+    private fun setupViews(bottomSheetPurpose: BottomSheetPurpose) {
         bottomSheet = dialog!!.findViewById(R.id.design_bottom_sheet)
+
+        if (bottomSheetPurpose == BottomSheetPurpose.VIEW_ACCOUNTS) {
+            binding.tvBsPurpose.text = getString(R.string.your_bank_accounts)
+        } else {
+            binding.tvBsPurpose.text = getString(R.string.select_bank)
+        }
 
         binding.btnAddBank.setOnClickListener {
             TransitionManager.beginDelayedTransition(bottomSheet)
@@ -158,20 +200,32 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
-        binding.btnConfirmBank.setOnClickListener {
-            if (binding.pagerBankList.isVisible && (binding.pagerBankList.adapter?.itemCount
-                    ?: 0) != 0
-            ) {
-                val parameters = args.sellParameters
-                homeViewModel.sellGold(parameters.apply {
-                    put(
-                        "userBankId",
-                        (binding.pagerBankList.adapter as BankListAdapter).getItem(binding.pagerBankList.currentItem).id
-                    )
-                })
-            } else {
-                Toast.makeText(context, "Please add a bank account", Toast.LENGTH_SHORT).show()
+        if (bottomSheetPurpose == BottomSheetPurpose.SELECT_BANK) {
+            binding.btnConfirmBank.setOnClickListener {
+                if (binding.pagerBankList.isVisible && (binding.pagerBankList.adapter?.itemCount
+                        ?: 0) != 0
+                ) {
+                    val parameters = args.sellParameters
+                    parameters?.let {
+                        homeViewModel.sellGold(it.apply {
+                            put(
+                                "userBankId",
+                                (binding.pagerBankList.adapter as BankListAdapter).getItem(binding.pagerBankList.currentItem).id
+                            )
+                        })
+                    } ?: run {
+                        Log.e(
+                            TAG,
+                            "#setupViews.confirmBankBtnClick: btn should not have been visible to the user"
+                        )
+                        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "Please add a bank account", Toast.LENGTH_SHORT).show()
+                }
             }
+        } else {
+            binding.btnConfirmBank.visibility = View.GONE
         }
 
         binding.btnCancel.setOnClickListener {
