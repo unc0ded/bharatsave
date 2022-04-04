@@ -421,6 +421,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
             )
         }
         binding.btnLearn.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionSaveLearn()) }
+        binding.btnWhyBharatsave.setOnClickListener {
+            findNavController().navigate(
+                // TODO: remove temporary url
+                HomeFragmentDirections.actionWebview("https://fello.in/faqs", "Why Bharat Save?")
+            )
+        }
     }
 
     override fun onClick(v: View?) {

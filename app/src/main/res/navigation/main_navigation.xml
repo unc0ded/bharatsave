@@ -5,6 +5,23 @@
     android:id="@+id/main_navigation"
     app:startDestination="@id/nav_home">
 
+    <activity
+        android:id="@+id/nav_webview"
+        android:name="com.bharatsave.goldapp.view.webview.WebViewActivity"
+        android:label="activity_webview"
+        tools:layout="@layout/activity_webview">
+
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="titleText"
+            app:argType="string"
+            app:nullable="true" />
+
+    </activity>
+
     <action
         android:id="@+id/action_logout"
         app:destination="@id/registrationActivity" />
@@ -42,6 +59,14 @@
         <action
             android:id="@+id/action_request_delivery"
             app:destination="@id/nav_delivery"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_webview"
+            app:destination="@id/nav_webview"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
@@ -169,8 +194,8 @@
 
         <argument
             android:name="productId"
-            app:nullable="true"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
         <argument
             android:name="purpose"
             app:argType="com.bharatsave.goldapp.view.main.home.AddressBottomSheetPurpose" />
@@ -185,8 +210,8 @@
 
         <argument
             android:name="sellParameters"
-            app:nullable="true"
-            app:argType="com.bharatsave.goldapp.util.StringHashMap" />
+            app:argType="com.bharatsave.goldapp.util.StringHashMap"
+            app:nullable="true" />
         <argument
             android:name="purpose"
             app:argType="com.bharatsave.goldapp.view.main.home.BottomSheetPurpose" />
@@ -201,8 +226,8 @@
 
         <argument
             android:name="alertData"
-            app:nullable="true"
-            app:argType="com.bharatsave.goldapp.model.AlertData" />
+            app:argType="com.bharatsave.goldapp.model.AlertData"
+            app:nullable="true" />
 
     </dialog>
 

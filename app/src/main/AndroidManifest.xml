@@ -35,6 +35,8 @@
 
         <activity android:name="com.bharatsave.goldapp.view.story.StoryContainerActivity" />
 
+        <activity android:name=".view.webview.WebViewActivity" />
+
         <receiver
             android:name="com.bharatsave.goldapp.view.ReadSmsBroadcastReceiver"
             android:permission="android.permission.BROADCAST_SMS"
