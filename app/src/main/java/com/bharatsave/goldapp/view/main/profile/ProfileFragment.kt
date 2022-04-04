@@ -15,6 +15,7 @@ import com.bharatsave.goldapp.MainNavigationDirections
 import com.bharatsave.goldapp.databinding.FragmentProfileBinding
 import com.bharatsave.goldapp.model.AlertData
 import com.bharatsave.goldapp.util.DeviceUtils
+import com.bharatsave.goldapp.util.clickWithThrottle
 import com.bharatsave.goldapp.util.generateRandomString
 import com.bharatsave.goldapp.view.main.home.AddressBottomSheetPurpose
 import com.bharatsave.goldapp.view.main.home.BottomSheetPurpose
@@ -78,7 +79,7 @@ class ProfileFragment : Fragment() {
                 .show()
         }
 
-        binding.btnLinked.setOnClickListener {
+        binding.btnLinked.clickWithThrottle {
             findNavController().navigate(
                 ProfileFragmentDirections.actionViewAccounts(
                     purpose = BottomSheetPurpose.VIEW_ACCOUNTS,
@@ -86,7 +87,7 @@ class ProfileFragment : Fragment() {
                 )
             )
         }
-        binding.btnViewAddress.setOnClickListener {
+        binding.btnViewAddress.clickWithThrottle {
             findNavController().navigate(
                 ProfileFragmentDirections.actionViewAddress(
                     purpose = AddressBottomSheetPurpose.VIEW_ADDRESS,
