@@ -52,6 +52,7 @@ class AlertBottomSheet : BottomSheetDialogFragment() {
                 binding.btnPositive.setOnClickListener {
                     try {
                         alertData.positiveAction.invoke()
+                        dismiss()
                     } catch (exception: Exception) {
                         Log.e(TAG, "#setupViews.positiveOnClick: ${exception.message}")
                     }

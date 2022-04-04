@@ -16,7 +16,7 @@
         <item name="materialButtonOutlinedStyle">@style/Widget.App.Button.OutlinedButton</item>
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
-        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout.OutlinedBox</item>
         <item name="listPopupWindowStyle">@style/Widget.App.PopupMenu.ListPopupWindow</item>
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <item name="chipStyle">@style/Widget.App.Chip.Choice</item>
@@ -98,8 +98,8 @@
         <item name="boxCornerRadiusBottomEnd">12dp</item>
     </style>
 
-    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
+    <style name="Widget.App.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout.OutlinedBox</item>
         <item name="android:textColorHint">@color/unfocused_grey</item>
         <item name="hintTextColor">@color/text_black</item>
         <item name="hintTextAppearance">@style/TextAppearance.App.Base</item>
@@ -110,7 +110,20 @@
         <item name="boxCornerRadiusBottomEnd">12dp</item>
     </style>
 
+    <style name="Widget.App.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout.FilledBox</item>
+        <item name="android:textColorHint">@color/text_grey</item>
+        <item name="hintTextColor">@color/text_black</item>
+        <item name="hintTextAppearance">@style/TextAppearance.App.Base</item>
+        <item name="boxStrokeColor">@color/text_black</item>
+    </style>
+
     <style name="Widget.App.TextInputEditText.OutlinedBox" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
+        <item name="android:textColor">@color/text_black</item>
+    </style>
+
+    <style name="Widget.App.TextInputEditText.FilledBox" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
         <item name="android:textAppearance">@style/TextAppearance.App.Subtitle</item>
         <item name="android:textColor">@color/text_black</item>
     </style>
@@ -243,7 +256,7 @@
         <item name="borderlessButtonStyle">@style/Widget.App.Button.TextButton</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.App.Button.OutlinedButton</item>
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
-        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout.FilledBox</item>
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
     </style>
 
@@ -265,8 +278,12 @@
         </item>
     </style>
 
-    <style name="ThemeOverlay.App.TextInputLayout" parent="">
+    <style name="ThemeOverlay.App.TextInputLayout.OutlinedBox" parent="">
         <item name="editTextStyle">@style/Widget.App.TextInputEditText.OutlinedBox</item>
+    </style>
+
+    <style name="ThemeOverlay.App.TextInputLayout.FilledBox" parent="">
+        <item name="editTextStyle">@style/Widget.App.TextInputEditText.FilledBox</item>
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">

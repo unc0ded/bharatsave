@@ -61,7 +61,6 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        isCancelable = false
         setupObservers(args.purpose)
         setupViews(args.purpose)
     }
@@ -201,6 +200,7 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         if (bottomSheetPurpose == BottomSheetPurpose.SELECT_BANK) {
+            isCancelable = false
             binding.btnConfirmBank.setOnClickListener {
                 if (binding.pagerBankList.isVisible && (binding.pagerBankList.adapter?.itemCount
                         ?: 0) != 0
@@ -226,6 +226,8 @@ class BankSelectionBottomSheetFragment : BottomSheetDialogFragment() {
             }
         } else {
             binding.btnConfirmBank.visibility = View.GONE
+            binding.btnCancel.isVisible = false
+            isCancelable = true
         }
 
         binding.btnCancel.setOnClickListener {
