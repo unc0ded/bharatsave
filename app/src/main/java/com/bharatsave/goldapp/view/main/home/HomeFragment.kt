@@ -67,7 +67,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupObservers()
         setupViews()
@@ -78,6 +77,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = null
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == TRANSACTION_REQUEST_CODE && data != null) {
             Toast.makeText(
@@ -406,9 +406,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             } else {
                 homeViewModel.startTransaction(
                     hashMapOf(
-                        "amount" to normalDecimalFormat.format(
-                            buyAmount
-                        )
+                        "amount" to normalDecimalFormat.format(buyAmount).replace(",", "")
                     )
                 )
             }
