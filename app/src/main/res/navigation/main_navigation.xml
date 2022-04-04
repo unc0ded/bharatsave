@@ -75,6 +75,9 @@
         <action
             android:id="@+id/action_view_accounts"
             app:destination="@id/nav_bank_selection" />
+        <action
+            android:id="@+id/action_view_address"
+            app:destination="@id/nav_delivery_address" />
 
     </fragment>
 
@@ -166,7 +169,11 @@
 
         <argument
             android:name="productId"
+            app:nullable="true"
             app:argType="string" />
+        <argument
+            android:name="purpose"
+            app:argType="com.bharatsave.goldapp.view.main.home.AddressBottomSheetPurpose" />
 
     </dialog>
 

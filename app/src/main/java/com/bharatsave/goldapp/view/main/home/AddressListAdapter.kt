@@ -7,8 +7,10 @@ import com.bharatsave.goldapp.custom_widget.CheckableAddressItem
 import com.bharatsave.goldapp.model.AddressDetail
 import com.bharatsave.goldapp.util.toPx
 
-class AddressListAdapter(private val addressList: List<AddressDetail>) :
-    RecyclerView.Adapter<AddressListAdapter.AddressViewHolder>() {
+class AddressListAdapter(
+    private val addressList: List<AddressDetail>,
+    private val isItemClickable: Boolean = true
+) : RecyclerView.Adapter<AddressListAdapter.AddressViewHolder>() {
 
     private var lastCheckedPosition = 0
 
@@ -28,7 +30,9 @@ class AddressListAdapter(private val addressList: List<AddressDetail>) :
 
     override fun onBindViewHolder(holder: AddressListAdapter.AddressViewHolder, position: Int) {
         holder.bind(addressList[position])
-        (holder.itemView as CheckableAddressItem).isChecked = position == lastCheckedPosition
+        if (isItemClickable) {
+            (holder.itemView as CheckableAddressItem).isChecked = position == lastCheckedPosition
+        }
     }
 
     override fun getItemCount(): Int = addressList.size
@@ -42,12 +46,14 @@ class AddressListAdapter(private val addressList: List<AddressDetail>) :
                     addressDetail.label,
                     addressDetail.pincode
                 )
-                setOnClickListener {
-                    val copyOfLastCheckedPosition = lastCheckedPosition
-                    lastCheckedPosition = adapterPosition
-                    if (lastCheckedPosition != copyOfLastCheckedPosition) {
-                        notifyItemChanged(copyOfLastCheckedPosition)
-                        notifyItemChanged(lastCheckedPosition)
+                if (isItemClickable) {
+                    setOnClickListener {
+                        val copyOfLastCheckedPosition = lastCheckedPosition
+                        lastCheckedPosition = adapterPosition
+                        if (lastCheckedPosition != copyOfLastCheckedPosition) {
+                            notifyItemChanged(copyOfLastCheckedPosition)
+                            notifyItemChanged(lastCheckedPosition)
+                        }
                     }
                 }
             }

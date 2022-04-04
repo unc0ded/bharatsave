@@ -122,7 +122,8 @@ class DeliveryFragment : Fragment() {
         binding.btnSelectAddress.setOnClickListener {
             findNavController().navigate(
                 DeliveryFragmentDirections.actionSelectDeliveryAddress(
-                    productId
+                    purpose = AddressBottomSheetPurpose.SELECT_ADDRESS,
+                    productId = productId
                 )
             )
         }

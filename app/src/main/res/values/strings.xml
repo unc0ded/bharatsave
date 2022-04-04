@@ -135,6 +135,8 @@
     <string name="more_articles">More Articles</string>
     <string name="your_bank_accounts">your bank accounts</string>
     <string name="delete">Delete</string>
+    <string name="your_addresses">Your addresses</string>
+    <string name="saved_addresses">saved addresses</string>
 
     <string-array name="delivery_list">
         <item>Augmont 0.1GM Gold Coin</item>

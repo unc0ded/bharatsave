@@ -13,6 +13,11 @@ import com.bharatsave.goldapp.databinding.FragmentDeliveryAddressBottomSheetBind
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
+enum class AddressBottomSheetPurpose {
+    VIEW_ADDRESS,
+    SELECT_ADDRESS
+}
+
 @AndroidEntryPoint
 class DeliveryAddressBottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -32,7 +37,7 @@ class DeliveryAddressBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setupViews()
+        setupViews(args.purpose)
     }
 
     override fun onDestroyView() {
@@ -40,7 +45,7 @@ class DeliveryAddressBottomSheetFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    private fun setupViews() {
+    private fun setupViews(purpose: AddressBottomSheetPurpose) {
         binding.pagerAddress.isUserInputEnabled = false
         binding.pagerAddress.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
@@ -60,18 +65,22 @@ class DeliveryAddressBottomSheetFragment : BottomSheetDialogFragment() {
                         0 -> {
                             text = getString(R.string.new_address)
                             setIconResource(R.drawable.ic_add_black_24dp)
-                            binding.btnPlaceOrder.isVisible = true
+                            if (purpose == AddressBottomSheetPurpose.SELECT_ADDRESS) {
+                                binding.btnPlaceOrder.isVisible = true
+                            }
                         }
                         1 -> {
                             text = getString(R.string.save_address)
                             setIconResource(R.drawable.ic_check_circle_outline_black_24dp)
-                            binding.btnPlaceOrder.isVisible = false
+                            if (purpose == AddressBottomSheetPurpose.SELECT_ADDRESS) {
+                                binding.btnPlaceOrder.isVisible = false
+                            }
                         }
                     }
                 }
             }
         })
-        binding.pagerAddress.adapter = AddressPagerAdapter(this)
+        binding.pagerAddress.adapter = AddressPagerAdapter(this, purpose)
     }
 
     fun getProductId() = args.productId

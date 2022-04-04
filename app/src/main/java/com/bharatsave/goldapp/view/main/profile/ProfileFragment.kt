@@ -16,6 +16,7 @@ import com.bharatsave.goldapp.databinding.FragmentProfileBinding
 import com.bharatsave.goldapp.model.AlertData
 import com.bharatsave.goldapp.util.DeviceUtils
 import com.bharatsave.goldapp.util.generateRandomString
+import com.bharatsave.goldapp.view.main.home.AddressBottomSheetPurpose
 import com.bharatsave.goldapp.view.main.home.BottomSheetPurpose
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
@@ -82,6 +83,14 @@ class ProfileFragment : Fragment() {
                 ProfileFragmentDirections.actionViewAccounts(
                     purpose = BottomSheetPurpose.VIEW_ACCOUNTS,
                     sellParameters = null
+                )
+            )
+        }
+        binding.btnViewAddress.setOnClickListener {
+            findNavController().navigate(
+                ProfileFragmentDirections.actionViewAddress(
+                    purpose = AddressBottomSheetPurpose.VIEW_ADDRESS,
+                    productId = null
                 )
             )
         }

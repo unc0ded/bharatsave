@@ -1,12 +1,13 @@
 package com.bharatsave.goldapp.view.main.home
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -23,6 +24,26 @@ class AddressSelectionFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel by viewModels<HomeViewModel>()
+
+    val EXTRA_BS_PURPOSE = "extra_bs_purpose"
+    private var purpose = AddressBottomSheetPurpose.SELECT_ADDRESS
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance(purpose: AddressBottomSheetPurpose) = AddressSelectionFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(EXTRA_BS_PURPOSE, purpose)
+            }
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        arguments?.getSerializable(EXTRA_BS_PURPOSE)?.let {
+            purpose = (it as AddressBottomSheetPurpose)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,12 +78,17 @@ class AddressSelectionFragment : Fragment() {
     private fun setupObservers() {
         viewModel.addressData.observe(viewLifecycleOwner) {
             if (it != null && it.isNotEmpty()) {
-                val adapter = AddressListAdapter(it)
+                val adapter = AddressListAdapter(
+                    it,
+                    purpose != AddressBottomSheetPurpose.VIEW_ADDRESS
+                )
                 binding.rvAddress.adapter = adapter
                 binding.rvAddress.isVisible = true
-                (parentFragment as DeliveryAddressBottomSheetFragment).view?.findViewById<MaterialButton>(
-                    R.id.btn_place_order
-                )?.isVisible = true
+                if (purpose == AddressBottomSheetPurpose.SELECT_ADDRESS) {
+                    (parentFragment as DeliveryAddressBottomSheetFragment).view?.findViewById<MaterialButton>(
+                        R.id.btn_place_order
+                    )?.isVisible = true
+                }
             } else {
                 binding.rvAddress.isVisible = false
                 (parentFragment as DeliveryAddressBottomSheetFragment).view?.findViewById<MaterialButton>(
@@ -92,6 +118,12 @@ class AddressSelectionFragment : Fragment() {
     private fun setupViews() {
         binding.rvAddress.layoutManager = LinearLayoutManager(context)
 
+        if (purpose == AddressBottomSheetPurpose.VIEW_ADDRESS) {
+            binding.tvTitle.text = getString(R.string.saved_addresses)
+        } else {
+            binding.tvTitle.text = getString(R.string.select_delivery_address)
+        }
+
         (parentFragment as DeliveryAddressBottomSheetFragment).view?.run {
             findViewById<MaterialButton>(R.id.btn_add_address)?.setOnClickListener {
                 findViewById<ViewPager2>(R.id.pager_address).currentItem = 1
@@ -100,13 +132,17 @@ class AddressSelectionFragment : Fragment() {
                 if (binding.rvAddress.adapter!!.itemCount != 0 && (binding.rvAddress.adapter as AddressListAdapter).getCheckedAddressId()
                         .isNotEmpty()
                 ) {
-                    viewModel.placeProductOrder(
-                        hashMapOf(
-                            "addressId" to (binding.rvAddress.adapter as AddressListAdapter).getCheckedAddressId(),
-                            "productId" to (parentFragment as DeliveryAddressBottomSheetFragment).getProductId(),
-                            "quantity" to "1"
+                    val productId =
+                        (parentFragment as DeliveryAddressBottomSheetFragment).getProductId()
+                    productId?.let {
+                        viewModel.placeProductOrder(
+                            hashMapOf(
+                                "addressId" to (binding.rvAddress.adapter as AddressListAdapter).getCheckedAddressId(),
+                                "productId" to it,
+                                "quantity" to "1"
+                            )
                         )
-                    )
+                    }
                 }
             }
         }

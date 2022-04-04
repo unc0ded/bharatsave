@@ -100,6 +100,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_edit_profile" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_view_address"
+            style="@style/Widget.App.Button.UnelevatedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:text="@string/your_addresses"
+            android:textAlignment="textStart"
+            app:icon="@drawable/ic_chevron_right_black_24dp"
+            app:iconGravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_linked" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_refer_heading"
             style="@style/Widget.App.TextView.Title"
@@ -111,7 +125,7 @@
             android:text="@string/referral_text"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_linked" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_view_address" />
 
         <!--        <com.google.android.material.textview.MaterialTextView-->
         <!--            android:id="@+id/tv_refer_body"-->

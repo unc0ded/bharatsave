@@ -22,7 +22,7 @@ class CheckableAddressItem @JvmOverloads constructor(
     private val CheckedStateSet = intArrayOf(android.R.attr.state_checked)
 
     init {
-        _binding = AddressListItemBinding.inflate(LayoutInflater.from(context), this)
+        _binding = AddressListItemBinding.inflate(LayoutInflater.from(context), this, true)
         background =
             AppCompatResources.getDrawable(context, R.drawable.rounded_outline_padded_background)
     }
