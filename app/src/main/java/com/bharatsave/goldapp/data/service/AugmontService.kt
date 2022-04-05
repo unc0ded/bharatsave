@@ -23,7 +23,7 @@ interface AugmontService {
     @POST("augmont/sell")
     suspend fun sellGold(@Body map: Map<String, String>): BalanceDetail
 
-    @POST("augmont/userbankcreate")
+    @POST("augmont/bank")
     suspend fun createBank(@Body map: Map<String, String>): BankDetail
 
     @GET("augmont/products")

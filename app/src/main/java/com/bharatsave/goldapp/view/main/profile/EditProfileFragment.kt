@@ -83,7 +83,6 @@ class EditProfileFragment : Fragment() {
                         .trim() != name || (binding.etEmail.editText as TextInputEditText).text.toString()
                         .trim() != email || (binding.etPincode.editText as TextInputEditText).text.toString()
                         .trim() != pincode
-                println(binding.btnSave.isEnabled)
             }.launchIn(lifecycleScope)
         (binding.etEmail.editText as TextInputEditText).textChanges().debounce(400)
             .onEach {
@@ -93,7 +92,6 @@ class EditProfileFragment : Fragment() {
                         .trim() != email || (binding.etFullName.editText as TextInputEditText).text.toString()
                         .trim() != name || (binding.etPincode.editText as TextInputEditText).text.toString()
                         .trim() != pincode
-                println(binding.btnSave.isEnabled)
             }.launchIn(lifecycleScope)
         (binding.etPincode.editText as TextInputEditText).textChanges().debounce(400)
             .onEach {
@@ -103,7 +101,6 @@ class EditProfileFragment : Fragment() {
                         .trim() != pincode || (binding.etFullName.editText as TextInputEditText).text.toString()
                         .trim() != name || (binding.etEmail.editText as TextInputEditText).text.toString()
                         .trim() != email
-                println(binding.btnSave.isEnabled)
             }.launchIn(lifecycleScope)
 
         binding.btnSave.setOnClickListener {

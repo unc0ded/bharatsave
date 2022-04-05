@@ -57,6 +57,18 @@ interface UserDao {
     @Query("UPDATE user_table SET goldBalance = :goldBalance WHERE id = :userId")
     suspend fun updateGoldBalance(goldBalance: String, userId: String)
 
-    @Query("DELETE from user_table")
+    @Query("DELETE FROM user_table")
     suspend fun deleteUser()
+
+    @Query("DELETE FROM banks_list")
+    suspend fun clearBanksTable()
+
+    @Query("DELETE FROM address_list")
+    suspend fun clearAddressTable()
+
+    @Query("DELETE FROM transactions_list")
+    suspend fun clearTransactionsTable()
+
+    @Query("DELETE FROM plans_table")
+    suspend fun clearPlansTable()
 }

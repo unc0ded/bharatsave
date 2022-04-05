@@ -109,4 +109,16 @@ class MainRepository @Inject constructor(
         userDao.insertTransactions(transactions)
 
     suspend fun placeOrder(bodyMap: Map<String, String>) = augmontService.orderProduct(bodyMap)
+
+    suspend fun clearUser() = userDao.deleteUser()
+
+    suspend fun clearBanks() = userDao.clearBanksTable()
+
+    suspend fun clearAddresses() = userDao.clearAddressTable()
+
+    suspend fun clearTransactions() = userDao.clearTransactionsTable()
+
+    suspend fun clearPlans() = userDao.clearPlansTable()
+
+    suspend fun clearRates() = mainDao.clearRateTable()
 }

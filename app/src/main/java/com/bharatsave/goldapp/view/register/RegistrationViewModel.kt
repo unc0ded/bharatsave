@@ -1,5 +1,6 @@
 package com.bharatsave.goldapp.view.register
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,6 @@ import com.bharatsave.goldapp.model.AuthResponse
 import com.bharatsave.goldapp.model.User
 import com.bharatsave.goldapp.view.launchIO
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -62,12 +62,31 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun saveAuthData(authToken: String, phoneNumber: String, firebaseId: String) {
-        viewModelScope.launch {
-            preferenceRepository.saveAuthToken(authToken)
-            preferenceRepository.saveUid(firebaseId)
-            preferenceRepository.savePhone(phoneNumber)
-//            preferenceRepository.saveRefreshToken(refreshToken)
-        }
+        viewModelScope.launchIO(
+            action = {
+                preferenceRepository.saveAuthToken(authToken)
+//                preferenceRepository.saveRefreshToken(refreshToken)
+            },
+            onError = {
+                Log.e("RegistrationViewModel", "#saveAuthToken ${it.message}")
+            }
+        )
+        viewModelScope.launchIO(
+            action = {
+                preferenceRepository.saveUid(firebaseId)
+            },
+            onError = {
+                Log.e("RegistrationViewModel", "#saveUid ${it.message}")
+            }
+        )
+        viewModelScope.launchIO(
+            action = {
+                preferenceRepository.savePhone(phoneNumber)
+            },
+            onError = {
+                Log.e("RegistrationViewModel", "#savePhone ${it.message}")
+            }
+        )
     }
 
     suspend fun checkTokens(): Boolean {

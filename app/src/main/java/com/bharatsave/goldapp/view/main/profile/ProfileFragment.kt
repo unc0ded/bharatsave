@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,7 +17,6 @@ import com.bharatsave.goldapp.databinding.FragmentProfileBinding
 import com.bharatsave.goldapp.model.AlertData
 import com.bharatsave.goldapp.util.DeviceUtils
 import com.bharatsave.goldapp.util.clickWithThrottle
-import com.bharatsave.goldapp.util.generateRandomString
 import com.bharatsave.goldapp.view.main.home.AddressBottomSheetPurpose
 import com.bharatsave.goldapp.view.main.home.BottomSheetPurpose
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -45,12 +45,13 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // TODO: replace this, fetch referral code from backend
-        binding.btnCopyReferral.generateRandomString("Your referral code:", 12)
-
         viewModel.userData.observe(viewLifecycleOwner) { user ->
             binding.tvName.text = user?.name
             binding.tvEmail.text = user?.email
+            binding.btnCopyReferral.text = HtmlCompat.fromHtml(
+                "Your referral code: <b>${user?.referralCode}</b>",
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
         }
 
         binding.btnEditProfile.setOnClickListener {
@@ -108,7 +109,10 @@ class ProfileFragment : Fragment() {
                         positiveText = "Understood, copy my code!",
                         positiveAction = {
                             val clip =
-                                ClipData.newPlainText("referral", binding.btnCopyReferral.text)
+                                ClipData.newPlainText(
+                                    "referral",
+                                    binding.btnCopyReferral.text.split(": ")[1]
+                                )
                             clipboard.setPrimaryClip(clip)
                             Toast.makeText(context, "Referral code copied!", Toast.LENGTH_SHORT)
                                 .show()

@@ -7,7 +7,7 @@ import com.bharatsave.goldapp.model.augmont.GoldRate
 
 @Database(
     entities = [User::class, BankDetail::class, GoldRate::class, PlanDetail::class, TransactionItem::class, AddressDetail::class],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 abstract class MainDatabase : RoomDatabase() {

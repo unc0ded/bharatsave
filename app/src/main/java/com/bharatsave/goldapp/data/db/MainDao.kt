@@ -20,4 +20,7 @@ interface MainDao {
 
     @Query("DELETE FROM gold_rates WHERE timeStamp NOT IN (SELECT timeStamp from gold_rates ORDER BY timeStamp DESC LIMIT 10)")
     suspend fun deleteOldRates()
+
+    @Query("DELETE FROM gold_rates")
+    suspend fun clearRateTable()
 }

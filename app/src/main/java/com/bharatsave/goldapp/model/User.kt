@@ -19,5 +19,6 @@ data class User(
     val phoneNumber: String = "",
     @Json(name = "userPincode")
     val pinCode: String = "",
-    val goldBalance: String = "0"
+    val goldBalance: String = "0",
+    val referralCode: String = ""
 )

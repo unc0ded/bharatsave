@@ -73,7 +73,9 @@ class MainViewModel @Inject constructor(
         viewModelScope.launchIO(
             action = {
                 val balance = mainRepository.fetchBalanceData()
-                mainRepository.updateUserBalance(balance, preferenceRepository.getPhoneNumber())
+                val phoneNumber = preferenceRepository.getPhoneNumber()
+                mainRepository.updateUserBalance(balance, phoneNumber)
+                Log.d(TAG, "#init.balanceData ${balance.goldBalance} $phoneNumber")
             },
             onError = {
                 Log.e(TAG, "#init.balanceData ${it.message}")

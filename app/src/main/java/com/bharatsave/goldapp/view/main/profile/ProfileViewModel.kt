@@ -47,6 +47,54 @@ class ProfileViewModel @Inject constructor(
     fun clearUserData() {
         viewModelScope.launchIO(
             action = {
+                mainRepository.clearUser()
+            },
+            onError = {
+                Log.e(TAG, "#clearUserTable ${it.message}")
+            }
+        )
+        viewModelScope.launchIO(
+            action = {
+                mainRepository.clearBanks()
+            },
+            onError = {
+                Log.e(TAG, "#clearBanksTable ${it.message}")
+            }
+        )
+        viewModelScope.launchIO(
+            action = {
+                mainRepository.clearAddresses()
+            },
+            onError = {
+                Log.e(TAG, "#clearAddressTable ${it.message}")
+            }
+        )
+        viewModelScope.launchIO(
+            action = {
+                mainRepository.clearTransactions()
+            },
+            onError = {
+                Log.e(TAG, "#clearTransactionsTable ${it.message}")
+            }
+        )
+        viewModelScope.launchIO(
+            action = {
+                mainRepository.clearPlans()
+            },
+            onError = {
+                Log.e(TAG, "#clearPlansTable ${it.message}")
+            }
+        )
+        viewModelScope.launchIO(
+            action = {
+                mainRepository.clearRates()
+            },
+            onError = {
+                Log.e(TAG, "#clearRatesTable ${it.message}")
+            }
+        )
+        viewModelScope.launchIO(
+            action = {
                 preferenceRepository.clearUserData()
             },
             onError = {
