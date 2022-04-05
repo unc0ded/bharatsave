@@ -34,23 +34,44 @@
             android:layout_marginStart="10dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="daasdasad"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/iv_logo"
+            app:layout_constraintEnd_toEndOf="@id/btn_reload"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/btn_back"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_logo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_logo"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_reload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_reload"
+            android:tint="?attr/colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/logo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="@color/brand_blue"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_logo" />
+
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

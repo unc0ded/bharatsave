@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import com.bharatsave.goldapp.databinding.FragmentWebviewBinding
 
-// TODO: incomplete! add custom client, handle back presses and redirects
+// TODO: test and fix
 class WebViewFragment : Fragment() {
 
     private var _binding: FragmentWebviewBinding? = null
@@ -47,13 +49,22 @@ class WebViewFragment : Fragment() {
         binding.tvTitle.text = title
         url?.let { setupWebView(it) }
         binding.btnBack.setOnClickListener {
-            // TODO: complete this
+            activity?.finish()
+        }
+        binding.btnReload.setOnClickListener {
+            binding.webView.reload()
         }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView(url: String) {
         binding.webView.loadUrl(url)
+        binding.webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                view.loadUrl(url)
+                return false
+            }
+        }
         binding.webView.settings.apply {
             javaScriptEnabled = true
             databaseEnabled = true
@@ -64,6 +75,11 @@ class WebViewFragment : Fragment() {
     }
 
     fun handleBackPress() {
-        binding.webView.evaluateJavascript("handleHardwareBackPress();", null)
+        if (binding.webView.canGoBack()) {
+            binding.webView.goBack()
+        } else {
+            activity?.finish()
+        }
+//        binding.webView.evaluateJavascript("handleHardwareBackPress();", null)
     }
 }
