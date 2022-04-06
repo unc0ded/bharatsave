@@ -57,6 +57,17 @@ interface UserDao {
     @Query("UPDATE user_table SET goldBalance = :goldBalance WHERE id = :userId")
     suspend fun updateGoldBalance(goldBalance: String, userId: String)
 
+    @Query("UPDATE banks_list SET accountNo = :accountNumber, accountName = :accountName, ifscCode = :ifscCode WHERE id = :bankId")
+    suspend fun updateBankDetail(
+        bankId: String,
+        accountNumber: String,
+        accountName: String,
+        ifscCode: String
+    )
+
+    @Query("DELETE FROM banks_list WHERE id = :bankId")
+    suspend fun deleteBankEntry(bankId: String)
+
     @Query("DELETE FROM user_table")
     suspend fun deleteUser()
 

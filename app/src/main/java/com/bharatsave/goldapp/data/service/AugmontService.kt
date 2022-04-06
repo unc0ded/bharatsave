@@ -2,9 +2,7 @@ package com.bharatsave.goldapp.data.service
 
 import com.bharatsave.goldapp.model.*
 import com.bharatsave.goldapp.model.augmont.GoldRate
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AugmontService {
 
@@ -26,6 +24,18 @@ interface AugmontService {
     @POST("augmont/bank")
     suspend fun createBank(@Body map: Map<String, String>): BankDetail
 
+    /*
+    Expected body parameters: accountNumber, accountName, ifscCode
+     */
+    @PUT("augmont/bank")
+    suspend fun updateBank(
+        @Query("userBankId") bankId: String,
+        @Body map: Map<String, String>
+    ): BankDetail
+
+    @DELETE("augmont/bank")
+    suspend fun deleteBank(@Query("userBankId") bankId: String)
+
     @GET("augmont/products")
     suspend fun goldProducts(): List<GoldCoin>
 
@@ -36,8 +46,8 @@ interface AugmontService {
     suspend fun orderProduct(@Body map: Map<String, String>): OrderResponse
 
     @GET("augmont/buylist")
-    suspend fun getBuyList() : List<BuyTransactionListItem>
+    suspend fun getBuyList(): List<BuyTransactionListItem>
 
     @GET("augmont/selllist")
-    suspend fun getSellList() : List<SellTransactionListItem>
+    suspend fun getSellList(): List<SellTransactionListItem>
 }

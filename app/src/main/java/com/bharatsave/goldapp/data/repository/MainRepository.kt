@@ -86,8 +86,22 @@ class MainRepository @Inject constructor(
 
     suspend fun registerUserBank(bodyMap: Map<String, String>) = augmontService.createBank(bodyMap)
 
+    suspend fun updateUserBank(bankId: String, bodyMap: Map<String, String>) =
+        augmontService.updateBank(bankId, bodyMap)
+
+    suspend fun deleteUserBank(bankId: String) = augmontService.deleteBank(bankId)
+
     suspend fun saveUserBanks(bankDetails: List<BankDetail>) =
         userDao.insertBanks(*bankDetails.toTypedArray())
+
+    suspend fun updateSavedBank(bankDetail: BankDetail) = userDao.updateBankDetail(
+        bankDetail.id,
+        bankDetail.accountNo,
+        bankDetail.accountName,
+        bankDetail.ifscCode
+    )
+
+    suspend fun deleteSavedBank(bankId: String) = userDao.deleteBankEntry(bankId)
 
     suspend fun fetchGoldProductList() = augmontService.goldProducts()
 

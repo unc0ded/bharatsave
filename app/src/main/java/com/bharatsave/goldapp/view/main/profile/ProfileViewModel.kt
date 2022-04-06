@@ -32,6 +32,10 @@ class ProfileViewModel @Inject constructor(
     val updateStatus: LiveData<String>
         get() = _updateStatus
 
+    private val _bankStatus = MutableLiveData<String>()
+    val bankStatus: LiveData<String>
+        get() = _bankStatus
+
     init {
         viewModelScope.launchIO(
             action = {
@@ -128,6 +132,44 @@ class ProfileViewModel @Inject constructor(
                     is HttpException -> _updateStatus.value =
                         "FAILED: ${it.response()?.errorBody()?.string()}"
                     else -> _updateStatus.value = it.message
+                }
+            }
+        )
+    }
+
+    fun updateUserBank(bankId: String, bodyMap: Map<String, String>) {
+        viewModelScope.launchIO(
+            action = {
+                val bankDetail = mainRepository.updateUserBank(bankId, bodyMap)
+                mainRepository.updateSavedBank(bankDetail)
+                _bankStatus.postValue("#bankUpdate: SUCCESS")
+            },
+            onError = {
+                when (it) {
+                    is IOException -> _bankStatus.value = "#bankUpdate: FAILED: ${it.message}"
+                    is HttpException ->
+                        _bankStatus.value =
+                            "#bankUpdate: FAILED: ${it.response()?.errorBody()?.string()}"
+                    else -> _bankStatus.value = it.message
+                }
+            }
+        )
+    }
+
+    fun deleteUserBank(bankId: String) {
+        viewModelScope.launchIO(
+            action = {
+                mainRepository.deleteUserBank(bankId)
+                mainRepository.deleteSavedBank(bankId)
+                _bankStatus.postValue("#bankDelete: SUCCESS")
+            },
+            onError = {
+                when (it) {
+                    is IOException -> _bankStatus.value = "#bankDelete: FAILED: ${it.message}"
+                    is HttpException ->
+                        _bankStatus.value =
+                            "#bankDelete: FAILED: ${it.response()?.errorBody()?.string()}"
+                    else -> _bankStatus.value = it.message
                 }
             }
         )
