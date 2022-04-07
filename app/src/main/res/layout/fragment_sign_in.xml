@@ -61,7 +61,8 @@
             android:layout_height="match_parent"
             android:autofillHints="phone"
             android:imeOptions="actionGo"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:maxLength="10" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

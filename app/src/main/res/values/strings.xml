@@ -137,6 +137,8 @@
     <string name="delete">Delete</string>
     <string name="your_addresses">Your addresses</string>
     <string name="saved_addresses">saved addresses</string>
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="save">Save</string>
 
     <string-array name="delivery_list">
         <item>Augmont 0.1GM Gold Coin</item>

@@ -1,76 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none"
     tools:context=".view.register.OnBoardingFragment">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_logo"
-        android:layout_width="48dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/circle_background"
-        android:backgroundTint="?attr/colorPrimary"
-        android:padding="6dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_logo"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:fontFamily="@font/eina01_bold"
-        android:textColor="@color/brand_blue"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
-        app:layout_constraintStart_toEndOf="@id/iv_logo"
-        app:layout_constraintTop_toTopOf="@+id/iv_logo"
-        tools:text="Bharat Save" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="?attr/colorPrimary"
+            android:padding="6dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_logo"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager_onboard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/eina01_bold"
+            android:textColor="@color/brand_blue"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
+            app:layout_constraintStart_toEndOf="@id/iv_logo"
+            app:layout_constraintTop_toTopOf="@+id/iv_logo"
+            tools:text="Bharat Save" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/indicator_onboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@id/btn_continue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@drawable/default_dot"
-        app:tabGravity="center"
-        app:tabIndicator="@drawable/selected_dot"
-        app:tabIndicatorAnimationMode="elastic"
-        app:tabIndicatorFullWidth="false"
-        app:tabIndicatorGravity="center"
-        app:tabPaddingEnd="8dp"
-        app:tabPaddingStart="8dp"
-        app:tabRippleColor="@null" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager_onboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_continue"
-        style="@style/Widget.App.Button.Primary"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="40dp"
-        android:text="@string/continue_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/indicator_onboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toTopOf="@id/btn_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tabBackground="@drawable/default_dot"
+            app:tabGravity="center"
+            app:tabIndicator="@drawable/selected_dot"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorGravity="center"
+            app:tabPaddingEnd="8dp"
+            app:tabPaddingStart="8dp"
+            app:tabRippleColor="@null" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_continue"
+            style="@style/Widget.App.Button.Primary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/continue_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

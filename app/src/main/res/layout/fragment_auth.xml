@@ -1,58 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none"
     tools:context=".view.register.AuthFragment">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_logo"
-        android:layout_width="72dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/circle_background"
-        android:backgroundTint="?attr/colorPrimary"
-        android:padding="8dp"
-        android:src="@drawable/ic_logo"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/eina01_bold"
-        android:text="@string/bharat_save_title"
-        android:textColor="@color/brand_blue"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_subtitle"
-        style="@style/Widget.App.TextView.Subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bharat_save_subtitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/circle_background"
+            android:backgroundTint="?attr/colorPrimary"
+            android:padding="8dp"
+            android:src="@drawable/ic_logo" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_auth_container"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
-        app:navGraph="@navigation/auth_navigation" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/eina01_bold"
+            android:text="@string/bharat_save_title"
+            android:textColor="@color/brand_blue"
+            android:textSize="28sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_subtitle"
+            style="@style/Widget.App.TextView.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bharat_save_subtitle" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_auth_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/auth_navigation" />
+
+    </LinearLayout>
+
+</ScrollView>

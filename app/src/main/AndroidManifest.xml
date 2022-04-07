@@ -22,8 +22,10 @@
 
         <activity
             android:name="com.bharatsave.goldapp.view.register.RegistrationActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
-            android:exported="true">
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,8 +41,8 @@
 
         <receiver
             android:name="com.bharatsave.goldapp.view.ReadSmsBroadcastReceiver"
-            android:permission="android.permission.BROADCAST_SMS"
-            android:exported="true">
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>

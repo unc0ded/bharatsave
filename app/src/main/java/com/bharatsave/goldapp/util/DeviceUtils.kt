@@ -6,8 +6,13 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 
 object DeviceUtils {
+
+    const val TAG = "DeviceUtils"
 
     enum class VibrationStrength(val strength: Long) {
         SOFT(50L),
@@ -41,6 +46,16 @@ object DeviceUtils {
                 @Suppress("DEPRECATION")
                 vibrator.vibrate(vibration.strength)
             }
+        }
+    }
+
+    @JvmStatic
+    fun hideSoftKeyboard(activeView: View?) {
+        try {
+            (activeView?.context?.getSystemService(Context.INPUT_METHOD_SERVICE)
+                    as InputMethodManager).hideSoftInputFromWindow(activeView.windowToken, 0)
+        } catch (exception: Exception) {
+            Log.e(TAG, "#hideSoftKeyboard: ${exception.message}")
         }
     }
 }

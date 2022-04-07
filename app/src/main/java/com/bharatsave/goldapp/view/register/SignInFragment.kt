@@ -1,13 +1,14 @@
 package com.bharatsave.goldapp.view.register
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.databinding.FragmentSignInBinding
+import com.bharatsave.goldapp.util.DeviceUtils
 import com.bharatsave.goldapp.util.actionGo
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +29,21 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.etPhoneNumber.editText?.actionGo { binding.btnSignIn.callOnClick() }
+        binding.etPhoneNumber.editText?.let {
+            it.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.btnSignIn.visibility = View.GONE
+                } else {
+                    binding.btnSignIn.visibility = View.VISIBLE
+                }
+            }
+        }
+        binding.etPhoneNumber.editText?.actionGo {
+            binding.etPhoneNumber.editText?.let {
+                DeviceUtils.hideSoftKeyboard(it)
+                it.clearFocus()
+            }
+        }
 
         binding.btnSignIn.setOnClickListener {
             val phoneNumber = binding.etPhoneNumber.editText?.text.toString().trim()

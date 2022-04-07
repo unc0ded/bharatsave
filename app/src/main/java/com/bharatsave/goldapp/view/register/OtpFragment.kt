@@ -206,7 +206,11 @@ class OtpFragment : Fragment() {
                         "Too many requests, please try again later",
                         Toast.LENGTH_SHORT
                     ).show()
-                    else -> Toast.makeText(context, "Verification error: ${e.message}", Toast.LENGTH_SHORT)
+                    else -> Toast.makeText(
+                        context,
+                        "Verification error: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
             }
