@@ -24,6 +24,7 @@ class AddressSelectionFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel by viewModels<HomeViewModel>()
+    private lateinit var addressListAdapter: AddressListAdapter
 
     val EXTRA_BS_PURPOSE = "extra_bs_purpose"
     private var purpose = AddressBottomSheetPurpose.SELECT_ADDRESS
@@ -60,8 +61,8 @@ class AddressSelectionFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setupObservers()
         setupViews()
+        setupObservers()
     }
 
     // TODO find a better way to do this
@@ -78,12 +79,8 @@ class AddressSelectionFragment : Fragment() {
     private fun setupObservers() {
         viewModel.addressData.observe(viewLifecycleOwner) {
             if (it != null && it.isNotEmpty()) {
-                val adapter = AddressListAdapter(
-                    it,
-                    purpose != AddressBottomSheetPurpose.VIEW_ADDRESS
-                )
-                binding.rvAddress.adapter = adapter
                 binding.rvAddress.isVisible = true
+                addressListAdapter.setAddressListData(it)
                 if (purpose == AddressBottomSheetPurpose.SELECT_ADDRESS) {
                     (parentFragment as DeliveryAddressBottomSheetFragment).view?.findViewById<MaterialButton>(
                         R.id.btn_place_order
@@ -116,7 +113,13 @@ class AddressSelectionFragment : Fragment() {
     }
 
     private fun setupViews() {
-        binding.rvAddress.layoutManager = LinearLayoutManager(context)
+        addressListAdapter =
+            AddressListAdapter(purpose != AddressBottomSheetPurpose.VIEW_ADDRESS)
+        binding.rvAddress.apply {
+            adapter = addressListAdapter
+            layoutManager = LinearLayoutManager(context)
+            visibility = View.GONE
+        }
 
         if (purpose == AddressBottomSheetPurpose.VIEW_ADDRESS) {
             binding.tvTitle.text = getString(R.string.saved_addresses)

@@ -7,12 +7,11 @@ import com.bharatsave.goldapp.custom_widget.CheckableAddressItem
 import com.bharatsave.goldapp.model.AddressDetail
 import com.bharatsave.goldapp.util.toPx
 
-class AddressListAdapter(
-    private val addressList: List<AddressDetail>,
-    private val isItemClickable: Boolean = true
-) : RecyclerView.Adapter<AddressListAdapter.AddressViewHolder>() {
+class AddressListAdapter(private val isItemClickable: Boolean = true) :
+    RecyclerView.Adapter<AddressListAdapter.AddressViewHolder>() {
 
     private var lastCheckedPosition = 0
+    private var addressList: List<AddressDetail>? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,14 +27,22 @@ class AddressListAdapter(
         return AddressViewHolder(addressItemView)
     }
 
+    fun setAddressListData(addresses: List<AddressDetail>) {
+        addressList = addresses
+        // TODO: replace `notifyDataSetChanged` with `notifyItemInserted`
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: AddressListAdapter.AddressViewHolder, position: Int) {
-        holder.bind(addressList[position])
+        addressList?.let {
+            holder.bind(it[position])
+        }
         if (isItemClickable) {
             (holder.itemView as CheckableAddressItem).isChecked = position == lastCheckedPosition
         }
     }
 
-    override fun getItemCount(): Int = addressList.size
+    override fun getItemCount(): Int = addressList?.size ?: 0
 
     inner class AddressViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         internal fun bind(addressDetail: AddressDetail) {
@@ -60,6 +67,14 @@ class AddressListAdapter(
         }
     }
 
-    fun getCheckedAddressId(): String =
-        if (addressList.isNotEmpty()) addressList[lastCheckedPosition].id else ""
+    fun getCheckedAddressId(): String {
+        return addressList?.let {
+            if (it.isNotEmpty()) {
+                it[lastCheckedPosition].id
+            } else {
+                ""
+            }
+        } ?: ""
+    }
+
 }

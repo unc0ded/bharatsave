@@ -1,11 +1,11 @@
 package com.bharatsave.goldapp.view.main.transactions
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bharatsave.goldapp.R
@@ -15,8 +15,9 @@ import com.bharatsave.goldapp.model.TransactionType
 import com.bharatsave.goldapp.view.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
-import java.time.*
-import java.time.format.DateTimeFormatter
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 @AndroidEntryPoint
 class TransactionsFragment : Fragment() {
@@ -40,6 +41,11 @@ class TransactionsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // for initial loading view
+        binding.rvTxns.visibility = View.GONE
+        binding.tvEmptyList.visibility = View.VISIBLE
+        binding.tvEmptyList.text = "Fetching your transactions..."
+
         val list: MutableList<Transaction.TransactionDetail> = mutableListOf()
         binding.chipGroupFilters.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -83,7 +89,7 @@ class TransactionsFragment : Fragment() {
                     val finalList = filterAndGroup(list)
                     if (finalList.isEmpty()) {
                         binding.rvTxns.isVisible = false
-                        binding.tvEmptyList.text = "No transactions yetr."
+                        binding.tvEmptyList.text = "No transactions yet."
                         binding.tvEmptyList.isVisible = true
                     } else {
                         binding.tvEmptyList.isVisible = false
@@ -147,6 +153,15 @@ class TransactionsFragment : Fragment() {
                 }
                 val finalList = filterAndGroup(list, days)
                 binding.rvTxns.adapter = TransactionsAdapter(finalList)
+
+            } else if (it != null && it.isEmpty()) {
+                binding.rvTxns.visibility = View.GONE
+                binding.tvEmptyList.visibility = View.VISIBLE
+                binding.tvEmptyList.text = "No transactions to display."
+            } else {
+                binding.rvTxns.visibility = View.GONE
+                binding.tvEmptyList.visibility = View.VISIBLE
+                binding.tvEmptyList.text = "An error occurred while fetching!"
             }
         }
     }
