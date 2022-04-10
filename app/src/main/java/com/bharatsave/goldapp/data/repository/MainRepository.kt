@@ -9,6 +9,7 @@ import com.bharatsave.goldapp.model.*
 import com.bharatsave.goldapp.model.augmont.GoldRate
 import javax.inject.Inject
 
+
 class MainRepository @Inject constructor(
     private val userService: UserService,
     private val augmontService: AugmontService,
@@ -112,8 +113,9 @@ class MainRepository @Inject constructor(
     suspend fun saveAddresses(addresses: List<AddressDetail>) =
         userDao.insertAddresses(*addresses.toTypedArray())
 
-    suspend fun registerUserAddress(bodyMap: Map<String, String>) =
-        augmontService.createAddress(bodyMap)
+    suspend fun registerUserAddress(bodyMap: Map<String, String>): List<AddressDetail> {
+        return augmontService.createAddress(bodyMap)
+    }
 
     suspend fun fetchTransactionsList() = userService.userTransactions()
 
@@ -136,3 +138,4 @@ class MainRepository @Inject constructor(
 
     suspend fun clearRates() = mainDao.clearRateTable()
 }
+

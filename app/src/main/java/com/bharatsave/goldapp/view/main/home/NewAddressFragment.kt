@@ -1,14 +1,13 @@
 package com.bharatsave.goldapp.view.main.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.viewpager2.widget.ViewPager2
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentNewAddressBinding
 import com.google.android.material.button.MaterialButton
@@ -51,11 +50,12 @@ class NewAddressFragment : Fragment() {
         viewModel.addressCreateStatus.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it.contains("success", true)) {
-                    Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show()
-                    viewModel.getAddressList()
-                    (parentFragment as DeliveryAddressBottomSheetFragment).view?.findViewById<ViewPager2>(
-                        R.id.pager_address
-                    )?.currentItem = 0
+                    Toast.makeText(
+                        context,
+                        "Address added successfully!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    (parentFragment as DeliveryAddressBottomSheetFragment).dismiss()
                 } else {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
                 }
@@ -63,7 +63,7 @@ class NewAddressFragment : Fragment() {
         }
     }
 
-    private fun setupViews() {
+    fun setupViews() {
         (binding.etAddress.editText as TextInputEditText).doOnTextChanged { text, _, _, _ ->
             binding.etAddress.error = if (text.toString().isEmpty()) "Required" else ""
         }

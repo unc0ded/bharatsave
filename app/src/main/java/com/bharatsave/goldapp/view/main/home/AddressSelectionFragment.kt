@@ -96,7 +96,11 @@ class AddressSelectionFragment : Fragment() {
 
         viewModel.orderStatus.observe(viewLifecycleOwner) {
             if (it != null && !it.contains("success", true)) {
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Your order was placed successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -112,7 +116,7 @@ class AddressSelectionFragment : Fragment() {
         }
     }
 
-    private fun setupViews() {
+    fun setupViews() {
         addressListAdapter =
             AddressListAdapter(purpose != AddressBottomSheetPurpose.VIEW_ADDRESS)
         binding.rvAddress.apply {
@@ -132,7 +136,8 @@ class AddressSelectionFragment : Fragment() {
                 findViewById<ViewPager2>(R.id.pager_address).currentItem = 1
             }
             findViewById<MaterialButton>(R.id.btn_place_order)?.setOnClickListener {
-                if (binding.rvAddress.adapter!!.itemCount != 0 && (binding.rvAddress.adapter as AddressListAdapter).getCheckedAddressId()
+                if (binding.rvAddress.adapter!!.itemCount != 0 &&
+                    (binding.rvAddress.adapter as AddressListAdapter).getCheckedAddressId()
                         .isNotEmpty()
                 ) {
                     val productId =

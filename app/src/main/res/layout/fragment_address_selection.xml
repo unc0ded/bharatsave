@@ -13,9 +13,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="@string/select_delivery_address"
+        android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.App.Title"
         android:textColor="?attr/colorOnBackground"
-        android:textAllCaps="true"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,6 +27,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
         android:overScrollMode="never"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

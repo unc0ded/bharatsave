@@ -239,8 +239,8 @@ class HomeViewModel @Inject constructor(
     fun createUserAddress(bodyMap: Map<String, String>) {
         viewModelScope.launchIO(
             action = {
-                val addressDetail = mainRepository.registerUserAddress(bodyMap)
-                mainRepository.saveAddresses(listOf(addressDetail))
+                val addressDetail: List<AddressDetail> = mainRepository.registerUserAddress(bodyMap)
+                mainRepository.saveAddresses(addressDetail)
                 _addressCreateStatus.postValue("SUCCESS")
             },
             onError = {

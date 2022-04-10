@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,8 @@ import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnClickListener {
+
+    private val TAG = "HomeFragment"
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -342,53 +345,63 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         (binding.etBuyAmount.editText as TextInputEditText).textChanges().debounce(500)
             .onEach { text ->
-                when (binding.toggleGroupBuyOption.checkedRadioButtonId) {
-                    R.id.toggle_buy_currency -> {
-                        if (text.toString().isNotBlank()) {
-                            buyAmount = text.toString().toFloat()
-                            if (buyAmount > 1000000) {
-                                binding.etBuyAmount.error = getString(R.string.error_lower_amount)
-                                binding.cardCheckoutDetails.visibility = View.GONE
-                            } else {
-                                binding.etBuyAmount.isErrorEnabled = false
-                                mainViewModel.goldRateData.value?.first?.run {
-                                    buyQuantity =
-                                        buyAmount / (buyPrice.toFloat() + buyGst.toFloat())
-                                    binding.tvCheckoutAmount.text =
-                                        "₹${normalDecimalFormat.format(buyAmount)}"
-                                    binding.tvCheckoutWeight.text =
-                                        "${longDecimalFormat.format(buyQuantity)}gms"
+                try {
+                    when (binding.toggleGroupBuyOption.checkedRadioButtonId) {
+                        R.id.toggle_buy_currency -> {
+                            if (text.toString().isNotBlank()) {
+                                buyAmount = text.toString().toFloat()
+                                if (buyAmount > 1000000) {
+                                    binding.etBuyAmount.error =
+                                        getString(R.string.error_lower_amount)
+                                    binding.cardCheckoutDetails.visibility = View.GONE
+                                } else {
+                                    binding.etBuyAmount.isErrorEnabled = false
+                                    mainViewModel.goldRateData.value?.first?.run {
+                                        buyQuantity =
+                                            buyAmount / (buyPrice.toFloat() + buyGst.toFloat())
+                                        binding.tvCheckoutAmount.text =
+                                            "₹${normalDecimalFormat.format(buyAmount)}"
+                                        binding.tvCheckoutWeight.text =
+                                            "${longDecimalFormat.format(buyQuantity)}gms"
+                                    }
+                                    binding.cardCheckoutDetails.visibility = View.VISIBLE
                                 }
-                                binding.cardCheckoutDetails.visibility = View.VISIBLE
+                            } else {
+                                buyAmount = 0f
+                                binding.cardCheckoutDetails.visibility = View.GONE
                             }
-                        } else {
-                            buyAmount = 0f
-                            binding.cardCheckoutDetails.visibility = View.GONE
+                        }
+
+                        R.id.toggle_buy_quantity -> {
+                            if (text.toString().isNotBlank()) {
+                                buyQuantity = text.toString().toFloat()
+                                if (buyQuantity > 250) {
+                                    binding.etBuyAmount.error =
+                                        getString(R.string.error_lower_quantity)
+                                    binding.cardCheckoutDetails.visibility = View.GONE
+                                } else {
+                                    binding.etBuyAmount.isErrorEnabled = false
+                                    mainViewModel.goldRateData.value?.first?.run {
+                                        buyAmount =
+                                            buyQuantity * (buyPrice.toFloat() + buyGst.toFloat())
+                                        binding.tvCheckoutAmount.text =
+                                            "₹${normalDecimalFormat.format(buyAmount)}"
+                                        binding.tvCheckoutWeight.text =
+                                            "${longDecimalFormat.format(buyQuantity)}gms"
+                                    }
+                                    binding.cardCheckoutDetails.visibility = View.VISIBLE
+                                }
+                            } else {
+                                buyQuantity = 0f
+                                binding.cardCheckoutDetails.visibility = View.GONE
+                            }
                         }
                     }
-                    R.id.toggle_buy_quantity -> {
-                        if (text.toString().isNotBlank()) {
-                            buyQuantity = text.toString().toFloat()
-                            if (buyQuantity > 250) {
-                                binding.etBuyAmount.error = getString(R.string.error_lower_quantity)
-                                binding.cardCheckoutDetails.visibility = View.GONE
-                            } else {
-                                binding.etBuyAmount.isErrorEnabled = false
-                                mainViewModel.goldRateData.value?.first?.run {
-                                    buyAmount =
-                                        buyQuantity * (buyPrice.toFloat() + buyGst.toFloat())
-                                    binding.tvCheckoutAmount.text =
-                                        "₹${normalDecimalFormat.format(buyAmount)}"
-                                    binding.tvCheckoutWeight.text =
-                                        "${longDecimalFormat.format(buyQuantity)}gms"
-                                }
-                                binding.cardCheckoutDetails.visibility = View.VISIBLE
-                            }
-                        } else {
-                            buyQuantity = 0f
-                            binding.cardCheckoutDetails.visibility = View.GONE
-                        }
-                    }
+                } catch (exception: Exception) {
+                    Log.e(
+                        TAG,
+                        "#setupViews.buyAmountEditTextTextChangedListener: ${exception.message}"
+                    )
                 }
             }.launchIn(lifecycleScope)
 

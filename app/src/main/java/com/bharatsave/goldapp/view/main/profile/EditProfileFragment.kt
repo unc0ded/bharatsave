@@ -1,6 +1,7 @@
 package com.bharatsave.goldapp.view.main.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,15 +15,14 @@ import com.bharatsave.goldapp.model.User
 import com.bharatsave.goldapp.util.textChanges
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class EditProfileFragment : Fragment() {
+
+    private val TAG = "EditProfileFragment"
 
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
@@ -77,34 +77,60 @@ class EditProfileFragment : Fragment() {
 
         (binding.etFullName.editText as TextInputEditText).textChanges().debounce(400)
             .onEach {
-                binding.etFullName.error = if (it.isNullOrBlank()) "Cannot be empty" else ""
-                binding.btnSave.isEnabled =
-                    it.toString()
-                        .trim() != name || (binding.etEmail.editText as TextInputEditText).text.toString()
-                        .trim() != email || (binding.etPincode.editText as TextInputEditText).text.toString()
-                        .trim() != pincode
+                try {
+                    binding.etFullName.error = if (it.isNullOrBlank()) "Cannot be empty" else ""
+                    binding.btnSave.isEnabled =
+                        it.toString()
+                            .trim() != name || (binding.etEmail.editText as TextInputEditText).text.toString()
+                            .trim() != email || (binding.etPincode.editText as TextInputEditText).text.toString()
+                            .trim() != pincode
+                } catch (exception: Exception) {
+                    Log.e(
+                        TAG,
+                        "#onViewCreated.fullNameEditTextTextChangedListener: ${exception.message}"
+                    )
+                }
             }.launchIn(lifecycleScope)
+
         (binding.etEmail.editText as TextInputEditText).textChanges().debounce(400)
             .onEach {
-                binding.etEmail.error = if (it.isNullOrBlank()) "Cannot be empty" else ""
-                binding.btnSave.isEnabled =
-                    it.toString()
-                        .trim() != email || (binding.etFullName.editText as TextInputEditText).text.toString()
-                        .trim() != name || (binding.etPincode.editText as TextInputEditText).text.toString()
-                        .trim() != pincode
+                try {
+                    binding.etEmail.error = if (it.isNullOrBlank()) "Cannot be empty" else ""
+                    binding.btnSave.isEnabled =
+                        it.toString()
+                            .trim() != email || (binding.etFullName.editText as TextInputEditText).text.toString()
+                            .trim() != name || (binding.etPincode.editText as TextInputEditText).text.toString()
+                            .trim() != pincode
+                } catch (exception: Exception) {
+                    Log.e(
+                        TAG,
+                        "#onViewCreated.emailEditTextTextChangedListener: ${exception.message}"
+                    )
+                }
             }.launchIn(lifecycleScope)
+
         (binding.etPincode.editText as TextInputEditText).textChanges().debounce(400)
             .onEach {
-                binding.etPincode.error = if (it.isNullOrBlank()) "Cannot be empty" else ""
-                binding.btnSave.isEnabled =
-                    it.toString()
-                        .trim() != pincode || (binding.etFullName.editText as TextInputEditText).text.toString()
-                        .trim() != name || (binding.etEmail.editText as TextInputEditText).text.toString()
-                        .trim() != email
+                try {
+                    binding.etPincode.error = if (it.isNullOrBlank()) "Cannot be empty" else ""
+                    binding.btnSave.isEnabled =
+                        it.toString()
+                            .trim() != pincode || (binding.etFullName.editText as TextInputEditText).text.toString()
+                            .trim() != name || (binding.etEmail.editText as TextInputEditText).text.toString()
+                            .trim() != email
+                } catch (exception: Exception) {
+                    Log.e(
+                        TAG,
+                        "#onViewCreated.pincodeEditTextTextChangedListener: ${exception.message}"
+                    )
+                }
             }.launchIn(lifecycleScope)
 
         binding.btnSave.setOnClickListener {
-            if (!binding.etFullName.error.isNullOrBlank() || !binding.etEmail.error.isNullOrBlank() || !binding.etPincode.error.isNullOrBlank())
+            if (!binding.etFullName.error.isNullOrBlank() ||
+                !binding.etEmail.error.isNullOrBlank() ||
+                !binding.etPincode.error.isNullOrBlank()
+            )
                 Toast.makeText(context, "Field(s) cannot be empty!", Toast.LENGTH_SHORT).show()
             else {
                 viewModel.saveUserDetails(

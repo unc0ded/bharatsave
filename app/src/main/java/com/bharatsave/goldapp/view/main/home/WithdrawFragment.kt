@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,8 @@ import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class WithdrawFragment : Fragment(), View.OnClickListener {
+
+    private val TAG = "WithdrawFragment"
 
     private var _binding: FragmentWithdrawBinding? = null
     private val binding get() = _binding!!
@@ -173,54 +176,60 @@ class WithdrawFragment : Fragment(), View.OnClickListener {
 
         (binding.etSellAmount.editText as TextInputEditText).textChanges().debounce(500)
             .onEach { text ->
-                when (binding.toggleGroupSellOption.checkedRadioButtonId) {
-                    R.id.toggle_sell_currency -> {
-                        if (text.toString().isNotBlank()) {
-                            sellAmount = text.toString().toFloat()
-                            if (sellAmount > currentAmountBalance) {
-                                binding.etSellAmount.error = "Amount exceeds balance"
-                                binding.cardSellDetails.visibility = View.GONE
-                            } else {
-                                binding.etSellAmount.isErrorEnabled = false
-                                mainViewModel.goldRateData.value?.first?.run {
-                                    binding.tvCurrentRate.text = "at $sellPrice/gm"
-                                    sellQuantity = sellAmount / sellPrice.toFloat()
-                                    binding.tvSellAmount.text =
-                                        "₹${normalDecimalFormat.format(sellAmount)}"
-                                    binding.tvSellWeight.text =
-                                        "${longDecimalFormat.format(sellQuantity)}gms"
+                try {
+                    when (binding.toggleGroupSellOption.checkedRadioButtonId) {
+                        R.id.toggle_sell_currency -> {
+                            if (text.toString().isNotBlank()) {
+                                sellAmount = text.toString().toFloat()
+                                if (sellAmount > currentAmountBalance) {
+                                    binding.etSellAmount.error = "Amount exceeds balance"
+                                    binding.cardSellDetails.visibility = View.GONE
+                                } else {
+                                    binding.etSellAmount.isErrorEnabled = false
+                                    mainViewModel.goldRateData.value?.first?.run {
+                                        binding.tvCurrentRate.text = "at $sellPrice/gm"
+                                        sellQuantity = sellAmount / sellPrice.toFloat()
+                                        binding.tvSellAmount.text =
+                                            "₹${normalDecimalFormat.format(sellAmount)}"
+                                        binding.tvSellWeight.text =
+                                            "${longDecimalFormat.format(sellQuantity)}gms"
+                                    }
+                                    binding.cardSellDetails.visibility = View.VISIBLE
                                 }
-                                binding.cardSellDetails.visibility = View.VISIBLE
+                            } else {
+                                sellAmount = 0f
+                                binding.cardSellDetails.visibility = View.GONE
                             }
-                        } else {
-                            sellAmount = 0f
-                            binding.cardSellDetails.visibility = View.GONE
+                        }
+
+                        R.id.toggle_sell_quantity -> {
+                            if (text.toString().isNotBlank()) {
+                                sellQuantity = text.toString().toFloat()
+                                if (sellQuantity > currentWeightBalance) {
+                                    binding.etSellAmount.error = "Weight exceeds balance"
+                                    binding.cardSellDetails.visibility = View.GONE
+                                } else {
+                                    binding.etSellAmount.isErrorEnabled = false
+                                    mainViewModel.goldRateData.value?.first?.run {
+                                        binding.tvCurrentRate.text = "at $sellPrice/gm"
+                                        sellAmount = sellQuantity * sellPrice.toFloat()
+                                        binding.tvSellAmount.text =
+                                            "₹${normalDecimalFormat.format(sellAmount)}"
+                                        binding.tvSellWeight.text =
+                                            "${longDecimalFormat.format(sellQuantity)}gms"
+                                    }
+                                    binding.cardSellDetails.visibility = View.VISIBLE
+                                }
+                            } else {
+                                sellQuantity = 0f
+                                binding.cardSellDetails.visibility = View.GONE
+                            }
                         }
                     }
-                    R.id.toggle_sell_quantity -> {
-                        if (text.toString().isNotBlank()) {
-                            sellQuantity = text.toString().toFloat()
-                            if (sellQuantity > currentWeightBalance) {
-                                binding.etSellAmount.error = "Weight exceeds balance"
-                                binding.cardSellDetails.visibility = View.GONE
-                            } else {
-                                binding.etSellAmount.isErrorEnabled = false
-                                mainViewModel.goldRateData.value?.first?.run {
-                                    binding.tvCurrentRate.text = "at $sellPrice/gm"
-                                    sellAmount = sellQuantity * sellPrice.toFloat()
-                                    binding.tvSellAmount.text =
-                                        "₹${normalDecimalFormat.format(sellAmount)}"
-                                    binding.tvSellWeight.text =
-                                        "${longDecimalFormat.format(sellQuantity)}gms"
-                                }
-                                binding.cardSellDetails.visibility = View.VISIBLE
-                            }
-                        } else {
-                            sellQuantity = 0f
-                            binding.cardSellDetails.visibility = View.GONE
-                        }
-                    }
+                } catch (exception: Exception) {
+                    Log.e(TAG, "#setupViews.sellAmountTextChangedListener: ${exception.message}")
                 }
+
             }.launchIn(lifecycleScope)
 
         binding.chipAdd500.setOnClickListener(this)

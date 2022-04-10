@@ -151,6 +151,8 @@ class TransactionsFragment : Fragment() {
                     R.id.filter_year -> 365
                     else -> null
                 }
+                binding.tvEmptyList.visibility = View.GONE
+                binding.rvTxns.visibility = View.VISIBLE
                 val finalList = filterAndGroup(list, days)
                 binding.rvTxns.adapter = TransactionsAdapter(finalList)
 
@@ -158,6 +160,7 @@ class TransactionsFragment : Fragment() {
                 binding.rvTxns.visibility = View.GONE
                 binding.tvEmptyList.visibility = View.VISIBLE
                 binding.tvEmptyList.text = "No transactions to display."
+
             } else {
                 binding.rvTxns.visibility = View.GONE
                 binding.tvEmptyList.visibility = View.VISIBLE

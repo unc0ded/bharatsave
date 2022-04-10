@@ -3,6 +3,7 @@ package com.bharatsave.goldapp.custom_widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Checkable
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +31,12 @@ class CheckableAddressItem @JvmOverloads constructor(
     fun setAddress(name: String, addressText: String, label: String, pinCode: String) {
         binding.tvAddressName.text = name
         binding.tvFullAddress.text = addressText
-        binding.tvAddressLabel.text = label
+        if (label.isEmpty()) {
+            binding.tvAddressLabel.visibility = View.GONE
+        } else {
+            binding.tvAddressLabel.visibility = View.VISIBLE
+            binding.tvAddressLabel.text = label
+        }
         binding.tvPinCode.text = pinCode
     }
 

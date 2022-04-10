@@ -6,13 +6,23 @@
     android:layout_height="wrap_content"
     tools:context=".view.main.home.DeliveryAddressBottomSheetFragment">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager_address"
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_place_order"
@@ -23,9 +33,9 @@
         android:includeFontPadding="false"
         android:text="@string/place_order"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/btn_add_address"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pager_address" />
+        app:layout_constraintTop_toTopOf="@id/btn_add_address" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_address"
@@ -40,6 +50,6 @@
         app:icon="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pager_address" />
+        app:layout_constraintTop_toBottomOf="@id/scroll_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

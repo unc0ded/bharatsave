@@ -40,7 +40,7 @@ interface AugmontService {
     suspend fun goldProducts(): List<GoldCoin>
 
     @POST("augmont/address")
-    suspend fun createAddress(@Body map: Map<String, String>): AddressDetail
+    suspend fun createAddress(@Body map: Map<String, String>): List<AddressDetail>
 
     @POST("augmont/order")
     suspend fun orderProduct(@Body map: Map<String, String>): OrderResponse
