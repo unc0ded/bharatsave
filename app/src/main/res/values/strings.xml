@@ -139,6 +139,7 @@
     <string name="saved_addresses">saved addresses</string>
     <string name="edit_profile_title">Edit Profile</string>
     <string name="save">Save</string>
+    <string name="fetching_products">fetching products...</string>
 
     <string-array name="delivery_list">
         <item>Augmont 0.1GM Gold Coin</item>

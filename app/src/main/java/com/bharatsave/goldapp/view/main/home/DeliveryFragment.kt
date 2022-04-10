@@ -82,6 +82,9 @@ class DeliveryFragment : Fragment() {
 
         homeViewModel.productData.observe(viewLifecycleOwner) {
             if (it != null && it.isNotEmpty()) {
+                binding.productsLoadingWrapper.visibility = View.GONE
+                binding.etGoldDeliveryOption.visibility = View.VISIBLE
+                binding.tvMarkingChargesTitle.visibility = View.VISIBLE
                 (binding.etGoldDeliveryOption.editText as MaterialAutoCompleteTextView).setAdapter(
                     ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, it)
                 )
@@ -90,6 +93,10 @@ class DeliveryFragment : Fragment() {
     }
 
     private fun setupViews() {
+        binding.etGoldDeliveryOption.visibility = View.GONE
+        binding.tvMarkingChargesTitle.visibility = View.GONE
+        binding.productsLoadingWrapper.visibility = View.VISIBLE
+
         binding.tvDeliverGoldTitle.setCustomTypefaceSpanString(
             "deliver",
             R.font.eina01_regular,
@@ -103,10 +110,12 @@ class DeliveryFragment : Fragment() {
         }
 
         (binding.etGoldDeliveryOption.editText as MaterialAutoCompleteTextView).setOnItemClickListener { _, _, position, _ ->
+            binding.tvMarkingChargesTitle.visibility = View.GONE
             binding.tvMakingChargesPrice.text = try {
-                (((binding.etGoldDeliveryOption.editText as MaterialAutoCompleteTextView).adapter as ArrayAdapter<*>).getItem(
-                    position
-                ) as GoldCoin).makingCharges
+                val makingCharges = (((binding.etGoldDeliveryOption.editText as
+                        MaterialAutoCompleteTextView).adapter as ArrayAdapter<*>)
+                    .getItem(position) as GoldCoin).makingCharges
+                "₹$makingCharges"
             } catch (e: ClassCastException) {
                 "N/A"
             }

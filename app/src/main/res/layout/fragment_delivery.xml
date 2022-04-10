@@ -159,6 +159,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_deliver_gold_title" />
 
+        <LinearLayout
+            android:id="@+id/products_loading_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_gold_delivery_option">
+
+            <ProgressBar
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/fetching_products"
+                android:textAppearance="@style/TextAppearance.App.Light"
+                android:textColor="@color/unfocused_grey" />
+
+        </LinearLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_gold_delivery_option"
             style="@style/Widget.App.TextInputLayout.ExposedDropdownMenu"
@@ -258,12 +282,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="@dimen/dimen_10dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_intro_screen_4"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/btn_select_address"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_making_charges" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_select_address"
