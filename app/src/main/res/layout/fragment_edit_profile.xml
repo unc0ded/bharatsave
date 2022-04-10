@@ -13,14 +13,26 @@
         android:layout_height="wrap_content"
         android:padding="40dp">
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:tint="?attr/colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_page_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_page_title" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_page_title"
             style="@style/Widget.App.TextView.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_20dp"
             android:gravity="center"
             android:text="@string/edit_profile_title"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_back"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout

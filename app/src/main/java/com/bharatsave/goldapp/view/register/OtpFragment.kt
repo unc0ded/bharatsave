@@ -63,8 +63,6 @@ class OtpFragment : Fragment() {
         }
 
         setupFirebaseAuth()
-
-        sendOtp(args.phone)
     }
 
     override fun onCreateView(
@@ -79,6 +77,7 @@ class OtpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sendOtp(args.phone)
         setupViews()
         setupObservers()
     }
@@ -194,6 +193,7 @@ class OtpFragment : Fragment() {
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
+                binding.progressWrapper.visibility = View.GONE
                 verificationInProgress = false
                 when (e) {
                     is FirebaseAuthInvalidCredentialsException -> Toast.makeText(
@@ -219,6 +219,10 @@ class OtpFragment : Fragment() {
                 verificationId: String,
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
+                binding.progressWrapper.visibility = View.GONE
+                binding.tvFooter.visibility = View.VISIBLE
+                binding.containerResend.visibility = View.VISIBLE
+
                 storedVerificationId = verificationId
                 resendToken = token
 
@@ -232,6 +236,10 @@ class OtpFragment : Fragment() {
     }
 
     private fun sendOtp(phoneNumber: String) {
+        binding.progressWrapper.visibility = View.VISIBLE
+        binding.tvFooter.visibility = View.GONE
+        binding.containerResend.visibility = View.GONE
+
         val options = PhoneAuthOptions.newBuilder(mFirebaseAuth)
             .setPhoneNumber("+91$phoneNumber")
             .setTimeout(60, TimeUnit.SECONDS)

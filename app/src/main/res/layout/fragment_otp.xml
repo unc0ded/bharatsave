@@ -61,6 +61,29 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_edit_phone"
         app:lineColor="@color/text_black" />
 
+    <LinearLayout
+        android:id="@+id/progress_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_otp">
+
+        <ProgressBar
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/Widget.App.TextView.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="sending otp..." />
+
+    </LinearLayout>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_footer"
         style="@style/Widget.App.TextView.Subtitle"

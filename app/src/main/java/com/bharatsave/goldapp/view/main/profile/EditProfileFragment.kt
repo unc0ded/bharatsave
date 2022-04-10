@@ -145,5 +145,9 @@ class EditProfileFragment : Fragment() {
                 )
             }
         }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }
