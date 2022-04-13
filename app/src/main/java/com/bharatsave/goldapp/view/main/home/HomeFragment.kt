@@ -60,6 +60,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private lateinit var orderId: String
 
+    /**
+     * This is a temporary way of avoiding unwanted transaction flow triggers. This should be
+     * replaced with a better way of handling the issue in future.
+     */
+    private var shouldStartTransactionFlow = false
+
     private val TRANSACTION_REQUEST_CODE = 102
 
     override fun onCreateView(
@@ -71,8 +77,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setupObservers()
         setupViews()
+        setupObservers()
     }
 
     override fun onDestroyView() {
@@ -143,7 +149,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
 
         homeViewModel.transactionToken.observe(viewLifecycleOwner) {
-            if (it != null) {
+            if (it != null && shouldStartTransactionFlow) {
                 orderId = it.orderId
                 val paytmOrder = PaytmOrder(
                     it.orderId,
@@ -164,6 +170,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         }
 
                         override fun networkNotAvailable() {
+                            shouldStartTransactionFlow = false
                             Toast.makeText(
                                 context,
                                 "Network unavailable: Please try again",
@@ -172,10 +179,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         }
 
                         override fun onErrorProceed(p0: String?) {
+                            shouldStartTransactionFlow = false
                             Toast.makeText(context, "Error proceed: $p0", Toast.LENGTH_LONG).show()
                         }
 
                         override fun clientAuthenticationFailed(p0: String?) {
+                            shouldStartTransactionFlow = false
                             Toast.makeText(
                                 context,
                                 "Client authentication failed: $p0",
@@ -184,10 +193,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         }
 
                         override fun someUIErrorOccurred(p0: String?) {
+                            shouldStartTransactionFlow = false
                             Toast.makeText(context, "UI error: $p0", Toast.LENGTH_LONG).show()
                         }
 
                         override fun onErrorLoadingWebPage(p0: Int, p1: String?, p2: String?) {
+                            shouldStartTransactionFlow = false
                             Toast.makeText(
                                 context,
                                 "Error loading web page: $p1 $p2",
@@ -196,6 +207,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         }
 
                         override fun onBackPressedCancelTransaction() {
+                            shouldStartTransactionFlow = false
                             Toast.makeText(
                                 context,
                                 "Transaction Cancelled: User pressed back",
@@ -204,6 +216,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         }
 
                         override fun onTransactionCancel(p0: String?, p1: Bundle?) {
+                            shouldStartTransactionFlow = false
                             Toast.makeText(
                                 context,
                                 "Transaction Cancelled: $p0 " + p1.toString(),
@@ -217,7 +230,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
 
         homeViewModel.transactionStatus.observe(viewLifecycleOwner) {
-            if (it != null) {
+            if (it != null && shouldStartTransactionFlow) {
+                shouldStartTransactionFlow = false
                 if (it.status.contains("success", true)) {
                     Toast.makeText(
                         context,
@@ -417,6 +431,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             } else if ((binding.etBuyAmount.editText as TextInputEditText).text.isNullOrBlank()) {
                 Toast.makeText(context, R.string.error_enter_something, Toast.LENGTH_SHORT).show()
             } else {
+                shouldStartTransactionFlow = true
                 homeViewModel.startTransaction(
                     hashMapOf(
                         "amount" to normalDecimalFormat.format(buyAmount).replace(",", "")
