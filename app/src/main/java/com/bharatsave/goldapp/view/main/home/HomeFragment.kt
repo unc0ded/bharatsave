@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.FragmentHomeBinding
+import com.bharatsave.goldapp.model.game.Orientation
 import com.bharatsave.goldapp.util.getThemeColorFromAttr
 import com.bharatsave.goldapp.util.setCustomSpanString
 import com.bharatsave.goldapp.util.setCustomTypefaceSpanString
@@ -450,7 +451,19 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.btnWhyBharatsave.setOnClickListener {
             findNavController().navigate(
                 // TODO: remove temporary url
-                HomeFragmentDirections.actionWebview("https://fello.in/faqs", "Why Bharat Save?")
+                HomeFragmentDirections.actionWebview(
+                    "https://fello.in/faqs",
+                    "Why Bharat Save?",
+                    false,
+                    Orientation.ANY
+                )
+            )
+        }
+
+        // TODO: remove this temporary click action
+        binding.btnPrivacy.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionGame()
             )
         }
     }

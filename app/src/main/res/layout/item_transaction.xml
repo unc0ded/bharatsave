@@ -43,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_filled_background"
             android:paddingHorizontal="6dp"
             android:paddingVertical="2dp"
             android:textAppearance="@style/TextAppearance.App.Title"
@@ -50,7 +51,6 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_gold_weight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_gold_weight"
-            android:background="@drawable/rounded_filled_background"
             tools:backgroundTint="@color/light_green"
             tools:text="BUY"
             tools:textColor="@color/focus_green" />

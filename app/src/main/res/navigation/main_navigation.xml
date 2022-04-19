@@ -19,6 +19,12 @@
             android:name="titleText"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="isGame"
+            app:argType="boolean" />
+        <argument
+            android:name="orientation"
+            app:argType="com.bharatsave.goldapp.model.game.Orientation" />
 
     </activity>
 
@@ -71,6 +77,10 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_game"
+            app:destination="@id/nav_game" />
 
     </fragment>
 
@@ -171,6 +181,22 @@
         <action
             android:id="@+id/action_select_bank"
             app:destination="@id/nav_bank_selection" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_game"
+        android:name="com.bharatsave.goldapp.view.main.games.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game">
+
+        <action
+            android:id="@+id/action_webview_game"
+            app:destination="@id/nav_webview"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
 
     </fragment>
 

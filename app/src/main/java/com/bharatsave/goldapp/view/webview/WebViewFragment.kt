@@ -19,6 +19,7 @@ class WebViewFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var url: String? = null
+    private var isGame = false
     private var title: String = "BharatSave"
 
     override fun onCreateView(
@@ -37,6 +38,7 @@ class WebViewFragment : Fragment() {
         }
         webViewActivityArgs?.let {
             url = it.url
+            isGame = it.isGame
             it.titleText?.let { text: String ->
                 title = text
             }
@@ -45,8 +47,12 @@ class WebViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.tvTitle.text = title
+        if (isGame) {
+            binding.topbar.visibility = View.GONE
+        } else {
+            binding.topbar.visibility = View.VISIBLE
+            binding.tvTitle.text = title
+        }
         url?.let { setupWebView(it) }
         binding.btnBack.setOnClickListener {
             activity?.finish()

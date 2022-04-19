@@ -1,10 +1,12 @@
 package com.bharatsave.goldapp.view.webview
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bharatsave.goldapp.R
 import com.bharatsave.goldapp.databinding.ActivityWebviewBinding
+import com.bharatsave.goldapp.model.game.Orientation
 
 
 class WebViewActivity : AppCompatActivity() {
@@ -15,6 +17,16 @@ class WebViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val args = intent.extras?.let { WebViewActivityArgs.fromBundle(it) }
+        args?.let {
+            when (args.orientation) {
+                Orientation.LANDSCAPE -> requestedOrientation =
+                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                Orientation.PORTRAIT -> requestedOrientation =
+                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
+        }
     }
 
     override fun onBackPressed() {

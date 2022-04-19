@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:scrollbars="none"
-    tools:context=".view.main.transactions.TransactionsFragment">
+    tools:context=".view.main.games.GameFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,21 +19,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
-            android:text="@string/recent_transactions"
+            android:text="@string/trending_games"
             android:textColor="?attr/colorOnBackground"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_summary"
+            android:id="@+id/token_summary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_page_title">
 
@@ -47,10 +46,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_begin="406dp" />
+                    app:layout_constraintGuide_percent="0.5" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_gold_held"
+                    android:id="@+id/tv_token_available"
                     style="@style/Widget.App.TextView.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +59,7 @@
                     app:layout_constraintEnd_toStartOf="@id/guideline_50"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="5.65gm" />
+                    tools:text="80" />
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/Widget.App.TextView"
@@ -68,16 +67,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/gold_weight"
+                    android:text="Tokens available"
                     android:textColor="?attr/colorOnBackground"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/tv_gold_held"
-                    app:layout_constraintStart_toStartOf="@id/tv_gold_held"
-                    app:layout_constraintTop_toBottomOf="@id/tv_gold_held" />
+                    app:layout_constraintEnd_toEndOf="@id/tv_token_available"
+                    app:layout_constraintStart_toStartOf="@id/tv_token_available"
+                    app:layout_constraintTop_toBottomOf="@id/tv_token_available" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_portfolio_value"
+                    android:id="@+id/tv_token_spent"
                     style="@style/Widget.App.TextView.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,9 +84,9 @@
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/guideline_50"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_50"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="₹565.45" />
+                    tools:text="420" />
 
                 <com.google.android.material.textview.MaterialTextView
                     style="@style/Widget.App.TextView"
@@ -95,64 +94,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/portfolio_value"
+                    android:text="Tokens spent"
                     android:textColor="?attr/colorOnBackground"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/tv_portfolio_value"
-                    app:layout_constraintStart_toStartOf="@id/tv_portfolio_value"
-                    app:layout_constraintTop_toBottomOf="@id/tv_portfolio_value" />
+                    app:layout_constraintEnd_toEndOf="@id/tv_token_spent"
+                    app:layout_constraintStart_toStartOf="@id/tv_token_spent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_token_spent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_filters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_summary"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_week"
-                style="?attr/chipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/this_week" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_month"
-                style="?attr/chipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/this_month" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filter_year"
-                style="?attr/chipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/this_year" />
-
-        </com.google.android.material.chip.ChipGroup>
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_txns"
+            android:id="@+id/rv_games"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginTop="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chip_group_filters" />
+            app:layout_constraintTop_toBottomOf="@id/token_summary" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_empty_list"
+            android:id="@+id/tv_status_text"
             style="@style/Widget.App.TextView.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -160,8 +126,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chip_group_filters"
-            tools:text="Nothing to see here..." />
+            app:layout_constraintTop_toBottomOf="@id/token_summary"
+            tools:text="Fetching available games" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
