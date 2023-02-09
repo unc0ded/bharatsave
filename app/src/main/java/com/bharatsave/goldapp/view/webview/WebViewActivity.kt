@@ -20,11 +20,9 @@ class WebViewActivity : AppCompatActivity() {
 
         val args = intent.extras?.let { WebViewActivityArgs.fromBundle(it) }
         args?.let {
-            when (args.orientation) {
-                Orientation.LANDSCAPE -> requestedOrientation =
-                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                Orientation.PORTRAIT -> requestedOrientation =
-                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            requestedOrientation = when (args.orientation) {
+                Orientation.LANDSCAPE -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                else -> ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
             }
         }
     }
