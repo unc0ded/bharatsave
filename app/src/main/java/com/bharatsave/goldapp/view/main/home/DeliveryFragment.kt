@@ -81,20 +81,24 @@ class DeliveryFragment : Fragment() {
         }
 
         homeViewModel.productData.observe(viewLifecycleOwner) {
-            if (it != null && it.isNotEmpty()) {
-                binding.productsLoadingWrapper.visibility = View.GONE
-                binding.etGoldDeliveryOption.visibility = View.VISIBLE
-                binding.tvMarkingChargesTitle.visibility = View.VISIBLE
-                (binding.etGoldDeliveryOption.editText as MaterialAutoCompleteTextView).setAdapter(
-                    ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, it)
-                )
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    binding.productsLoadingWrapper.visibility = View.GONE
+                    binding.etGoldDeliveryOption.visibility = View.VISIBLE
+                    binding.tvMarkingChargesTitle.visibility = View.VISIBLE
+                    (binding.etGoldDeliveryOption.editText as MaterialAutoCompleteTextView).setAdapter(
+                        ArrayAdapter(requireContext(), R.layout.dropdown_menu_item, it)
+                    )
+                }
+                else {
+                    binding.productsLoadingWrapper.visibility = View.GONE
+                    binding.tvLowGoldBalance.visibility = View.VISIBLE
+                }
             }
         }
     }
 
     private fun setupViews() {
-        binding.etGoldDeliveryOption.visibility = View.GONE
-        binding.tvMarkingChargesTitle.visibility = View.GONE
         binding.productsLoadingWrapper.visibility = View.VISIBLE
 
         binding.tvDeliverGoldTitle.setCustomTypefaceSpanString(

@@ -74,6 +74,8 @@
     <string name="gold_24k">24K</string>
     <string name="delivery_amount_option">Amount of gold to deliver</string>
     <string name="select_an_option">Select an option</string>
+    <string name="fetching_products">fetching products…</string>
+    <string name="insufficient_balance_note">Insufficient gold balance</string>
     <string name="making_charges_note">Making charges applicable</string>
     <string name="making_delivery_charges">MAKING &amp; DELIVERY CHARGES</string>
     <string name="gst_percent">+3% GST</string>
@@ -139,7 +141,8 @@
     <string name="saved_addresses">saved addresses</string>
     <string name="edit_profile_title">Edit Profile</string>
     <string name="save">Save</string>
-    <string name="fetching_products">fetching products...</string>
+
+    <!--    games-->
     <string name="trending_games">Trending Games</string>
 
     <string-array name="delivery_list">

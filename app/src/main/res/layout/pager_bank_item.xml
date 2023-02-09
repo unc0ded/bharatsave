@@ -36,42 +36,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
         android:textAppearance="@style/TextAppearance.App.Subtitle"
         android:textColor="@color/text_lighter_black"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@id/iv_bank_icon"
         app:layout_constraintTop_toBottomOf="@id/tv_account_number"
-        android:layout_marginTop="5dp"
         tools:text="Firstname Lastname" />
 
     <LinearLayout
         android:id="@+id/delete_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rounded_filled_background"
         android:backgroundTint="@color/fill_grey"
-        android:padding="10dp"
-        android:orientation="horizontal"
         android:gravity="center_vertical|end"
-        app:layout_constraintTop_toBottomOf="@id/tv_account_name"
-        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
         android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="parent">
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_account_name">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"
+            style="@style/Widget.App.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:text="@string/cancel"
-            style="@style/Widget.App.Button.OutlinedButton" />
+            android:text="@string/cancel" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/delete"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:text="@string/delete" />
 
     </LinearLayout>
 

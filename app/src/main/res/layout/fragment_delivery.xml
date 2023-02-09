@@ -159,15 +159,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_deliver_gold_title" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_gold_delivery_option"
+            style="@style/Widget.App.TextInputLayout.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/select_an_option"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery_amount_label">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:textAppearance="@style/TextAppearance.App.Subtitle"
+                android:textColor="?attr/colorOnBackground" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:id="@+id/products_loading_wrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_gold_delivery_option">
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery_amount_label">
 
             <ProgressBar
                 android:layout_width="20dp"
@@ -183,26 +205,18 @@
 
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_gold_delivery_option"
-            style="@style/Widget.App.TextInputLayout.ExposedDropdownMenu"
-            android:layout_width="0dp"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_low_gold_balance"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="10dp"
-            android:hint="@string/select_an_option"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:text="@string/insufficient_balance_note"
+            android:textAppearance="@style/TextAppearance.App.Subtitle"
+            android:textColor="@color/focus_red"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_delivery_amount_label">
-
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"
-                android:textAppearance="@style/TextAppearance.App.Subtitle"
-                android:textColor="?attr/colorOnBackground" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery_amount_label" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_marking_charges_title"
@@ -213,6 +227,7 @@
             android:text="@string/making_charges_note"
             android:textAppearance="@style/TextAppearance.App.Light"
             android:textColor="@color/unfocused_grey"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_gold_delivery_option" />
 
